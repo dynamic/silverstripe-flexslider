@@ -21,7 +21,7 @@ class FlexSlider extends DataExtension {
 			new GridFieldBulkImageUpload(),
 			new GridFieldSortableRows("SortOrder")
 		);
-		$PhotosGridField = new GridField("Slides", "SlideImage", $this->owner->Slides(), $PhotosGridFieldConfig);
+		$PhotosGridField = new GridField("Slides", "SlideImage", $this->owner->Slides()->sort('SortOrder'), $PhotosGridFieldConfig);
 		
 		/*
 		$gridFieldConfig = GridFieldConfig_RelationEditor::create()->addComponents(
