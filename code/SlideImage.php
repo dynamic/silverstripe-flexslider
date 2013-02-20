@@ -64,7 +64,9 @@ class SlideImage extends DataObject {
 	}
 	
 	public function Slide() {
-		return $this->Image()->SetRatioSize(600,500);
+		$width = $this->Page()->SliderWidth;
+		$height = $this->Page()->SliderHeight;
+		return $this->Image()->PaddedImage($width, $height);
 	}
 	
 	function canCreate($member=null) {return true;} 

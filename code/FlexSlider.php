@@ -1,9 +1,19 @@
 <?php
 
 class FlexSlider extends DataExtension {
+
+	static $db = array(
+		'SliderWidth' => 'Int',
+		'SliderHeight' => 'Int'
+	);
 	
 	static $has_many = array(
 		'Slides' => 'SlideImage'
+	);
+	
+	static $defaults = array(
+		'SliderWidth' => 350,
+		'SliderHeight' => 350
 	);
 	
 	public function updateCMSFields(FieldList $fields) {
@@ -33,15 +43,33 @@ class FlexSlider extends DataExtension {
 	    	; 
 	    $SlidesField = new GridField("Slides", "Slides", $this->owner->Slides()->sort('SortOrder'), $gridFieldConfig);
 	    */
-	    
-	    $fields->addFieldToTab("Root.Slides", $PhotosGridField);
+	    // add FlexSlider, width and height
+	    $fields->addFieldsToTab("Root.Slides", array(
+	    	TextField::create('SliderWidth', 'Slideshow width'),
+	    	TextField::create('SliderHeight', 'Slideshow height'),
+	    	$PhotosGridField
+	    ));
+	    		
+	}
+	
+	function contentcontrollerInit($controller) {
+		//Requirements::javascript('framework/thirdparty/jquery/jquery.min.js');
 		
 	}
 	
-	public function getSlideList() {
-		return $this->owner->Slides()->sort('SortOrder');
+	public function SlideShow() {
+		
+		$slides = $this->owner->Slides()->sort('SortOrder');
+		//debug::show($slides);
+		
+		return $slides;
+		//return $slides->renderWith('FlexSlider');
 	}
 	
-	
-		
+	// set default width/height if not set
+	public function onBeforeWrite() {
+		if ($this->SliderWidth == 0) $this->SliderWidth = 350;
+		if ($this->SliderHeight == 0) $this->SliderHeight = 350;
+	}
+			
 }
