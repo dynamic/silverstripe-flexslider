@@ -68,8 +68,11 @@ class FlexSlider extends DataExtension {
 	
 	// set default width/height if not set
 	public function onBeforeWrite() {
-		if ($this->SliderWidth == 0) $this->SliderWidth = 350;
-		if ($this->SliderHeight == 0) $this->SliderHeight = 350;
+	
+		if (!$this->owner->SliderWidth || $this->owner->SliderWidth == 0) $this->owner->SliderWidth = 350;
+		if (!$this->owner->SliderHeight || $this->owner->SliderHeight == 0) $this->owner->SliderHeight = 350;
+		
+		parent::onBeforeWrite();
 	}
 			
 }
