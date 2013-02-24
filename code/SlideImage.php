@@ -69,7 +69,7 @@ class SlideImage extends DataObject {
 			$height = $this->Page()->SliderHeight;
 		} else {
 			$width = 350;
-			$height = 500;
+			$height = 350;
 		}
 		return $this->Image()->PaddedImage($width, $height);
 	}
