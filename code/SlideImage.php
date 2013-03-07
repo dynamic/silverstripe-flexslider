@@ -9,7 +9,8 @@ class SlideImage extends DataObject {
 	
 	static $has_one = array(
 		"Image" => "Image",
-		"Page" => "Page"
+		"Page" => "Page",
+		"PageLink" => "SiteTree"
 	);
 	
 	static $singular_name = "Slide";
@@ -39,7 +40,8 @@ class SlideImage extends DataObject {
 	   	
 	   	return new FieldList(
 			new TextField('Name'),
-			$ImageField
+			$ImageField,
+			new TreeDropdownField("PageLinkID", "Choose a page to link to:", "SiteTree")
 		);
 	}
 	
@@ -69,7 +71,7 @@ class SlideImage extends DataObject {
 			$height = $this->Page()->SliderHeight;
 		} else {
 			$width = 350;
-			$height = 500;
+			$height = 350;
 		}
 		return $this->Image()->PaddedImage($width, $height);
 	}
