@@ -19,6 +19,7 @@ class FlexSlider extends DataExtension {
 	public function updateCMSFields(FieldList $fields) {
 		
 		// Slides
+		/*
 		$PhotosGridFieldConfig = GridFieldConfig::create()->addComponents(
 			new GridFieldToolbarHeader(),
 			new GridFieldSortableHeader(),
@@ -43,6 +44,15 @@ class FlexSlider extends DataExtension {
 	    	; 
 	    $SlidesField = new GridField("Slides", "Slides", $this->owner->Slides()->sort('SortOrder'), $gridFieldConfig);
 	    */
+	    
+	    $config = GridFieldConfig_RelationEditor::create();	
+		$config->addComponent(new GridFieldBulkEditingTools());
+		$config->addComponent(new GridFieldBulkImageUpload());
+	    
+		$SlidesField = GridField::create("Slides", "Slides", $this->owner->Slides()->sort('SortOrder'), $config);
+	    
+	    $fields->addFieldToTab("Root.Staff", $SlidesField);
+	    
 	    // add FlexSlider, width and height
 	    $fields->addFieldsToTab("Root.Slides", array(
 	    	TextField::create('SliderWidth', 'Slideshow width'),
