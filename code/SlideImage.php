@@ -45,6 +45,7 @@ class SlideImage extends DataObject {
 		);
 	}
 	
+	/*
 	function getCMSFields_forPopup() {
 		return new FieldSet(
 			new TextField('Name'),
@@ -52,6 +53,7 @@ class SlideImage extends DataObject {
 			//new DropDown($this->ID,'Product No')
 		);
 	}
+	*/
    
 	public function Thumbnail() {
 		return $this->Image()->CroppedImage(80,80);
