@@ -22,7 +22,7 @@ class SlideImage extends DataObject {
 		'Name' => 'Caption',
 		'GridThumb' => 'Image'
 	);
-	
+		
 	public function GridThumb() {
 		$Image = $this->Image();
 		if ( $Image ) 
@@ -78,7 +78,8 @@ class SlideImage extends DataObject {
 		return $this->Image()->PaddedImage($width, $height);
 	}
 	
-	function canCreate($member=null) {return true;} 
-	function canEdit($member=null) {return true;} 
-	function canDelete($member=null) {return true;}
+	function canCreate($member=null) { return true; } 
+	function canEdit($member=null) { return true; } 
+	function canDelete($member=null) { return true; }
+	function canView($member=null) { return true; }
 }
