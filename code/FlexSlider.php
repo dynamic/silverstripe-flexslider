@@ -19,33 +19,7 @@ class FlexSlider extends DataExtension {
 	public function updateCMSFields(FieldList $fields) {
 		
 		// Slides
-		/*
-		$PhotosGridFieldConfig = GridFieldConfig::create()->addComponents(
-			new GridFieldToolbarHeader(),
-			new GridFieldSortableHeader(),
-			new GridFieldDataColumns(),
-			new GridFieldPaginator(10),
-			new GridFieldEditButton(),
-			new GridFieldDeleteAction(),
-			new GridFieldDetailForm(),
-			new GridFieldBulkEditingTools(),
-			new GridFieldBulkImageUpload(),
-			new GridFieldSortableRows("SortOrder")
-		);
-		$PhotosGridField = new GridField("Slides", "SlideImage", $this->owner->Slides()->sort('SortOrder'), $PhotosGridFieldConfig);
-		
-		/*
-		$gridFieldConfig = GridFieldConfig_RelationEditor::create()->addComponents(
-	    	new GridFieldSortableRows('SortOrder')
-	    );
-	    $gridFieldConfig->getComponentByType('GridFieldAddExistingAutocompleter')
-	    	->setSearchFields(array('Name'))
-	    	//->setResultsFormat('$Firstname - $Surname')
-	    	; 
-	    $SlidesField = new GridField("Slides", "Slides", $this->owner->Slides()->sort('SortOrder'), $gridFieldConfig);
-	    */
-	    
-	    $config = GridFieldConfig_RelationEditor::create();	
+		$config = GridFieldConfig_RelationEditor::create();	
 		$config->addComponent(new GridFieldBulkEditingTools());
 		$config->addComponent(new GridFieldBulkImageUpload('ImageID', array('Name')));
 		$config->addComponent(new GridFieldSortableRows("SortOrder"));
@@ -54,8 +28,8 @@ class FlexSlider extends DataExtension {
 	    	    
 	    // add FlexSlider, width and height
 	    $fields->addFieldsToTab("Root.Slides", array(
-	    	TextField::create('SliderWidth', 'Slideshow width'),
-	    	TextField::create('SliderHeight', 'Slideshow height'),
+	    	TextField::create('SliderWidth', 'Image Width'),
+	    	TextField::create('SliderHeight', 'Image Height'),
 	    	$PhotosGridField
 	    ));
 	    		

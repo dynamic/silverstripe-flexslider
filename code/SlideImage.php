@@ -4,6 +4,7 @@ class SlideImage extends DataObject {
 
 	static $db = array(
 		"Name" => "Text",
+		'Description' => 'Text',
 		'SortOrder' => 'Int'
 	);
 	
@@ -40,6 +41,7 @@ class SlideImage extends DataObject {
 	   	
 	   	return new FieldList(
 			new TextField('Name'),
+			TextareaField::create('Description'),
 			$ImageField,
 			new TreeDropdownField("PageLinkID", "Choose a page to link to:", "SiteTree")
 		);
