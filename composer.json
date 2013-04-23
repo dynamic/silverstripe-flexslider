@@ -1,0 +1,20 @@
+{
+    "name": "dynamic/flexslider",
+    "description": "The Dynamic FlexSlider Module",
+    "keywords": ["silverstripe", "flexslider", "module", "extension"],
+    "license": "BSD-3-Clause",
+    "type": "silverstripe-module",
+    "require": {
+    	"silverstripe/framework": ">=3.0"
+    },
+   
+    "authors": [
+        {
+            "name": "Dynamic Inc",
+            "homepage": "http://dynamicdoes.com"
+        }
+    ],
+	"extra": {
+		"installer-name": "flexslider"
+	}
+}
