@@ -5,7 +5,9 @@
     "license": "BSD-3-Clause",
     "type": "silverstripe-module",
     "require": {
-    	"silverstripe/framework": ">=3.0"
+    	"silverstripe/framework": ">=3.0",
+    	"colymba/gridfield-bulk-editing-tools": "dev-ss-3.0",
+    	"undefinedoffset/sortablegridfield": "0.1.1"
     },
    
     "authors": [
