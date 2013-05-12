@@ -74,10 +74,21 @@ class SlideImage extends DataObject {
 			$width = $this->Page()->SliderWidth;
 			$height = $this->Page()->SliderHeight;
 		} else {
-			$width = 350;
-			$height = 350;
+			$width = 640;
+			$height = 400;
 		}
 		return $this->Image()->PaddedImage($width, $height);
+	}
+	
+	public function CroppedSlide() {
+		if ($this->Page() && $this->Page()->SliderWidth && $this->Page()->SliderHeight) {
+			$width = $this->Page()->SliderWidth;
+			$height = $this->Page()->SliderHeight;
+		} else {
+			$width = 640;
+			$height = 400;
+		}
+		return $this->Image()->CroppedImage($width, $height);
 	}
 	
 	function canCreate($member=null) { return true; } 

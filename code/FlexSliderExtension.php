@@ -7,11 +7,24 @@ class FlexSliderExtension extends Extension {
 		Requirements::javascript('flexslider/thirdparty/flexslider/jquery.flexslider-min.js');
 		Requirements::css('flexslider/thirdparty/flexslider/flexslider.css');
 		
+		// Flexslider options
+		if ($this->owner->Animate) {
+			$animate = 'true';
+		} else {
+			$animate = 'false';
+		}
+		if ($this->owner->Loop) {
+			$loop = 'true';
+		} else {
+			$loop = 'false';
+		}
+		
 		Requirements::customScript("
 			$(document).ready(function(){
 				$('.flexslider').flexslider({
-					animation: 'slide',
-					animationLoop: true,
+					slideshow: " . $animate . ",
+					animation: '" . $this->owner->Animation . "',
+					animationLoop: " . $loop . ",
 					controlNav: true,
 					directionNav: true, 
 					pauseOnAction: true,

@@ -4,7 +4,10 @@ class FlexSlider extends DataExtension {
 
 	static $db = array(
 		'SliderWidth' => 'Int',
-		'SliderHeight' => 'Int'
+		'SliderHeight' => 'Int',
+		'Animation' => "Enum('slide, fade', 'slide')",
+		'Loop' => 'Boolean',
+		'Animate' => 'Boolean'
 	);
 	
 	static $has_many = array(
@@ -12,18 +15,15 @@ class FlexSlider extends DataExtension {
 	);
 	
 	static $defaults = array(
-		'SliderWidth' => 350,
-		'SliderHeight' => 350
+		'SliderWidth' => 640,
+		'SliderHeight' => 400,
+		'Loop' => 1,
+		'Animate' => 1
 	);
 	
 	public function updateCMSFields(FieldList $fields) {
 		
 		// Slides
-		$config = GridFieldConfig_RelationEditor::create();	
-		$config->addComponent(new GridFieldBulkEditingTools());
-		$config->addComponent(new GridFieldBulkImageUpload('ImageID', array('Name')));
-		$config->addComponent(new GridFieldSortableRows("SortOrder"));
-		
 		$gridFieldConfig = GridFieldConfig::create()->addComponents(
 		   new GridFieldToolbarHeader(),
 		   new GridFieldAddNewButton('toolbar-header-right'),
@@ -34,17 +34,23 @@ class FlexSlider extends DataExtension {
 		   new GridFieldDeleteAction(),
 		   new GridFieldDetailForm()
 		);
-		$gridFieldConfig->addComponent(new GridFieldBulkEditingTools());
-		$gridFieldConfig->addComponent(new GridFieldBulkImageUpload('ImageID', array('Name')));
-		$gridFieldConfig->addComponent(new GridFieldSortableRows("SortOrder"));
+		if (class_exists('GridFieldBulkEditingTools')) {
+			$gridFieldConfig->addComponent(new GridFieldBulkEditingTools());
+			$gridFieldConfig->addComponent(new GridFieldBulkImageUpload('ImageID', array('Name')));
+		}
+		if (class_exists('GridFieldSortableRows')) $gridFieldConfig->addComponent(new GridFieldSortableRows("SortOrder"));
 	    
-		$PhotosGridField = GridField::create("Slides", "Slides", $this->owner->Slides()->sort('SortOrder'), $gridFieldConfig);
+		$SlidesField = GridField::create("Slides", "Slides", $this->owner->Slides()->sort('SortOrder'), $gridFieldConfig);
 	    	    
 	    // add FlexSlider, width and height
 	    $fields->addFieldsToTab("Root.Slides", array(
+	    	$SlidesField,
+	    	HeaderField::create('Config', 'Configuration', 3),
+	    	CheckboxField::create('Animate', 'Animate automatically'),
+	    	DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
+	    	CheckboxField::create('Loop', 'Loop the carousel'),
 	    	TextField::create('SliderWidth', 'Image Width'),
-	    	TextField::create('SliderHeight', 'Image Height'),
-	    	$PhotosGridField
+	    	TextField::create('SliderHeight', 'Image Height')
 	    ));
 	    		
 	}
@@ -57,19 +63,9 @@ class FlexSlider extends DataExtension {
 	public function SlideShow() {
 		
 		$slides = $this->owner->Slides()->sort('SortOrder');
-		//debug::show($slides);
 		
 		return $slides;
 		//return $slides->renderWith('FlexSlider');
-	}
-	
-	// set default width/height if not set
-	public function onBeforeWrite() {
-	
-		if (!$this->owner->SliderWidth || $this->owner->SliderWidth == 0) $this->owner->SliderWidth = 350;
-		if (!$this->owner->SliderHeight || $this->owner->SliderHeight == 0) $this->owner->SliderHeight = 350;
-		
-		parent::onBeforeWrite();
 	}
 			
 }
