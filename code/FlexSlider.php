@@ -17,9 +17,18 @@ class FlexSlider extends DataExtension {
 	static $defaults = array(
 		'SliderWidth' => 640,
 		'SliderHeight' => 400,
-		'Loop' => 1,
-		'Animate' => 1
+		'Loop' => '1',
+		'Animate' => '1'
 	);
+	
+	public function populateDefaults() {
+		parent::populateDefaults();
+
+		$this->owner->SliderWidth = 640;
+		$this->owner->SliderHeight = 400;
+		$this->Loop = 1;
+		$this->Animate = 1;
+	}
 	
 	public function updateCMSFields(FieldList $fields) {
 		
