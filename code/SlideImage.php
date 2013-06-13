@@ -33,30 +33,24 @@ class SlideImage extends DataObject {
 	}
 	
 	function getCMSFields() {
-	
+		$fields = parent::getCMSFields();
 		$ImageField = new UploadField('Image', 'Image');
 		$ImageField->getValidator()->allowedExtensions = array('jpg', 'gif', 'png');
 		$ImageField->setFolderName('Uploads/SlideImages');
 		$ImageField->setConfig('allowedMaxFileNumber', 1);
 	   	
-	   	return new FieldList(
-			new TextField('Name'),
+	   	$fields->addFieldsToTab('Root.Main',array(
+	   		new TextField('Name'),
 			TextareaField::create('Description'),
 			$ImageField,
 			new TreeDropdownField("PageLinkID", "Choose a page to link to:", "SiteTree")
-		);
+		));
+		$fields->removeFieldsFromTab('Root.Main',array(
+			'SortOrder',
+			'PageID'));
+		return $fields;
 	}
 	
-	/*
-	function getCMSFields_forPopup() {
-		return new FieldSet(
-			new TextField('Name'),
-			new ImageField('Image')
-			//new DropDown($this->ID,'Product No')
-		);
-	}
-	*/
-   
 	public function Thumbnail() {
 		return $this->Image()->CroppedImage(80,80);
 	}
