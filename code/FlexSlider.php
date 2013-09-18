@@ -7,20 +7,21 @@ class FlexSlider extends DataExtension {
 		'SliderHeight' => 'Int',
 		'Animation' => "Enum('slide, fade', 'slide')",
 		'Loop' => 'Boolean',
-		'Animate' => 'Boolean'
+		'Animate' => 'Boolean',
+		'ThumbnailNav' => 'Boolean'
 	);
-	
+
 	static $has_many = array(
 		'Slides' => 'SlideImage'
 	);
-	
+
 	static $defaults = array(
 		'SliderWidth' => 640,
 		'SliderHeight' => 400,
 		'Loop' => '1',
 		'Animate' => '1'
 	);
-	
+
 	public function populateDefaults() {
 		parent::populateDefaults();
 
@@ -29,9 +30,9 @@ class FlexSlider extends DataExtension {
 		$this->Loop = 1;
 		$this->Animate = 1;
 	}
-	
+
 	public function updateCMSFields(FieldList $fields) {
-		
+
 		// Slides
 		$gridFieldConfig = GridFieldConfig::create()->addComponents(
 		   new GridFieldToolbarHeader(),
@@ -48,9 +49,9 @@ class FlexSlider extends DataExtension {
 			$gridFieldConfig->addComponent(new GridFieldBulkImageUpload('ImageID', array('Name')));
 		}
 		if (class_exists('GridFieldSortableRows')) $gridFieldConfig->addComponent(new GridFieldSortableRows("SortOrder"));
-	    
+
 		$SlidesField = GridField::create("Slides", "Slides", $this->owner->Slides()->sort('SortOrder'), $gridFieldConfig);
-	    	    
+
 	    // add FlexSlider, width and height
 	    $fields->addFieldsToTab("Root.Slides", array(
 	    	$SlidesField,
@@ -59,22 +60,23 @@ class FlexSlider extends DataExtension {
 	    	DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
 	    	CheckboxField::create('Loop', 'Loop the carousel'),
 	    	TextField::create('SliderWidth', 'Image Width'),
-	    	TextField::create('SliderHeight', 'Image Height')
+	    	TextField::create('SliderHeight', 'Image Height'),
+	    	CheckboxField::create('ThumbnailNav')->setTitle('Thumbnail Navigation')
 	    ));
-	    		
+
 	}
-	
+
 	function contentcontrollerInit($controller) {
 		//Requirements::javascript('framework/thirdparty/jquery/jquery.min.js');
-		
+
 	}
-	
+
 	public function SlideShow() {
-		
+
 		$slides = $this->owner->Slides()->sort('SortOrder');
-		
+
 		return $slides;
 		//return $slides->renderWith('FlexSlider');
 	}
-			
+
 }
