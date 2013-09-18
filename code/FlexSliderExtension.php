@@ -3,10 +3,10 @@
 class FlexSliderExtension extends Extension {
 
 	public function onAfterInit() {
-		
+
 		Requirements::javascript('flexslider/thirdparty/flexslider/jquery.flexslider-min.js');
 		Requirements::css('flexslider/thirdparty/flexslider/flexslider.css');
-		
+
 		// Flexslider options
 		if ($this->owner->Animate) {
 			$animate = 'true';
@@ -18,7 +18,12 @@ class FlexSliderExtension extends Extension {
 		} else {
 			$loop = 'false';
 		}
-		
+		if($this->owner->ThumbnailNav==true){
+			$sync = "sync: '#carousel',";
+		}else{
+			$sync = "";
+		}
+
 		Requirements::customScript("
 			$(document).ready(function(){
 				$('.flexslider').flexslider({
@@ -26,16 +31,17 @@ class FlexSliderExtension extends Extension {
 					animation: '" . $this->owner->Animation . "',
 					animationLoop: " . $loop . ",
 					controlNav: true,
-					directionNav: true, 
+					directionNav: true,
 					pauseOnAction: true,
 					pauseOnHover: true,
+					".$sync."
 					start: function(slider){
 					  $('body').removeClass('loading');
-					}	
+					}
 				});
 			});
 		");
-		
+
 	}
-	
+
 }
