@@ -23,6 +23,16 @@ class FlexSliderExtension extends Extension {
 		}else{
 			$sync = "";
 		}
+		if(method_exists($this->owner->ClassName, 'flexSliderBeforeAction')){
+			$before = $this->owner->flexSliderBeforeAction();
+		}else{
+			$before = "function(){}";
+		}
+		if(method_exists($this->owner->ClassName, 'flexSliderAfterAction')){
+			$after = $this->owner->flexSliderAfterAction();
+		}else{
+			$after = "function(){}";
+		}
 
 		Requirements::customScript("
 			$(document).ready(function(){
@@ -37,7 +47,9 @@ class FlexSliderExtension extends Extension {
 					".$sync."
 					start: function(slider){
 					  $('body').removeClass('loading');
-					}
+					},
+					before: ".$before.",
+					after: ".$after."
 				});
 			});
 		");
