@@ -2,22 +2,6 @@
 
 class SlideImage extends DataObject {
 
-	static $has_one = array(
-		"Image" => "Image",
-		"Page" => "Page",
-		"PageLink" => "SiteTree"
-	);
-
-	static $singular_name = "Slide";
-	static $plural_name = "Slides";
-
-	static $default_order = "SortOrder";
-
-	static $summary_fields = array (
-		'Name' => 'Caption',
-		'GridThumb' => 'Image'
-	);
-
 	public function GridThumb() {
 		$Image = $this->Image();
 		if ( $Image )
