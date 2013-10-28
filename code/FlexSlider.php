@@ -2,15 +2,6 @@
 
 class FlexSlider extends DataExtension {
 
-	static $db = array(
-		'SliderWidth' => 'Int',
-		'SliderHeight' => 'Int',
-		'Animation' => "Enum('slide, fade', 'slide')",
-		'Loop' => 'Boolean',
-		'Animate' => 'Boolean',
-		'ThumbnailNav' => 'Boolean'
-	);
-
 	static $has_many = array(
 		'Slides' => 'SlideImage'
 	);
