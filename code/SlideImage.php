@@ -2,43 +2,21 @@
 
 class SlideImage extends DataObject {
 
-	static $db = array(
-		"Name" => "Text",
-		'Description' => 'Text',
-		'SortOrder' => 'Int'
-	);
-	
-	static $has_one = array(
-		"Image" => "Image",
-		"Page" => "Page",
-		"PageLink" => "SiteTree"
-	);
-	
-	static $singular_name = "Slide";
-	static $plural_name = "Slides";
-	
-	static $default_order = "SortOrder";
-	
-	static $summary_fields = array (
-		'Name' => 'Caption',
-		'GridThumb' => 'Image'
-	);
-		
 	public function GridThumb() {
 		$Image = $this->Image();
-		if ( $Image ) 
+		if ( $Image )
 			return $Image->CMSThumbnail();
-		else 
+		else
 			return null;
 	}
-	
+
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
 		$ImageField = new UploadField('Image', 'Image');
 		$ImageField->getValidator()->allowedExtensions = array('jpg', 'gif', 'png');
 		$ImageField->setFolderName('Uploads/SlideImages');
 		$ImageField->setConfig('allowedMaxFileNumber', 1);
-	   	
+
 	   	$fields->addFieldsToTab('Root.Main',array(
 	   		new TextField('Name'),
 			TextareaField::create('Description'),
@@ -50,11 +28,11 @@ class SlideImage extends DataObject {
 			'PageID'));
 		return $fields;
 	}
-	
+
 	public function Thumbnail() {
 		return $this->Image()->CroppedImage(80,80);
 	}
-	
+
 	public function Large() {
 		if ($this->Image()->GetHeight() > 700) {
 			return $this->Image()->SetHeight(700);
@@ -62,7 +40,7 @@ class SlideImage extends DataObject {
 			return $this->Image();
 		}
 	}
-	
+
 	public function Slide() {
 		if ($this->Page() && $this->Page()->SliderWidth && $this->Page()->SliderHeight) {
 			$width = $this->Page()->SliderWidth;
@@ -73,7 +51,7 @@ class SlideImage extends DataObject {
 		}
 		return $this->Image()->PaddedImage($width, $height);
 	}
-	
+
 	public function CroppedSlide() {
 		if ($this->Page() && $this->Page()->SliderWidth && $this->Page()->SliderHeight) {
 			$width = $this->Page()->SliderWidth;
@@ -84,9 +62,9 @@ class SlideImage extends DataObject {
 		}
 		return $this->Image()->CroppedImage($width, $height);
 	}
-	
-	function canCreate($member=null) { return true; } 
-	function canEdit($member=null) { return true; } 
+
+	function canCreate($member=null) { return true; }
+	function canEdit($member=null) { return true; }
 	function canDelete($member=null) { return true; }
 	function canView($member=null) { return true; }
 }

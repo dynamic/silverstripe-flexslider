@@ -1,0 +1,21 @@
+---
+Name: FlexSlider
+---
+SlideImage:
+  db:
+    Name: Text
+    Description: Text
+    SortOrder: Int
+  has_one:
+    Image: Image
+    Page: Page
+    PageLink: SiteTree
+  singular_name:
+    - Slide
+  plural_name:
+    - Slides
+  default_order:
+    - SortOrder
+  summary_fields:
+    Name: Caption
+    GridThumb: Image
