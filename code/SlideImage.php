@@ -26,6 +26,7 @@ class SlideImage extends DataObject {
 		$fields->removeFieldsFromTab('Root.Main',array(
 			'SortOrder',
 			'PageID'));
+		$this->extend('updateCMSFields', $fields);
 		return $fields;
 	}
 
