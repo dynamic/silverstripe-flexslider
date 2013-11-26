@@ -19,6 +19,7 @@ class SlideImage extends DataObject {
 
 	   	$fields->addFieldsToTab('Root.Main',array(
 	   		new TextField('Name'),
+	   		CheckboxField::create('ShowSlide')->setTitle('Show Slide'),
 			TextareaField::create('Description'),
 			$ImageField,
 			new TreeDropdownField("PageLinkID", "Choose a page to link to:", "SiteTree")

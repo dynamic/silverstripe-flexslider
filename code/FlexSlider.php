@@ -73,7 +73,7 @@ class FlexSlider extends DataExtension {
 
 	public function SlideShow() {
 
-		$slides = $this->owner->Slides()->sort('SortOrder');
+		$slides = $this->owner->Slides()->filter(array('ShowSlide'=>1))->sort('SortOrder');
 
 		return $slides;
 		//return $slides->renderWith('FlexSlider');
