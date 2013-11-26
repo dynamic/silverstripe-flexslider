@@ -6,6 +6,7 @@ SlideImage:
     Name: Text
     Description: Text
     SortOrder: Int
+    ShowSlide: Boolean
   has_one:
     Image: Image
     Page: Page
