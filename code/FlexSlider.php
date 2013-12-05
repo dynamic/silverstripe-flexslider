@@ -51,6 +51,9 @@ class FlexSlider extends DataExtension {
 		if (class_exists('GridFieldSortableRows')) $gridFieldConfig->addComponent(new GridFieldSortableRows("SortOrder"));
 
 		$SlidesField = GridField::create("Slides", "Slides", $this->owner->Slides()->sort('SortOrder'), $gridFieldConfig);
+		
+		(Permission::check('ADMIN')) ? $width = TextField::create('SliderWidth', 'Image Width') : $width = HiddenField::create('SliderWidth');
+		(Permission::check('ADMIN')) ? $height = TextField::create('SliderHeight', 'Image Height') : $height = HiddenField::create('SliderHeight');
 
 	    // add FlexSlider, width and height
 	    $fields->addFieldsToTab("Root.Slides", array(
@@ -59,8 +62,8 @@ class FlexSlider extends DataExtension {
 	    	CheckboxField::create('Animate', 'Animate automatically'),
 	    	DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
 	    	CheckboxField::create('Loop', 'Loop the carousel'),
-	    	TextField::create('SliderWidth', 'Image Width'),
-	    	TextField::create('SliderHeight', 'Image Height'),
+	    	$width,
+	    	$height,
 	    	CheckboxField::create('ThumbnailNav')->setTitle('Thumbnail Navigation')
 	    ));
 
