@@ -3,8 +3,8 @@
 class FlexSlider extends DataExtension {
 
 	static $db = array(
-		//'SliderWidth' => 'Int',
-		//'SliderHeight' => 'Int',
+		'SliderWidth' => 'Int',
+		'SliderHeight' => 'Int',
 		'Animation' => "Enum('slide, fade', 'slide')",
 		'Loop' => 'Boolean',
 		'Animate' => 'Boolean',
@@ -16,8 +16,8 @@ class FlexSlider extends DataExtension {
 	);
 
 	static $defaults = array(
-		//'SliderWidth' => 640,
-		//'SliderHeight' => 400,
+		'SliderWidth' => 640,
+		'SliderHeight' => 400,
 		'Loop' => '1',
 		'Animate' => '1'
 	);
@@ -25,8 +25,8 @@ class FlexSlider extends DataExtension {
 	public function populateDefaults() {
 		parent::populateDefaults();
 
-		//$this->owner->SliderWidth = 640;
-		//$this->owner->SliderHeight = 400;
+		$this->owner->SliderWidth = 640;
+		$this->owner->SliderHeight = 400;
 		$this->Loop = 1;
 		$this->Animate = 1;
 	}
@@ -59,8 +59,8 @@ class FlexSlider extends DataExtension {
 	    	CheckboxField::create('Animate', 'Animate automatically'),
 	    	DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
 	    	CheckboxField::create('Loop', 'Loop the carousel'),
-	    	//TextField::create('SliderWidth', 'Image Width'),
-	    	//TextField::create('SliderHeight', 'Image Height'),
+	    	TextField::create('SliderWidth', 'Image Width'),
+	    	TextField::create('SliderHeight', 'Image Height'),
 	    	CheckboxField::create('ThumbnailNav')->setTitle('Thumbnail Navigation')
 	    ));
 
