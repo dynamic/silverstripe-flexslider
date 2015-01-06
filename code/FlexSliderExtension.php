@@ -33,6 +33,11 @@ class FlexSliderExtension extends Extension {
 		}else{
 			$after = "function(){}";
 		}
+		if(method_exists($this->owner->ClassName, 'setFlexSliderSpeed')){
+			$speed = $this->owner->setFlexSliderSpeed();
+		}else{
+			$speed = 7000;
+		}
 
 		Requirements::customScript("
 			$(document).ready(function(){
@@ -49,7 +54,8 @@ class FlexSliderExtension extends Extension {
 					  $('body').removeClass('loading');
 					},
 					before: ".$before.",
-					after: ".$after."
+					after: ".$after.",
+					slideshowSpeed: " . $speed . "
 				});
 			});
 		");
