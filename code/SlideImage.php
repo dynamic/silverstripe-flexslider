@@ -2,6 +2,11 @@
 
 class SlideImage extends DataObject {
 
+	//TODO: move to config.yml
+	private static $defaults = array(
+		'ShowSlide' => true
+	);
+
 	public function GridThumb() {
 		$Image = $this->Image();
 		if ( $Image )
