@@ -1,0 +1,9 @@
+SlideImage:
+  slide1:
+    Name: Hello World
+    Description: What a fine place it is too!
+    ShowSlide: true
+  slide2:
+    Name: Goodbye World
+    Description: It was fun while it lasted!
+    ShowSlide: false
