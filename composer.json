@@ -6,10 +6,9 @@
     "type": "silverstripe-module",
     "require": {
     	"silverstripe/framework": ">=3.0",
-    	"colymba/gridfield-bulk-editing-tools": "0.5.x-dev",
-    	"undefinedoffset/sortablegridfield": "0.1.1"
+    	"colymba/gridfield-bulk-editing-tools": "2.1.1",
+    	"undefinedoffset/sortablegridfield": "0.4.1"
     },
-   
     "authors": [
         {
             "name": "Dynamic Inc",
