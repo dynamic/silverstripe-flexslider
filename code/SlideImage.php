@@ -70,8 +70,22 @@ class SlideImage extends DataObject {
 		return $this->Image()->CroppedImage($width, $height);
 	}
 
-	function canCreate($member=null) { return true; }
-	function canEdit($member=null) { return true; }
-	function canDelete($member=null) { return true; }
+	public function providePermissions() {
+		return array(
+			//'Location_VIEW' => 'Read a Location',
+			'Slide_EDIT' => 'Edit a Slide',
+			'Slide_DELETE' => 'Delete a Slide',
+			'Slide_CREATE' => 'Create a Slide'
+		);
+	}
+	function canCreate($member=null) {
+		return Permission::check('Slide_CREATE');
+	}
+	function canEdit($member=null) {
+		return Permission::check('Slide_EDIT');
+	}
+	function canDelete($member=null) {
+		return Permission::check('Slide_DELETE');
+	}
 	function canView($member=null) { return true; }
 }
