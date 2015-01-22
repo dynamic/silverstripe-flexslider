@@ -8,36 +8,18 @@ class FlexSliderExtension extends Extension {
 		Requirements::css('flexslider/thirdparty/flexslider/flexslider.css');
 
 		// Flexslider options
-		if ($this->owner->Animate) {
-			$animate = 'true';
-		} else {
-			$animate = 'false';
-		}
-		if ($this->owner->Loop) {
-			$loop = 'true';
-		} else {
-			$loop = 'false';
-		}
-		if($this->owner->ThumbnailNav==true){
-			$sync = "sync: '#carousel',";
-		}else{
-			$sync = "";
-		}
-		if(method_exists($this->owner->ClassName, 'flexSliderBeforeAction')){
-			$before = $this->owner->flexSliderBeforeAction();
-		}else{
-			$before = "function(){}";
-		}
-		if(method_exists($this->owner->ClassName, 'flexSliderAfterAction')){
-			$after = $this->owner->flexSliderAfterAction();
-		}else{
-			$after = "function(){}";
-		}
-		if(method_exists($this->owner->ClassName, 'setFlexSliderSpeed')){
-			$speed = $this->owner->setFlexSliderSpeed();
-		}else{
-			$speed = 7000;
-		}
+		$animate = ($this->owner->Animate) ? 'true' : 'false';
+		$loop = ($this->owner->Loop) ? 'true' : 'false';
+		$sync = ($this->owner->ThumbnailNav==true) ? "sync: '#carousel'," : "";
+		$before = (method_exists($this->owner->ClassName, 'flexSliderBeforeAction'))
+			? $this->owner->flexSliderBeforeAction()
+			: "function(){}";
+		$after = (method_exists($this->owner->ClassName, 'flexSliderAfterAction'))
+			? $this->owner->flexSliderAfterAction()
+			: "function(){}";
+		$speed = (method_exists($this->owner->ClassName, 'setFlexSliderSpeed'))
+			? $this->owner->setFlexSliderSpeed()
+			: 7000;
 
 		Requirements::customScript("
 			$(document).ready(function(){
