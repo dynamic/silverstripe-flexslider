@@ -20,9 +20,13 @@ Git Installation
 Requirements
 =======================
 
+* [silverstripe/silverstripe-framework](https://github.com/silverstripe/silverstripe-framework) 3.1.x
+
+Recommended Add-Ons
+=======================
+
 * [colymba/gridfiel-dbulk-editing-tools](https://github.com/colymba/GridFieldBulkEditingTools)
 * [undefinedoffset/sortablegridfield](https://github.com/UndefinedOffset/SortableGridField)
-* [silverstripe/silverstripe-framework](https://github.com/silverstripe/silverstripe-framework) 3.1.x
 
 Usage
 =======================
