@@ -40,9 +40,9 @@ class FlexSlider extends DataExtension {
 		   new GridFieldDeleteAction(),
 		   new GridFieldDetailForm()
 		);
-		if (class_exists('GridFieldBulkEditingTools')) {
-			$gridFieldConfig->addComponent(new GridFieldBulkEditingTools());
-			$gridFieldConfig->addComponent(new GridFieldBulkImageUpload('ImageID', array('Name')));
+		if (class_exists('GridFieldBulkManager')) {
+			$gridFieldConfig->addComponent(new GridFieldBulkManager());
+            $gridFieldConfig->addComponent(new GridFieldBulkUpload());
 		}
 		if (class_exists('GridFieldSortableRows')) $gridFieldConfig->addComponent(new GridFieldSortableRows("SortOrder"));
 
