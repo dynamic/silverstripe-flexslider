@@ -29,4 +29,4 @@ script:
  - vendor/bin/phpunit flexslider/tests/
 notifications:
   slack:
-    secure: EsA1gihJJ+/q7LWH+C5ipRx4Izi49e9ekGf4/0HL0bD4np/BGSRsh8/bBwOhYOLSi2RJTZzl62ALO0J2gjkwMyvrT41jmpVFYYFBEer5D3f5KEa8otq+Z0yHNxUwIMVbqg48fQU8L0TAPBUHSiABjMyTJAbEfemy7Q2oRmCtFiU=
+    secure: OECqu/qDBFWYCoG5OPeNiHH7OCj36HgjkRPbuy5pE1zN3s46gaIVNsgiADbfVaphcbupYs6WY4qtcUQFZP0Uk5/4zi7jxregbLNlHaMdN5SmmjdwBKbGcWifCgHaKwVHsB8zutDP2oRDt85AznTWtBuvEXn/5Qyyh1+muTeQCXs=
