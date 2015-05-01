@@ -1,0 +1,22 @@
+.flexslider {
+    margin-bottom: 30px;
+}
+.typography .flexslider ul {
+    margin: 0;
+}
+.typography .flexslider ul li {
+    list-style-type: none;
+    margin: 0;
+}
+.typography .flexslider img {
+    border: 0;
+}
+.flexslider .slide {
+    margin-bottom: 10px;
+}
+.typography .flexslider a:hover {
+    border-bottom: 0;
+}
+.typography .flex-direction-nav a {
+    overflow: visible;
+}
