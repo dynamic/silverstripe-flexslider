@@ -3,10 +3,7 @@
 class FlexSliderExtension extends Extension {
 
 	public function onAfterInit() {
-
-		//Requirements::javascript('flexslider/thirdparty/flexslider/jquery.flexslider-min.js');
-		//Requirements::css('flexslider/thirdparty/flexslider/flexslider.css');
-
+        
 		// Flexslider options
 		$animate = ($this->owner->Animate) ? 'true' : 'false';
 		$loop = ($this->owner->Loop) ? 'true' : 'false';
@@ -21,29 +18,32 @@ class FlexSliderExtension extends Extension {
 			? $this->owner->setFlexSliderSpeed()
 			: 7000;
 
-		Requirements::customScript("
-            (function($) {
-                $(document).ready(function(){
-                    $('.flexslider').flexslider({
-                        slideshow: " . $animate . ",
-                        animation: '" . $this->owner->Animation . "',
-                        animationLoop: " . $loop . ",
-                        controlNav: true,
-                        directionNav: true,
-                        prevText: '',
-                        nextText: '',
-                        pauseOnAction: true,
-                        pauseOnHover: true,
-                        ".$sync."
-                        start: function(slider){
-                          $('body').removeClass('loading');
-                        },
-                        before: ".$before.",
-                        after: ".$after.",
-                        slideshowSpeed: " . $speed . "
+        // only call custom script if page has Slides
+        if ($this->owner->data()->Slides()->exists()) {
+            Requirements::customScript("
+                (function($) {
+                    $(document).ready(function(){
+                        $('.flexslider').flexslider({
+                            slideshow: " . $animate . ",
+                            animation: '" . $this->owner->Animation . "',
+                            animationLoop: " . $loop . ",
+                            controlNav: true,
+                            directionNav: true,
+                            prevText: '',
+                            nextText: '',
+                            pauseOnAction: true,
+                            pauseOnHover: true,
+                            ".$sync."
+                            start: function(slider){
+                              $('body').removeClass('loading');
+                            },
+                            before: ".$before.",
+                            after: ".$after.",
+                            slideshowSpeed: " . $speed . "
+                        });
                     });
-                });
-            }(jQuery));");
+                }(jQuery));");
+        }
 
 	}
 
