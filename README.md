@@ -43,8 +43,13 @@ Page_Controller:
 ```
 
 Alternatively you could add the following to your `mysite/_config.php` file:
-```Page::add_extension('FlexSlider');```
-```Page_Controller::add_extension('FlexSliderExtension')```
+```
+Page::add_extension('FlexSlider');
+```
+
+```
+Page_Controller::add_extension('FlexSliderExtension')
+```
 
 After attaching the DataExtension to your page type or DataObject run a `dev/build` then `?flush=all`. You should now see a "Slides" tab on the page type or DataObject you applied the DataExtension to. You can now add Slides that will be looped through in your layout by using the `FlexSlider` include.
 `<% include FlexSlider %>`
