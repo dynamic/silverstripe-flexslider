@@ -39,26 +39,34 @@ class FlexSliderExtension extends Extension {
 			$speed = 7000;
 		}
 
-		Requirements::customScript("
-			$(document).ready(function(){
-				$('.flexslider').flexslider({
-					slideshow: " . $animate . ",
-					animation: '" . $this->owner->Animation . "',
-					animationLoop: " . $loop . ",
-					controlNav: true,
-					directionNav: true,
-					pauseOnAction: true,
-					pauseOnHover: true,
-					".$sync."
-					start: function(slider){
-					  $('body').removeClass('loading');
-					},
-					before: ".$before.",
-					after: ".$after.",
-					slideshowSpeed: " . $speed . "
-				});
-			});
-		");
+        // only call custom script if page has Slides
+        if (Object::has_extension($this->owner->data()->ClassName, 'FlexSlider')) {
+            if($this->owner->data()->Slides()->exists()){
+                Requirements::customScript("
+                (function($) {
+                    $(document).ready(function(){
+                        $('.flexslider').flexslider({
+                            slideshow: " . $animate . ",
+                            animation: '" . $this->owner->Animation . "',
+                            animationLoop: " . $loop . ",
+                            controlNav: true,
+                            directionNav: true,
+                            prevText: '',
+                            nextText: '',
+                            pauseOnAction: true,
+                            pauseOnHover: true,
+                            ".$sync."
+                            start: function(slider){
+                              $('body').removeClass('loading');
+                            },
+                            before: ".$before.",
+                            after: ".$after.",
+                            slideshowSpeed: " . $speed . "
+                        });
+                    });
+                }(jQuery));");
+            }
+        }
 
 	}
 
