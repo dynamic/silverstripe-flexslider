@@ -18,9 +18,10 @@ class FlexSliderExtension extends Extension {
 			? $this->owner->setFlexSliderSpeed()
 			: 7000;
 
-        // only call custom script if page has Slides
-        if ($this->owner->data()->Slides()->exists()) {
-            Requirements::customScript("
+        // only call custom script if page has Slides and DataExtension
+        if (Object::has_extension($this->owner->data()->ClassName, 'FlexSlider')) {
+            if($this->owner->data()->Slides()->exists()){
+                Requirements::customScript("
                 (function($) {
                     $(document).ready(function(){
                         $('.flexslider').flexslider({
@@ -43,6 +44,7 @@ class FlexSliderExtension extends Extension {
                         });
                     });
                 }(jQuery));");
+            }
         }
 
 	}
