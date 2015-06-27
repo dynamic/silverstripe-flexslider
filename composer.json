@@ -5,9 +5,11 @@
     "license": "BSD-3-Clause",
     "type": "silverstripe-module",
     "require": {
-    	"silverstripe/framework": ">=3.0",
-    	"colymba/gridfield-bulk-editing-tools": "2.1.1",
-    	"undefinedoffset/sortablegridfield": "0.4.1"
+    	"silverstripe/framework": ">=3.1"
+    },
+    "suggest": {
+        "colymba/gridfield-bulk-editing-tools": "Allows for bulk editing of GridField items",
+        "undefinedoffset/sortablegridfield": "Allows sorting of GridField items"
     },
     "authors": [
         {
