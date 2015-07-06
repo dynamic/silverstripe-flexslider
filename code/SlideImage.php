@@ -1,6 +1,6 @@
 <?php
 
-class SlideImage extends DataObject {
+class SlideImage extends DataObject implements PermissionProvider {
 
 	//TODO: move to config.yml
 	private static $defaults = array(
