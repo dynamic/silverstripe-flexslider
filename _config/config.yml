@@ -18,5 +18,5 @@ SlideImage:
   default_order:
     - SortOrder
   summary_fields:
+    Image.CMSThumbnail: Image
     Name: Caption
-    GridThumb: Image

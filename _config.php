@@ -1,0 +1,3 @@
+<?php
+
+define('FLEXSLIDER_IMAGE_FILE_SIZE_LIMIT', '512000');
