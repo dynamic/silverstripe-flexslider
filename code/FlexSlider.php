@@ -1,76 +1,56 @@
 <?php
 
-class FlexSlider extends DataExtension {
+class FlexSlider extends DataExtension
+{
+    public static $db = array(
+        'Animation' => "Enum('slide, fade', 'slide')",
+        'Loop' => 'Boolean',
+        'Animate' => 'Boolean',
+        'ThumbnailNav' => 'Boolean',
+    );
 
-	static $db = array(
-		'Animation' => "Enum('slide, fade', 'slide')",
-		'Loop' => 'Boolean',
-		'Animate' => 'Boolean',
-		'ThumbnailNav' => 'Boolean'
-	);
+    public static $has_many = array(
+        'Slides' => 'SlideImage',
+    );
 
-	static $has_many = array(
-		'Slides' => 'SlideImage'
-	);
+    public static $defaults = array(
+        'Loop' => '1',
+        'Animate' => '1',
+    );
 
-	static $defaults = array(
-		'Loop' => '1',
-		'Animate' => '1'
-	);
+    public function populateDefaults()
+    {
+        parent::populateDefaults();
+        $this->Loop = 1;
+        $this->Animate = 1;
+    }
 
-	public function populateDefaults() {
-		parent::populateDefaults();
+    public function updateCMSFields(FieldList $fields)
+    {
+        // Slides
+        $config = GridFieldConfig_RecordEditor::create();
+        if (class_exists('GridFieldSortableRows')) {
+            $config->addComponent(new GridFieldSortableRows('SortOrder'));
+        }
+        $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
+        $config->removeComponentsByType('GridFieldDeleteAction');
+        $config->addComponent(new GridFieldDeleteAction(false));
+        $SlidesField = GridField::create('Slides', 'Slides', $this->owner->Slides()->sort('SortOrder'), $config);
 
-		$this->owner->SliderWidth = 640;
-		$this->owner->SliderHeight = 400;
-		$this->Loop = 1;
-		$this->Animate = 1;
-	}
+        $fields->addFieldsToTab('Root.Slides', array(
+            HeaderField::create('SliderHD', 'Slides', 3),
+            $SlidesField,
+            ToggleCompositeField::create('ConfigHD', 'Slider Settings', array(
+                CheckboxField::create('Animate', 'Animate automatically'),
+                DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
+                CheckboxField::create('Loop', 'Loop the carousel'),
+                CheckboxField::create('ThumbnailNav', 'Thumbnail Navigation'),
+            )),
+        ));
+    }
 
-	public function updateCMSFields(FieldList $fields) {
-
-		// Slides
-		$gridFieldConfig = GridFieldConfig::create()->addComponents(
-		   new GridFieldToolbarHeader(),
-		   new GridFieldAddNewButton('toolbar-header-right'),
-		   new GridFieldSortableHeader(),
-		   new GridFieldDataColumns(),
-		   new GridFieldPaginator(20),
-		   new GridFieldEditButton(),
-		   new GridFieldDeleteAction(),
-		   new GridFieldDetailForm()
-		);
-		if (class_exists('GridFieldBulkManager')) {
-			$gridFieldConfig->addComponent(new GridFieldBulkManager());
-            $gridFieldConfig->addComponent(new GridFieldBulkUpload());
-		}
-		if (class_exists('GridFieldSortableRows')) $gridFieldConfig->addComponent(new GridFieldSortableRows("SortOrder"));
-
-		$SlidesField = GridField::create("Slides", "Slides", $this->owner->Slides()->sort('SortOrder'), $gridFieldConfig);
-
-	    // add FlexSlider, width and height
-	    $fields->addFieldsToTab("Root.Slides", array(
-	    	$SlidesField,
-	    	HeaderField::create('Config', 'Configuration', 3),
-	    	CheckboxField::create('Animate', 'Animate automatically'),
-	    	DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
-	    	CheckboxField::create('Loop', 'Loop the carousel'),
-	    	CheckboxField::create('ThumbnailNav')->setTitle('Thumbnail Navigation')
-	    ));
-
-	}
-
-	function contentcontrollerInit($controller) {
-		//Requirements::javascript('framework/thirdparty/jquery/jquery.min.js');
-
-	}
-
-	public function SlideShow() {
-
-		$slides = $this->owner->Slides()->filter(array('ShowSlide'=>1))->sort('SortOrder');
-
-		return $slides;
-		//return $slides->renderWith('FlexSlider');
-	}
-
+    public function SlideShow()
+    {
+        return $this->owner->Slides()->filter(array('ShowSlide' => 1))->sort('SortOrder');
+    }
 }

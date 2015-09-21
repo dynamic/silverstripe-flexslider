@@ -7,3 +7,7 @@ SlideImage:
     Name: Goodbye World
     Description: It was fun while it lasted!
     ShowSlide: false
+Image:
+  image1:
+    Name: Test Image
+    Filename: test.jpg

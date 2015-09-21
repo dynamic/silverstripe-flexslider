@@ -1,91 +1,91 @@
 <?php
 
-class SlideImage extends DataObject implements PermissionProvider {
+class SlideImage extends DataObject implements PermissionProvider
+{
+    //TODO: move to config.yml
+    private static $defaults = array(
+        'ShowSlide' => true,
+    );
 
-	//TODO: move to config.yml
-	private static $defaults = array(
-		'ShowSlide' => true
-	);
-
-	public function GridThumb() {
-		$Image = $this->Image();
-		if ( $Image )
-			return $Image->CMSThumbnail();
-		else
-			return null;
-	}
-
-	function getCMSFields() {
+    public function getCMSFields()
+    {
 		$fields = parent::getCMSFields();
 		$ImageField = new UploadField('Image', 'Image');
-		$ImageField->getValidator()->allowedExtensions = array('jpg', 'gif', 'png');
+		$ImageField->getValidator()->allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
 		$ImageField->setFolderName('Uploads/SlideImages');
 		$ImageField->setConfig('allowedMaxFileNumber', 1);
+		$ImageField->getValidator()->setAllowedMaxFileSize(FLEXSLIDER_IMAGE_FILE_SIZE_LIMIT);
 
-	   	$fields->addFieldsToTab('Root.Main',array(
-	   		new TextField('Name'),
-	   		CheckboxField::create('ShowSlide')->setTitle('Show Slide'),
+		$fields->removeByName(array('ShowSlide'));
+
+		$fields->addFieldsToTab('Root.Main', array(
+			TextField::create('Name'),
 			TextareaField::create('Description'),
+			TreeDropdownField::create('PageLinkID', 'Choose a page to link to:', 'SiteTree'),
 			$ImageField,
-			new TreeDropdownField("PageLinkID", "Choose a page to link to:", "SiteTree")
+			CheckboxField::create('ShowSlide')->setTitle('Show Slide')
+				->setDescription('Include this slide in the slider. Uncheck to hide'),
 		));
-		$fields->removeFieldsFromTab('Root.Main',array(
+		$fields->removeByName(array(
 			'SortOrder',
-			'PageID'));
+			'PageID'
+		));
+
 		$this->extend('updateCMSFields', $fields);
 		return $fields;
-	}
+    }
 
-	public function Thumbnail() {
-		return $this->Image()->CroppedImage(80,80);
-	}
+    public function validate()
+    {
+        $result = parent::validate();
 
-	public function Large() {
-		if ($this->Image()->GetHeight() > 700) {
-			return $this->Image()->SetHeight(700);
-		} else {
-			return $this->Image();
-		}
-	}
+        if (!$this->Name) {
+            $result->error('A Name is required before you can save');
+        }
 
-	public function Slide() {
-		if ($this->Page() && $this->Page()->SliderWidth && $this->Page()->SliderHeight) {
-			$width = $this->Page()->SliderWidth;
-			$height = $this->Page()->SliderHeight;
-		} else {
-			$width = 640;
-			$height = 400;
-		}
-		return $this->Image()->PaddedImage($width, $height);
-	}
+        if (!$this->ImageID) {
+            $result->error('An Image is required before you can save');
+        }
 
-	public function CroppedSlide() {
-		if ($this->Page() && $this->Page()->SliderWidth && $this->Page()->SliderHeight) {
-			$width = $this->Page()->SliderWidth;
-			$height = $this->Page()->SliderHeight;
-		} else {
-			$width = 640;
-			$height = 400;
-		}
-		return $this->Image()->CroppedImage($width, $height);
-	}
+        return $result;
+    }
 
-	public function providePermissions() {
-		return array(
-			//'Location_VIEW' => 'Read a Location',
-			'Slide_EDIT' => 'Edit a Slide',
-			'Slide_DELETE' => 'Delete a Slide',
-			'Slide_CREATE' => 'Create a Slide'
-		);
-	}
-	function canCreate($member=null) {
-		return Permission::check('Slide_CREATE');
-	}
-	function canEdit($member=null) {
-		return Permission::check('Slide_EDIT');
-	}
-	function canDelete($member=null) {
-		return Permission::check('Slide_DELETE');
-	}
-	function canView($member=null) { return true; }
+    public function Thumbnail()
+    {
+        return $this->Image()->CroppedImage(80, 80);
+    }
+
+    public function Large()
+    {
+        if ($this->Image()->GetHeight() > 700) {
+            return $this->Image()->SetHeight(700);
+        } else {
+            return $this->Image();
+        }
+    }
+
+    public function providePermissions()
+    {
+        return array(
+            'Slide_EDIT' => 'Edit a Slide',
+            'Slide_DELETE' => 'Delete a Slide',
+            'Slide_CREATE' => 'Create a Slide',
+        );
+    }
+    public function canCreate($member = null)
+    {
+        return Permission::check('Slide_CREATE');
+    }
+    public function canEdit($member = null)
+    {
+        return Permission::check('Slide_EDIT');
+    }
+    public function canDelete($member = null)
+    {
+        return Permission::check('Slide_DELETE');
+    }
+    public function canView($member = null)
+    {
+        return true;
+    }
 }

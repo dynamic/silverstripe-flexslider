@@ -30,6 +30,9 @@ class SlideImageTest extends FlexSliderTest{
 		$slide = $this->objFromFixture('SlideImage', 'slide1');
 		$slideID = $slide->ID;
 
+		$image = $this->objFromFixture('Image', 'image1');
+		$imageID = $image->ID;
+
 		$this->logOut();
 
 		$this->logInWithPermission('Slide_EDIT');
@@ -38,6 +41,7 @@ class SlideImageTest extends FlexSliderTest{
 		$slide = SlideImage::get()->byID($slideID);
 		$newTitle = "Updated Name for Slide";
 		$slide->Name = $newTitle;
+		$slide->ImageID = $imageID;
 		$slide->write();
 
 		$slide = SlideImage::get()->byiD($slideID);
