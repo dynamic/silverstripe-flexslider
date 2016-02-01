@@ -7,7 +7,7 @@
         <li>
         	<% if $PageLink %><a href="$PageLink.Link" title="$PageLink.MenuTitle.XML"><% end_if %>
 			<% if $Image %>
-            	<img src="$Slide.URL"  alt="$Name.XML" class="slide">
+            	<img src="$Image.URL"  alt="$Name.XML" class="slide">
             <% end_if %>
             <% if $PageLink %></a><% end_if %>
             <h3>$Name</h3>
