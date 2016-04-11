@@ -1,0 +1,37 @@
+language: php
+php:
+ - 5.4
+
+env:
+  matrix:
+   #- DB=MYSQL CORE_RELEASE=3.0
+   - DB=MYSQL CORE_RELEASE=3.1
+   #- DB=MYSQL CORE_RELEASE=master
+   - DB=PGSQL CORE_RELEASE=3.1
+   - DB=SQLITE CORE_RELEASE=3.1
+   - DB=MYSQL CORE_RELEASE=3.2
+
+matrix:
+  include:
+    - php: 5.5
+      env: DB=MYSQL CORE_RELEASE=3.1
+    - php: 5.5
+      env: DB=MYSQL CORE_RELEASE=3.2
+    - php: 5.6
+      env: DB=MYSQL CORE_RELEASE=3.1
+    - php: 5.6
+      env: DB=MYSQL CORE_RELEASE=3.2
+      #env: DB=MYSQL CORE_RELEASE=master
+
+before_script:
+ - composer self-update
+ - phpenv rehash
+ - git clone git://github.com/silverstripe-labs/silverstripe-travis-support.git ~/travis-support
+ - php ~/travis-support/travis_setup.php --source `pwd` --target ~/builds/ss
+ - cd ~/builds/ss
+
+script:
+ - vendor/bin/phpunit flexslider/tests/
+notifications:
+  slack:
+    secure: OECqu/qDBFWYCoG5OPeNiHH7OCj36HgjkRPbuy5pE1zN3s46gaIVNsgiADbfVaphcbupYs6WY4qtcUQFZP0Uk5/4zi7jxregbLNlHaMdN5SmmjdwBKbGcWifCgHaKwVHsB8zutDP2oRDt85AznTWtBuvEXn/5Qyyh1+muTeQCXs=
