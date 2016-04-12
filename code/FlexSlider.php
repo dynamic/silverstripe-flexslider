@@ -44,7 +44,7 @@ class FlexSlider extends DataExtension
                 CheckboxField::create('Animate', 'Animate automatically'),
                 DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
                 CheckboxField::create('Loop', 'Loop the carousel'),
-                CheckboxField::create('ThumbnailNav', 'Thumbnail Navigation'),
+                //CheckboxField::create('ThumbnailNav', 'Thumbnail Navigation'),
             )),
         ));
     }
