@@ -1,20 +1,22 @@
 {
     "name": "dynamic/flexslider",
-    "description": "The Dynamic FlexSlider Module",
-    "keywords": ["silverstripe", "flexslider", "module", "extension"],
+    "description": "Display a FlexSlider on pages of your website",
+    "keywords": ["silverstripe", "flexslider", "module", "slideshow", "slider", "jquery"],
     "license": "BSD-3-Clause",
     "type": "silverstripe-module",
     "require": {
-    	"silverstripe/framework": ">=3.1"
+    	"silverstripe/framework": "^3.1",
+        "silverstripe/cms": "^3.1"
     },
     "suggest": {
-        "colymba/gridfield-bulk-editing-tools": "Allows for bulk editing of GridField items",
-        "undefinedoffset/sortablegridfield": "Allows sorting of GridField items"
+        "colymba/gridfield-bulk-editing-tools": "^v2.1",
+        "undefinedoffset/sortablegridfield": "^0.6"
     },
     "authors": [
         {
-            "name": "Dynamic Inc",
-            "homepage": "http://dynamicdoes.com"
+            "name": "Dynamic",
+            "homepage": "http://www.dynamicagency.com",
+            "email": "dev@dy.ag"
         }
     ],
 	"extra": {
