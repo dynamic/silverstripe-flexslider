@@ -1,68 +1,64 @@
 <?php
 
-class SlideImageTest extends FlexSliderTest{
+class SlideImageTest extends FlexSliderTest
+{
+    protected static $use_draft_site = true;
 
-	protected static $use_draft_site = true;
+    public function setUp()
+    {
+        parent::setUp();
+    }
 
-	function setUp(){
-		parent::setUp();
-	}
+    public function testSlideImageCreation()
+    {
+        $this->logInWithPermission('Slide_CREATE');
+        $slide = $this->objFromFixture('SlideImage', 'slide1');
 
-	function testSlideImageCreation(){
+        $this->assertTrue($slide->canCreate());
 
-		$this->logInWithPermission('Slide_CREATE');
-		$slide = $this->objFromFixture('SlideImage', 'slide1');
+        $slideID = $slide->ID;
 
-		$this->assertTrue($slide->canCreate());
+        $this->assertTrue($slideID > 0);
 
-		$slideID = $slide->ID;
+        $getSlide = SlideImage::get()->byID($slideID);
+        $this->assertTrue($getSlide->ID == $slideID);
+    }
 
-		$this->assertTrue($slideID > 0);
+    public function testSlideUpdate()
+    {
+        $this->logInWithPermission('ADMIN');
+        $slide = $this->objFromFixture('SlideImage', 'slide1');
+        $slideID = $slide->ID;
 
-		$getSlide = SlideImage::get()->byID($slideID);
-		$this->assertTrue($getSlide->ID == $slideID);
+        $image = $this->objFromFixture('Image', 'image1');
+        $imageID = $image->ID;
 
-	}
+        $this->logOut();
 
-	function testSlideUpdate(){
+        $this->logInWithPermission('Slide_EDIT');
 
-		$this->logInWithPermission('ADMIN');
-		$slide = $this->objFromFixture('SlideImage', 'slide1');
-		$slideID = $slide->ID;
+        $this->assertTrue($slide->canEdit());
+        $slide = SlideImage::get()->byID($slideID);
+        $newTitle = 'Updated Name for Slide';
+        $slide->Name = $newTitle;
+        $slide->ImageID = $imageID;
+        $slide->write();
 
-		$image = $this->objFromFixture('Image', 'image1');
-		$imageID = $image->ID;
+        $slide = SlideImage::get()->byiD($slideID);
 
-		$this->logOut();
+        $this->assertTrue($slide->Name == $newTitle);
+    }
 
-		$this->logInWithPermission('Slide_EDIT');
+    public function testSlideImageDeletion()
+    {
+        $this->logInWithPermission('Slide_DELETE');
+        $slide = $this->objFromFixture('SlideImage', 'slide2');
+        $slideID = $slide->ID;
 
-		$this->assertTrue($slide->canEdit());
-		$slide = SlideImage::get()->byID($slideID);
-		$newTitle = "Updated Name for Slide";
-		$slide->Name = $newTitle;
-		$slide->ImageID = $imageID;
-		$slide->write();
+        $this->assertTrue($slide->canDelete());
+        $slide->delete();
 
-		$slide = SlideImage::get()->byiD($slideID);
-
-		$this->assertTrue($slide->Name == $newTitle);
-
-	}
-
-	function testSlideImageDeletion(){
-
-		$this->logInWithPermission('Slide_DELETE');
-		$slide = $this->objFromFixture('SlideImage', 'slide2');
-		$slideID = $slide->ID;
-
-		$this->assertTrue($slide->canDelete());
-		$slide->delete();
-
-		$slides = SlideImage::get()->column('ID');
-		$this->assertFalse(in_array($slideID, $slides));
-
-	}
-
-
+        $slides = SlideImage::get()->column('ID');
+        $this->assertFalse(in_array($slideID, $slides));
+    }
 }
