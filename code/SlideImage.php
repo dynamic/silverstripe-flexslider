@@ -55,40 +55,29 @@ class SlideImage extends DataObject implements PermissionProvider
         return $result;
     }
 
-    public function Thumbnail()
-    {
-        return $this->Image()->CroppedImage(80, 80);
-    }
-
-    public function Large()
-    {
-        if ($this->Image()->GetHeight() > 700) {
-            return $this->Image()->SetHeight(700);
-        } else {
-            return $this->Image();
-        }
-    }
-
     public function providePermissions()
     {
         return array(
-            'Slide_EDIT' => 'Edit a Slide',
-            'Slide_DELETE' => 'Delete a Slide',
-            'Slide_CREATE' => 'Create a Slide',
+            'Slide_EDIT' => 'Slide Edit',
+            'Slide_DELETE' => 'Slide Delete',
+            'Slide_CREATE' => 'Slide Create',
         );
     }
     public function canCreate($member = null)
     {
         return Permission::check('Slide_CREATE');
     }
+
     public function canEdit($member = null)
     {
         return Permission::check('Slide_EDIT');
     }
+
     public function canDelete($member = null)
     {
         return Permission::check('Slide_DELETE');
     }
+
     public function canView($member = null)
     {
         return true;

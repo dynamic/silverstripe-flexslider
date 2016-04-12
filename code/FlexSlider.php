@@ -28,25 +28,27 @@ class FlexSlider extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         // Slides
-        $config = GridFieldConfig_RecordEditor::create();
-        if (class_exists('GridFieldSortableRows')) {
-            $config->addComponent(new GridFieldSortableRows('SortOrder'));
-        }
-        $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
-        $config->removeComponentsByType('GridFieldDeleteAction');
-        $config->addComponent(new GridFieldDeleteAction(false));
-        $SlidesField = GridField::create('Slides', 'Slides', $this->owner->Slides()->sort('SortOrder'), $config);
+        if ($this->owner->ID) {
+            $config = GridFieldConfig_RecordEditor::create();
+            if (class_exists('GridFieldSortableRows')) {
+                $config->addComponent(new GridFieldSortableRows('SortOrder'));
+            }
+            $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
+            $config->removeComponentsByType('GridFieldDeleteAction');
+            $config->addComponent(new GridFieldDeleteAction(false));
+            $SlidesField = GridField::create('Slides', 'Slides', $this->owner->Slides()->sort('SortOrder'), $config);
 
-        $fields->addFieldsToTab('Root.Slides', array(
-            HeaderField::create('SliderHD', 'Slides', 3),
-            $SlidesField,
-            ToggleCompositeField::create('ConfigHD', 'Slider Settings', array(
-                CheckboxField::create('Animate', 'Animate automatically'),
-                DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
-                CheckboxField::create('Loop', 'Loop the carousel'),
-                //CheckboxField::create('ThumbnailNav', 'Thumbnail Navigation'),
-            )),
-        ));
+            $fields->addFieldsToTab('Root.Slides', array(
+                HeaderField::create('SliderHD', 'Slides', 3),
+                $SlidesField,
+                ToggleCompositeField::create('ConfigHD', 'Slider Settings', array(
+                    CheckboxField::create('Animate', 'Animate automatically'),
+                    DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
+                    CheckboxField::create('Loop', 'Loop the carousel'),
+                    //CheckboxField::create('ThumbnailNav', 'Thumbnail Navigation'),
+                )),
+            ));
+        }
     }
 
     public function SlideShow()
