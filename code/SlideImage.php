@@ -9,30 +9,35 @@ class SlideImage extends DataObject implements PermissionProvider
 
     public function getCMSFields()
     {
-		$fields = parent::getCMSFields();
-		$ImageField = new UploadField('Image', 'Image');
-		$ImageField->getValidator()->allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
-		$ImageField->setFolderName('Uploads/SlideImages');
-		$ImageField->setConfig('allowedMaxFileNumber', 1);
-		$ImageField->getValidator()->setAllowedMaxFileSize(FLEXSLIDER_IMAGE_FILE_SIZE_LIMIT);
+        $fields = parent::getCMSFields();
+        $ImageField = new UploadField('Image', 'Image');
+        $ImageField->getValidator()->allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
+        $ImageField->setFolderName('Uploads/SlideImages');
+        $ImageField->setConfig('allowedMaxFileNumber', 1);
+        $ImageField->getValidator()->setAllowedMaxFileSize(FLEXSLIDER_IMAGE_FILE_SIZE_LIMIT);
 
-		$fields->removeByName(array('ShowSlide'));
+        $fields->removeByName(array('ShowSlide'));
 
-		$fields->addFieldsToTab('Root.Main', array(
-			TextField::create('Name'),
-			TextareaField::create('Description'),
-			TreeDropdownField::create('PageLinkID', 'Choose a page to link to:', 'SiteTree'),
-			$ImageField,
-			CheckboxField::create('ShowSlide')->setTitle('Show Slide')
-				->setDescription('Include this slide in the slider. Uncheck to hide'),
-		));
-		$fields->removeByName(array(
-			'SortOrder',
-			'PageID'
-		));
+        $fields->addFieldsToTab('Root.Main', array(
+            TextField::create('Name')
+                ->setDescription('for internal reference only'),
+            TextField::create('Title')
+                ->setDescription('optional, used in template'),
+            TextareaField::create('Description')
+                ->setDescription('optional, used in template'),
+            TreeDropdownField::create('PageLinkID', 'Choose a page to link to:', 'SiteTree'),
+            $ImageField,
+            CheckboxField::create('ShowSlide')->setTitle('Show Slide')
+                ->setDescription('Include this slide in the slider. Uncheck to hide'),
+        ));
+        $fields->removeByName(array(
+            'SortOrder',
+            'PageID',
+        ));
 
-		$this->extend('updateCMSFields', $fields);
-		return $fields;
+        $this->extend('updateCMSFields', $fields);
+
+        return $fields;
     }
 
     public function validate()

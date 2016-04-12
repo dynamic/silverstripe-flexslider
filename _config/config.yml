@@ -3,7 +3,8 @@ Name: FlexSlider
 ---
 SlideImage:
   db:
-    Name: Text
+    Name: Varchar(255)
+    Title: Varchar(255)
     Description: Text
     SortOrder: Int
     ShowSlide: Boolean
@@ -19,4 +20,8 @@ SlideImage:
     - SortOrder
   summary_fields:
     Image.CMSThumbnail: Image
-    Name: Caption
+    Name: Name
+  searchable_fields:
+    Name: Name
+    Title: Title
+    Description: Description
