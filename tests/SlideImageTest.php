@@ -9,56 +9,97 @@ class SlideImageTest extends FlexSliderTest
         parent::setUp();
     }
 
-    public function testSlideImageCreation()
+    public function testGetCMSFields()
     {
-        $this->logInWithPermission('Slide_CREATE');
-        $slide = $this->objFromFixture('SlideImage', 'slide1');
-
-        $this->assertTrue($slide->canCreate());
-
-        $slideID = $slide->ID;
-
-        $this->assertTrue($slideID > 0);
-
-        $getSlide = SlideImage::get()->byID($slideID);
-        $this->assertTrue($getSlide->ID == $slideID);
+        $object = new SlideImage();
+        $fieldset = $object->getCMSFields();
+        $this->assertTrue(is_a($fieldset, 'FieldList'));
+        $this->assertNotNull($fieldset->dataFieldByName('Name'));
+        $this->assertNotNull($fieldset->dataFieldByName('Image'));
     }
 
-    public function testSlideUpdate()
+    public function testValidateName()
     {
-        $this->logInWithPermission('ADMIN');
-        $slide = $this->objFromFixture('SlideImage', 'slide1');
-        $slideID = $slide->ID;
+        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $object->Name = '';
+        $this->setExpectedException('ValidationException');
+        $object->write();
+    }
 
+    public function testValidateImage()
+    {
+        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $object->ImageID = '';
+        $this->setExpectedException('ValidationException');
+        $object->write();
+    }
+
+    public function testCanView()
+    {
+        $object = $this->objFromFixture('SlideImage', 'slide1');
         $image = $this->objFromFixture('Image', 'image1');
-        $imageID = $image->ID;
-
+        $object->ImageID = $image->ID;
+        $object->write();
+        $this->logInWithPermission('ADMIN');
+        $this->assertTrue($object->canView());
         $this->logOut();
-
-        $this->logInWithPermission('Slide_EDIT');
-
-        $this->assertTrue($slide->canEdit());
-        $slide = SlideImage::get()->byID($slideID);
-        $newTitle = 'Updated Name for Slide';
-        $slide->Name = $newTitle;
-        $slide->ImageID = $imageID;
-        $slide->write();
-
-        $slide = SlideImage::get()->byiD($slideID);
-
-        $this->assertTrue($slide->Name == $newTitle);
+        $nullMember = Member::create();
+        $nullMember->write();
+        $this->assertTrue($object->canView($nullMember));
+        $nullMember->delete();
     }
 
-    public function testSlideImageDeletion()
+    public function testCanEdit()
     {
-        $this->logInWithPermission('Slide_DELETE');
-        $slide = $this->objFromFixture('SlideImage', 'slide2');
-        $slideID = $slide->ID;
+        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $image = $this->objFromFixture('Image', 'image1');
+        $object->ImageID = $image->ID;
+        $object->write();
+        $objectID = $object->ID;
+        $this->logInWithPermission('ADMIN');
+        $originalName = $object->Name;
+        $this->assertEquals($originalName, 'Hello World');
+        $this->assertTrue($object->canEdit());
+        $object->Name = 'Changed Name';
+        $object->write();
+        $testEdit = SlideImage::get()->byID($objectID);
+        $this->assertEquals($testEdit->Name, 'Changed Name');
+        $this->logOut();
+    }
 
-        $this->assertTrue($slide->canDelete());
-        $slide->delete();
+    public function testCanDelete()
+    {
+        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $image = $this->objFromFixture('Image', 'image1');
+        $object->ImageID = $image->ID;
+        $object->write();
+        $this->logInWithPermission('ADMIN');
+        $this->assertTrue($object->canDelete());
+        $checkObject = $object;
+        $object->delete();
+        $this->assertEquals($checkObject->ID, 0);
+    }
 
-        $slides = SlideImage::get()->column('ID');
-        $this->assertFalse(in_array($slideID, $slides));
+    public function testCanCreate()
+    {
+        $object = singleton('SlideImage');
+        $this->logInWithPermission('ADMIN');
+        $this->assertTrue($object->canCreate());
+        $this->logOut();
+        $nullMember = Member::create();
+        $nullMember->write();
+        $this->assertFalse($object->canCreate($nullMember));
+        $nullMember->delete();
+    }
+
+    public function testProvidePermissions()
+    {
+        $object = singleton('SlideImage');
+        $expected = array(
+            'Slide_EDIT' => 'Slide Edit',
+            'Slide_DELETE' => 'Slide Delete',
+            'Slide_CREATE' => 'Slide Create',
+        );
+        $this->assertEquals($expected, $object->providePermissions());
     }
 }
