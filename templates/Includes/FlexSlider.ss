@@ -10,7 +10,7 @@
             	<img src="$Image.URL"  alt="$Name.XML" class="slide">
             <% end_if %>
             <% if $PageLink %></a><% end_if %>
-            <h3>$Name</h3>
+            <% if $Title %><h3>$Title</h3><% end_if %>
             <% if $Description %><p>$Description</p><% end_if %>
         </li>
         <% end_loop %>
