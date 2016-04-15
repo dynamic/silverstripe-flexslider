@@ -21,7 +21,7 @@ class SlideImage extends DataObject implements PermissionProvider
         $fields->addFieldsToTab('Root.Main', array(
             TextField::create('Name')
                 ->setDescription('for internal reference only'),
-            TextField::create('Title')
+            TextField::create('Headline')
                 ->setDescription('optional, used in template'),
             TextareaField::create('Description')
                 ->setDescription('optional, used in template'),
