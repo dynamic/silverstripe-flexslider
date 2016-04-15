@@ -33,6 +33,10 @@ class FlexSlider extends DataExtension
             if (class_exists('GridFieldSortableRows')) {
                 $config->addComponent(new GridFieldSortableRows('SortOrder'));
             }
+            if (class_exists('GridFieldBulkUpload')) {
+                $config->addComponent(new GridFieldBulkUpload());
+                $config->addComponent(new GridFieldBulkManager());
+            }
             $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
             $config->removeComponentsByType('GridFieldDeleteAction');
             $config->addComponent(new GridFieldDeleteAction(false));
