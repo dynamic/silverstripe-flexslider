@@ -18,7 +18,7 @@ The FlexSlider module allows a developer to attach a [Woothemes FlexSlider](http
 
 ## Installation
 
-`composer require dynamic/silverstripe-flexslider dev-master`
+`composer require dynamic/flexslider dev-master`
 
 Add `flexslider` to your `.gitignore`
 
