@@ -42,7 +42,9 @@ class FlexSlider extends DataExtension
             $config->addComponent(new GridFieldDeleteAction(false));
             $SlidesField = GridField::create('Slides', 'Slides', $this->owner->Slides()->sort('SortOrder'), $config);
 
-            $fields->addFieldsToTab('Root.Slides', array(
+            $slideTitle = $this->owner->stat('slide_tab_title') ? $this->owner->stat('slide_tab_title') : 'Slides';
+
+            $fields->addFieldsToTab("Root.{$slideTitle}", array(
                 HeaderField::create('SliderHD', 'Slides', 3),
                 $SlidesField,
                 ToggleCompositeField::create('ConfigHD', 'Slider Settings', array(
