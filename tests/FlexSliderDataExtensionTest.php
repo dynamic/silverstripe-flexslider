@@ -2,6 +2,26 @@
 
 class FlexSliderDataExtensionTest extends FlexSliderTest
 {
+    public function testTabNameConfig()
+    {
+
+        $page = new Page();
+        $page->write();
+        $extension = new FlexSlider();
+        $pageFields = $page->getCMSFields();
+        $extension->updateCMSFields($pageFields);
+        $this->assertNotNull($pageFields->fieldByName('Root.Slides'));
+
+        Config::inst()->update('Page', 'slide_tab_title', 'MyCustomSlideTitle');
+        $page2 = Page::create();
+        $page2->write();
+        $page2Fields = $page2->getCMSFields();
+        $extension->updateCMSFields($page2Fields);
+        $this->assertNull($page2Fields->fieldByName('Root.Slides'));
+        $this->assertNotNull($page2Fields->fieldByName('Root.MyCustomSlideTitle'));
+
+    }
+
     public function testUpdateCMSFields()
     {
         $extension = new FlexSlider();
