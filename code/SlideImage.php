@@ -2,11 +2,68 @@
 
 class SlideImage extends DataObject implements PermissionProvider
 {
-    //TODO: move to config.yml
+    /**
+     * @var string
+     */
+    private static $singular_name = 'Slide';
+
+    /**
+     * @var string
+     */
+    private static $plural_name = 'Slides';
+
+    /**
+     * @var array
+     */
+    private static $db = array(
+        'Name' => 'Varchar(255)',
+        'Headline' => 'Varchar(255)',
+        'Description' => 'Text',
+        'SortOrder' => 'Int',
+        'ShowSlide' => 'Boolean',
+    );
+
+    /**
+     * @var array
+     */
+    private static $has_one = array(
+        'Image' => 'Image',
+        'Page' => 'Page',
+        'PageLink' => 'SiteTree',
+    );
+
+    /**
+     * @var string
+     */
+    private static $default_sort = 'SortOrder';
+
+    /**
+     * @var array
+     */
     private static $defaults = array(
         'ShowSlide' => true,
     );
 
+    /**
+     * @var array
+     */
+    private static $summary_fields = array(
+        'Image.CMSThumbnail' => 'Image',
+        'Name' => 'Name',
+    );
+
+    /**
+     * @var array
+     */
+    private static $searchable_fields = array(
+        'Name',
+        'Headline',
+        'Description',
+    );
+
+    /**
+     * @return FieldList
+     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -40,6 +97,9 @@ class SlideImage extends DataObject implements PermissionProvider
         return $fields;
     }
 
+    /**
+     * @return ValidationResult
+     */
     public function validate()
     {
         $result = parent::validate();
@@ -55,6 +115,9 @@ class SlideImage extends DataObject implements PermissionProvider
         return $result;
     }
 
+    /**
+     * @return array
+     */
     public function providePermissions()
     {
         return array(
@@ -63,21 +126,38 @@ class SlideImage extends DataObject implements PermissionProvider
             'Slide_CREATE' => 'Slide Create',
         );
     }
+
+    /**
+     * @param null $member
+     * @return bool|int
+     */
     public function canCreate($member = null)
     {
         return Permission::check('Slide_CREATE');
     }
 
+    /**
+     * @param null $member
+     * @return bool|int
+     */
     public function canEdit($member = null)
     {
         return Permission::check('Slide_EDIT');
     }
 
+    /**
+     * @param null $member
+     * @return bool|int
+     */
     public function canDelete($member = null)
     {
         return Permission::check('Slide_DELETE');
     }
 
+    /**
+     * @param null $member
+     * @return bool
+     */
     public function canView($member = null)
     {
         return true;
