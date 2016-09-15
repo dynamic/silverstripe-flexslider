@@ -2,6 +2,9 @@
 
 class FlexSlider extends DataExtension
 {
+    /**
+     * @var array
+     */
     public static $db = array(
         'Animation' => "Enum('slide, fade', 'slide')",
         'Loop' => 'Boolean',
@@ -9,15 +12,24 @@ class FlexSlider extends DataExtension
         'ThumbnailNav' => 'Boolean',
     );
 
+    /**
+     * @var array
+     */
     public static $has_many = array(
         'Slides' => 'SlideImage',
     );
 
+    /**
+     * @var array
+     */
     public static $defaults = array(
         'Loop' => '1',
         'Animate' => '1',
     );
 
+    /**
+     *
+     */
     public function populateDefaults()
     {
         parent::populateDefaults();
@@ -25,8 +37,18 @@ class FlexSlider extends DataExtension
         $this->Animate = 1;
     }
 
+    /**
+     * @param FieldList $fields
+     */
     public function updateCMSFields(FieldList $fields)
     {
+        $fields->removeByName(array(
+            'Animation',
+            'Loop',
+            'Animate',
+            'ThumbnailNav',
+        ));
+
         // Slides
         if ($this->owner->ID) {
             $config = GridFieldConfig_RecordEditor::create();
@@ -57,8 +79,60 @@ class FlexSlider extends DataExtension
         }
     }
 
+    /**
+     * @return DataList
+     */
     public function SlideShow()
     {
         return $this->owner->Slides()->filter(array('ShowSlide' => 1))->sort('SortOrder');
+    }
+
+    /**
+     * add requirements to Page_Controller init()
+     */
+    public function contentcontrollerInit()
+    {
+        // Flexslider options
+        $animate = ($this->owner->Animate) ? 'true' : 'false';
+        $loop = ($this->owner->Loop) ? 'true' : 'false';
+        $sync = ($this->owner->ThumbnailNav == true) ? "sync: '#carousel'," : '';
+        $before = (method_exists($this->owner->ClassName, 'flexSliderBeforeAction'))
+            ? $this->owner->flexSliderBeforeAction()
+            : 'function(){}';
+        $after = (method_exists($this->owner->ClassName, 'flexSliderAfterAction'))
+            ? $this->owner->flexSliderAfterAction()
+            : 'function(){}';
+        $speed = (method_exists($this->owner->ClassName, 'setFlexSliderSpeed'))
+            ? $this->owner->setFlexSliderSpeed()
+            : 7000;
+
+        // only call custom script if page has Slides and DataExtension
+        if (Object::has_extension($this->owner->ClassName, 'FlexSlider')) {
+            if ($this->owner->Slides()->exists()) {
+                Requirements::customScript("
+                (function($) {
+                    $(document).ready(function(){
+                        $('.flexslider').flexslider({
+                            slideshow: ".$animate.",
+                            animation: '".$this->owner->Animation."',
+                            animationLoop: ".$loop.",
+                            controlNav: true,
+                            directionNav: true,
+                            prevText: '',
+                            nextText: '',
+                            pauseOnAction: true,
+                            pauseOnHover: true,
+                            ".$sync."
+                            start: function(slider){
+                              $('body').removeClass('loading');
+                            },
+                            before: ".$before.',
+                            after: '.$after.',
+                            slideshowSpeed: '.$speed.'
+                        });
+                    });
+                }(jQuery));');
+            }
+        }
     }
 }
