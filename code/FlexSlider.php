@@ -95,7 +95,7 @@ class FlexSlider extends DataExtension
         // Flexslider options
         $animate = ($this->owner->Animate) ? 'true' : 'false';
         $loop = ($this->owner->Loop) ? 'true' : 'false';
-        $sync = ($this->owner->ThumbnailNav == true) ? "sync: '#carousel'," : '';
+        $sync = ($this->owner->ThumbnailNav == true) ? '"#carousel"' : false;
         $before = (method_exists($this->owner->ClassName, 'flexSliderBeforeAction'))
             ? $this->owner->flexSliderBeforeAction()
             : 'function(){}';
@@ -106,32 +106,20 @@ class FlexSlider extends DataExtension
             ? $this->owner->setFlexSliderSpeed()
             : 7000;
 
+        $vars = [
+            'animate' => $animate,
+            'animationType' => $this->owner->Animation,
+            'loop' => $loop,
+            'sync' => $sync,
+            'before' => $before,
+            'after' => $after,
+            'speed' => $speed,
+        ];
+
         // only call custom script if page has Slides and DataExtension
         if (Object::has_extension($this->owner->ClassName, 'FlexSlider')) {
             if ($this->owner->Slides()->exists()) {
-                Requirements::customScript("
-                (function($) {
-                    $(document).ready(function(){
-                        $('.flexslider').flexslider({
-                            slideshow: ".$animate.",
-                            animation: '".$this->owner->Animation."',
-                            animationLoop: ".$loop.",
-                            controlNav: true,
-                            directionNav: true,
-                            prevText: '',
-                            nextText: '',
-                            pauseOnAction: true,
-                            pauseOnHover: true,
-                            ".$sync."
-                            start: function(slider){
-                              $('body').removeClass('loading');
-                            },
-                            before: ".$before.',
-                            after: '.$after.',
-                            slideshowSpeed: '.$speed.'
-                        });
-                    });
-                }(jQuery));');
+                Requirements::javascriptTemplate('flexslider/javascript/flexslider.init.js', $vars);
             }
         }
     }
