@@ -84,6 +84,12 @@ class FlexSlider extends DataExtension
      */
     public function SlideShow()
     {
+        $owner = $this->owner;
+
+        if (!($owner instanceof SiteTree)) {
+            $this->getCustomScript();
+        }
+
         return $this->owner->Slides()->filter(array('ShowSlide' => 1))->sort('SortOrder');
     }
 
@@ -91,6 +97,19 @@ class FlexSlider extends DataExtension
      * add requirements to Page_Controller init()
      */
     public function contentcontrollerInit()
+    {
+        // only call custom script if page has Slides and DataExtension
+        if (Object::has_extension($this->owner->ClassName, 'FlexSlider')) {
+            if ($this->owner->SlideShow()->exists()) {
+                $this->getCustomScript();
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    public function getCustomScript()
     {
         // Flexslider options
         $animate = ($this->owner->Animate) ? 'true' : 'false';
@@ -106,33 +125,29 @@ class FlexSlider extends DataExtension
             ? $this->owner->setFlexSliderSpeed()
             : 7000;
 
-        // only call custom script if page has Slides and DataExtension
-        if (Object::has_extension($this->owner->ClassName, 'FlexSlider')) {
-            if ($this->owner->Slides()->exists()) {
-                Requirements::customScript("
-                (function($) {
-                    $(document).ready(function(){
-                        $('.flexslider').flexslider({
-                            slideshow: ".$animate.",
-                            animation: '".$this->owner->Animation."',
-                            animationLoop: ".$loop.",
-                            controlNav: true,
-                            directionNav: true,
-                            prevText: '',
-                            nextText: '',
-                            pauseOnAction: true,
-                            pauseOnHover: true,
-                            ".$sync."
-                            start: function(slider){
-                              $('body').removeClass('loading');
-                            },
-                            before: ".$before.',
-                            after: '.$after.',
-                            slideshowSpeed: '.$speed.'
-                        });
+        Requirements::customScript("
+            (function($) {
+                $(document).ready(function(){
+                    $('.flexslider').flexslider({
+                        slideshow: " . $animate . ",
+                        animation: '" . $this->owner->Animation . "',
+                        animationLoop: " . $loop . ",
+                        controlNav: true,
+                        directionNav: true,
+                        prevText: '',
+                        nextText: '',
+                        pauseOnAction: true,
+                        pauseOnHover: true,
+                        " . $sync . "
+                        start: function(slider){
+                          $('body').removeClass('loading');
+                        },
+                        before: " . $before . ',
+                        after: ' . $after . ',
+                        slideshowSpeed: ' . $speed . '
                     });
-                }(jQuery));');
-            }
-        }
+                });
+            }(jQuery));'
+        );
     }
 }
