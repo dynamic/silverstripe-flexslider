@@ -62,6 +62,11 @@ class SlideImage extends DataObject implements PermissionProvider
     );
 
     /**
+     * @var int
+     */
+    private static $image_size_limit = 512000;
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
@@ -71,7 +76,7 @@ class SlideImage extends DataObject implements PermissionProvider
         $ImageField->getValidator()->allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
         $ImageField->setFolderName('Uploads/SlideImages');
         $ImageField->setConfig('allowedMaxFileNumber', 1);
-        $ImageField->getValidator()->setAllowedMaxFileSize(FLEXSLIDER_IMAGE_FILE_SIZE_LIMIT);
+        $ImageField->getValidator()->setAllowedMaxFileSize(self::config()->get('image_size_limit'));
 
         $fields->removeByName(array('ShowSlide'));
 
