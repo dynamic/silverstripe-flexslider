@@ -52,13 +52,7 @@ class FlexSlider extends DataExtension
         // Slides
         if ($this->owner->ID) {
             $config = GridFieldConfig_RecordEditor::create();
-            if (class_exists('GridFieldSortableRows')) {
-                $config->addComponent(new GridFieldSortableRows('SortOrder'));
-            }
-            if (class_exists('GridFieldBulkUpload')) {
-                $config->addComponent(new GridFieldBulkUpload());
-                $config->addComponent(new GridFieldBulkManager());
-            }
+            $config->addComponent(new GridFieldOrderableRows('SortOrder'));
             $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
             $config->removeComponentsByType('GridFieldDeleteAction');
             $config->addComponent(new GridFieldDeleteAction(false));
@@ -90,7 +84,7 @@ class FlexSlider extends DataExtension
             $this->getCustomScript();
         }
 
-        return $this->owner->Slides()->filter(array('ShowSlide' => 1))->sort('SortOrder');
+        return $this->owner->Slides()->sort('SortOrder');
     }
 
     /**
