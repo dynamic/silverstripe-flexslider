@@ -28,6 +28,9 @@
     }
   ],
   "extra": {
-    "installer-name": "flexslider"
+    "installer-name": "flexslider",
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
   }
 }
