@@ -15,11 +15,14 @@
     "authors": [
         {
             "name": "Dynamic",
-            "homepage": "http://www.dynamicagency.com",
-            "email": "dev@dy.ag"
+            "email": "dev@dynamicagency.com",
+            "homepage": "http://www.dynamicagency.com"
         }
     ],
 	"extra": {
-		"installer-name": "flexslider"
+		"installer-name": "flexslider",
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
 	}
 }
