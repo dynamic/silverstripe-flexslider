@@ -40,9 +40,7 @@ class SlideThumbnailNavMigrationTask extends BuildTask
                         $result->SliderDirectionNav = 1;
                         $result->CarouselControlNav = 0;
                         $result->CarouselDirectionNav = 1;
-                        $result->CarouselItemWidth = 196;
-                        $result->CarouselItemMargin = 10;
-                        $result->CarouselThumbnailCt = 4;
+                        $result->CarouselThumbnailCt = 6;
                         $result->write();
                         $ct++;
                     }
