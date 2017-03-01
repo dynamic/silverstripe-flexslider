@@ -5,12 +5,10 @@
     "license": "BSD-3-Clause",
     "type": "silverstripe-module",
     "require": {
-    	"silverstripe/framework": "^3.1",
-        "silverstripe/cms": "^3.1"
-    },
-    "suggest": {
-        "colymba/gridfield-bulk-editing-tools": "^v2.1",
-        "undefinedoffset/sortablegridfield": "^0.6"
+    	"silverstripe/framework": "^3.2",
+        "silverstripe/cms": "^3.2",
+        "heyday/silverstripe-versioneddataobjects": "^1.5",
+        "silverstripe-australia/gridfieldextensions": "^1.4"
     },
     "authors": [
         {

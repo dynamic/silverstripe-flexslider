@@ -40,13 +40,6 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @var array
      */
-    private static $defaults = array(
-        'ShowSlide' => true,
-    );
-
-    /**
-     * @var array
-     */
     private static $summary_fields = array(
         'Image.CMSThumbnail' => 'Image',
         'Name' => 'Name',
@@ -67,18 +60,30 @@ class SlideImage extends DataObject implements PermissionProvider
     private static $image_size_limit = 512000;
 
     /**
+     * @var array
+     */
+    private static $extensions = [
+        'VersionedDataObject',
+    ];
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
+
+        $fields->removeByName([
+            'ShowSlide',
+            'SortOrder',
+            'PageID',
+        ]);
+
         $ImageField = new UploadField('Image', 'Image');
         $ImageField->getValidator()->allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
         $ImageField->setFolderName('Uploads/SlideImages');
         $ImageField->setConfig('allowedMaxFileNumber', 1);
         $ImageField->getValidator()->setAllowedMaxFileSize(self::config()->get('image_size_limit'));
-
-        $fields->removeByName(array('ShowSlide'));
 
         $fields->addFieldsToTab('Root.Main', array(
             TextField::create('Name')
@@ -89,15 +94,9 @@ class SlideImage extends DataObject implements PermissionProvider
                 ->setDescription('optional, used in template'),
             TreeDropdownField::create('PageLinkID', 'Choose a page to link to:', 'SiteTree'),
             $ImageField,
-            CheckboxField::create('ShowSlide')->setTitle('Show Slide')
-                ->setDescription('Include this slide in the slider. Uncheck to hide'),
-        ));
-        $fields->removeByName(array(
-            'SortOrder',
-            'PageID',
         ));
 
-        $this->extend('updateCMSFields', $fields);
+        $this->extend('updateSlideImageFields', $fields);
 
         return $fields;
     }
