@@ -6,11 +6,13 @@
     "type": "silverstripe-module",
     "require": {
     	"silverstripe/framework": "^3.1",
-        "silverstripe/cms": "^3.1"
+        "silverstripe/cms": "^3.1",
+        "dynamic/imageuploadfield": "^1.0",
+        "silverstripe-australia/gridfieldextensions": "^1.2",
+        "unclecheese/display-logic": "^1.2"
     },
     "suggest": {
-        "colymba/gridfield-bulk-editing-tools": "^v2.1",
-        "undefinedoffset/sortablegridfield": "^0.6"
+        "colymba/gridfield-bulk-editing-tools": "^v2.1"
     },
     "authors": [
         {
