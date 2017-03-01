@@ -72,11 +72,6 @@ class SlideImage extends DataObject implements PermissionProvider
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-        $ImageField = new UploadField('Image', 'Image');
-        $ImageField->getValidator()->allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
-        $ImageField->setFolderName('Uploads/SlideImages');
-        $ImageField->setConfig('allowedMaxFileNumber', 1);
-        $ImageField->getValidator()->setAllowedMaxFileSize(self::config()->get('image_size_limit'));
 
         $fields->removeByName(array('ShowSlide'));
 
@@ -88,7 +83,8 @@ class SlideImage extends DataObject implements PermissionProvider
             TextareaField::create('Description')
                 ->setDescription('optional, used in template'),
             TreeDropdownField::create('PageLinkID', 'Choose a page to link to:', 'SiteTree'),
-            $ImageField,
+            ImageUploadField::create('Image')
+                ->setFolderName('Uploads/SlideImages'),
             CheckboxField::create('ShowSlide')->setTitle('Show Slide')
                 ->setDescription('Include this slide in the slider. Uncheck to hide'),
         ));
@@ -96,8 +92,6 @@ class SlideImage extends DataObject implements PermissionProvider
             'SortOrder',
             'PageID',
         ));
-
-        $this->extend('updateCMSFields', $fields);
 
         return $fields;
     }
