@@ -159,10 +159,10 @@ class FlexSlider extends DataExtension
                                 itemWidth: " . $this->owner->obj('CarouselItemWidth') . ",
                                 pausePlay: false,
                                 asNavFor: '.flexslider:eq('+index+')',
-                                itemMargin: 10, //todo: editable in CMS
-                                minItems: 4, //todo: editable in CMS
-                                maxItems: 4, //todo: editable in CMS
-                                move: 4 //todo: editable in CMS
+                                itemMargin: " . $this->owner->obj('CarouselItemMargin') . ",
+                                minItems: " . $this->owner->obj('CarouselThumbnailCt') . ",
+                                maxItems: " . $this->owner->obj('CarouselThumbnailCt') . ",
+                                move: " . $this->owner->obj('CarouselThumbnailCt') . "
                               });
                          }
  
@@ -171,8 +171,8 @@ class FlexSlider extends DataExtension
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
                                 animation: '" . $this->owner->Animation . "',
                                 animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
-                                controlNav: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
-                                directionNav: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
+                                controlNav: " . $this->owner->obj('SliderControlNav')->NiceAsBoolean() . ",
+                                directionNav: " . $this->owner->obj('SliderDirectionNav')->NiceAsBoolean() . ",
                                 prevText: '',
                                 nextText: '',
                                 pauseOnAction: true,
