@@ -1,10 +1,12 @@
 .flexslider {
     margin-bottom: 30px;
 }
-.typography .flexslider ul {
+.typography .flexslider ul,
+.typography .carousel ul{
     margin: 0;
 }
-.typography .flexslider ul li {
+.typography .flexslider ul li,
+.typography .carousel ul li{
     list-style-type: none;
     margin: 0;
 }
