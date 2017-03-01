@@ -22,6 +22,8 @@ Page::add_extension('FlexSlider');
 
 After attaching the DataExtension to your page type or DataObject run a `dev/build` then `?flush=all`. 
 
+This module uses [ImageUploadField](https://github.com/dynamic/silverstripe-imageuploadfield/) for the slide image field. See the [docs](https://github.com/dynamic/silverstripe-imageuploadfield/blob/master/docs/en/index.md) for configuration options such as changing the max upload limit.
+
 ### User Guide
 
 You should now see a "Slides" tab on the page type or DataObject to which you applied the DataExtension. Simply create Slides to be included in the slide show that link to other pages on your website.
