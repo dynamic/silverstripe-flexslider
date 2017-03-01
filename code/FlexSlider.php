@@ -67,7 +67,6 @@ class FlexSlider extends DataExtension
             $slideTitle = $this->owner->stat('slide_tab_title') ? $this->owner->stat('slide_tab_title') : 'Slides';
 
             $fields->addFieldsToTab("Root.{$slideTitle}", array(
-                HeaderField::create('SliderHD', 'Slides', 3),
                 $SlidesField,
                 ToggleCompositeField::create('ConfigHD', 'Slider Settings', array(
                     CheckboxField::create('Animate', 'Animate automatically'),
