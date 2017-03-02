@@ -14,13 +14,7 @@ Page:
     - FlexSlider
 ```
 
-Alternatively you could add the following to your `mysite/_config.php` file:
-
-```
-Page::add_extension('FlexSlider'); 
-```
-
-After attaching the DataExtension to your page type or DataObject run a `dev/build` then `?flush=all`. 
+After attaching the DataExtension to your page type or DataObject run a `dev/build`. 
 
 This module uses [ImageUploadField](https://github.com/dynamic/silverstripe-imageuploadfield/) for the slide image field. See the [docs](https://github.com/dynamic/silverstripe-imageuploadfield/blob/master/docs/en/index.md) for configuration options such as changing the max upload limit.
 
