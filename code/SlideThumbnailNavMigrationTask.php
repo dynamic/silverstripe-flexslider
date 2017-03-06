@@ -41,7 +41,12 @@ class SlideThumbnailNavMigrationTask extends BuildTask
                         $result->CarouselControlNav = 0;
                         $result->CarouselDirectionNav = 1;
                         $result->CarouselThumbnailCt = 6;
-                        $result->write();
+                        if ($result InstanceOf SiteTree || singleton($object)->hasExtension('VersionedDataobject')) {
+                            $result->writeToStage('Stage');
+                            $result->publish('Stage', 'Live');
+                        } else {
+                            $result->write();
+                        }
                         $ct++;
                     }
                 }
