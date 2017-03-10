@@ -73,25 +73,31 @@ class SlideImage extends DataObject implements PermissionProvider
     {
         $fields = parent::getCMSFields();
 
-        $fields->removeByName(array('ShowSlide'));
-
-        $fields->addFieldsToTab('Root.Main', array(
-            TextField::create('Name')
-                ->setDescription('for internal reference only'),
-            TextField::create('Headline')
-                ->setDescription('optional, used in template'),
-            TextareaField::create('Description')
-                ->setDescription('optional, used in template'),
-            TreeDropdownField::create('PageLinkID', 'Choose a page to link to:', 'SiteTree'),
-            ImageUploadField::create('Image')
-                ->setFolderName('Uploads/SlideImages'),
-            CheckboxField::create('ShowSlide')->setTitle('Show Slide')
-                ->setDescription('Include this slide in the slider. Uncheck to hide'),
-        ));
-        $fields->removeByName(array(
+        $fields->removeByName([
             'SortOrder',
             'PageID',
-        ));
+        ]);
+
+        $fields->dataFieldByName('Name')
+            ->setDescription('for internal reference only');
+
+        $fields->dataFieldByName('Headline')
+            ->setDescription('optional, used in template');
+
+        $fields->dataFieldByName('Description')
+            ->setDescription('optional, used in template');
+
+        $fields->dataFieldByName('PageLinkID')
+            ->setTitle("'Choose a page to link to:'");
+
+        $image = $fields->dataFieldByName('Image')
+            ->setFolderName('Uploads/SlideImages')
+            ->setAllowedMaxFileNumber(1)
+            ->setAllowedFileCategories('image');
+        $fields->insertBefore($image, 'ShowSlide');
+
+        $fields->dataFieldByName('ShowSlide')
+            ->setDescription('Include this slide in the slider. Uncheck to hide');
 
         return $fields;
     }
