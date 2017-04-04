@@ -1,30 +1,36 @@
 {
-    "name": "dynamic/flexslider",
-    "description": "Display a FlexSlider on pages of your website",
-    "keywords": ["silverstripe", "flexslider", "module", "slideshow", "slider", "jquery"],
-    "license": "BSD-3-Clause",
-    "type": "silverstripe-module",
-    "require": {
-    	"silverstripe/framework": "^3.1",
-        "silverstripe/cms": "^3.1",
-        "dynamic/imageuploadfield": "^1.0",
-        "silverstripe-australia/gridfieldextensions": "^1.2",
-        "unclecheese/display-logic": "^1.2"
-    },
-    "suggest": {
-        "colymba/gridfield-bulk-editing-tools": "^v2.1"
-    },
-    "authors": [
-        {
-            "name": "Dynamic",
-            "email": "dev@dynamicagency.com",
-            "homepage": "http://www.dynamicagency.com"
-        }
-    ],
-	"extra": {
-		"installer-name": "flexslider",
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
-	}
+  "name": "dynamic/flexslider",
+  "description": "Display a FlexSlider on pages of your website",
+  "keywords": [
+    "silverstripe",
+    "flexslider",
+    "module",
+    "slideshow",
+    "slider",
+    "jquery"
+  ],
+  "license": "BSD-3-Clause",
+  "type": "silverstripe-module",
+  "require": {
+    "silverstripe/framework": "^3.1",
+    "silverstripe/cms": "^3.1",
+    "dynamic/imageuploadfield": "dev-master"
+  },
+  "suggest": {
+    "colymba/gridfield-bulk-editing-tools": "^v2.1",
+    "undefinedoffset/sortablegridfield": "^0.6"
+  },
+  "authors": [
+    {
+      "name": "Dynamic",
+      "homepage": "http://www.dynamicagency.com",
+      "email": "dev@dynamicagency.com"
+    }
+  ],
+  "extra": {
+    "installer-name": "flexslider",
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
+  }
 }
