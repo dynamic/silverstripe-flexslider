@@ -4,6 +4,8 @@ namespace Dynamic\FlexSlider\Test\Model;
 
 use Dynamic\FlexSlider\Test\FlexSliderTest;
 use Dynamic\FlexSlider\Model\SlideImage;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\ValidationException;
 use SilverStripe\Security\Member;
 use SilverStripe\Core\Config\Config;
 
@@ -24,7 +26,7 @@ class SlideImageTest extends FlexSliderTest
     {
         $object = new SlideImage();
         $fieldset = $object->getCMSFields();
-        $this->assertInstanceOf('SilverStripe\\Forms\\FieldList', $fieldset);
+        $this->assertInstanceOf(FieldList::class, $fieldset);
         $this->assertNotNull($fieldset->dataFieldByName('Name'));
         $this->assertNotNull($fieldset->dataFieldByName('Image'));
     }
@@ -36,7 +38,7 @@ class SlideImageTest extends FlexSliderTest
             'slide1'
         );
         $object->Name = '';
-        $this->setExpectedException('ValidationException');
+        $this->setExpectedException(ValidationException::class);
         $object->write();
     }
 
@@ -47,7 +49,7 @@ class SlideImageTest extends FlexSliderTest
             'slide1'
         );
         $object->ImageID = '';
-        $this->setExpectedException('ValidationException');
+        $this->setExpectedException(ValidationException::class);
         $object->write();
     }
 
@@ -108,7 +110,7 @@ class SlideImageTest extends FlexSliderTest
 
     public function testCanCreate()
     {
-        $object = singleton('Dynamic\\FlexSlider\\Model\\SlideImage');
+        $object = singleton(SlideImage::class);
         $this->logInWithPermission('ADMIN');
         $this->assertTrue($object->canCreate());
         $this->logOut();
@@ -120,7 +122,7 @@ class SlideImageTest extends FlexSliderTest
 
     public function testProvidePermissions()
     {
-        $object = singleton('Dynamic\\FlexSlider\\Model\\SlideImage');
+        $object = singleton(SlideImage::class);
         $expected = array(
             'Slide_EDIT' => 'Slide Edit',
             'Slide_DELETE' => 'Slide Delete',
