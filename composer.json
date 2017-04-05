@@ -14,6 +14,7 @@
   "require": {
     "silverstripe/framework": "^4.0",
     "silverstripe/cms": "^4.0",
+    "silverstripe/asset-admin": "^1.0",
     "silverstripe-australia/gridfieldextensions": "^2.0"
   },
   "authors": [
