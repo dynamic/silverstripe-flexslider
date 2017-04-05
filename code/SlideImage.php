@@ -1,15 +1,41 @@
 <?php
 
-/**
- * Class SlideImage
- */
 class SlideImage extends DataObject implements PermissionProvider
 {
+    /**
+     * @var string
+     */
+    private static $singular_name = 'Slide';
 
     /**
-     * @var int
+     * @var string
      */
-    private static $flexslider_max_image_size = 512000;
+    private static $plural_name = 'Slides';
+
+    /**
+     * @var array
+     */
+    private static $db = array(
+        'Name' => 'Varchar(255)',
+        'Headline' => 'Varchar(255)',
+        'Description' => 'Text',
+        'SortOrder' => 'Int',
+        'ShowSlide' => 'Boolean',
+    );
+
+    /**
+     * @var array
+     */
+    private static $has_one = array(
+        'Image' => 'Image',
+        'Page' => 'Page',
+        'PageLink' => 'SiteTree',
+    );
+
+    /**
+     * @var string
+     */
+    private static $default_sort = 'SortOrder';
 
     /**
      * @var array
@@ -19,36 +45,59 @@ class SlideImage extends DataObject implements PermissionProvider
     );
 
     /**
+     * @var array
+     */
+    private static $summary_fields = array(
+        'Image.CMSThumbnail' => 'Image',
+        'Name' => 'Name',
+    );
+
+    /**
+     * @var array
+     */
+    private static $searchable_fields = array(
+        'Name',
+        'Headline',
+        'Description',
+    );
+
+    /**
+     * @var int
+     */
+    private static $image_size_limit = 512000;
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-        $ImageField = ImageUploadField::create('Image')
-            ->setTitle('Image')
-            ->setFolderName('Uploads/SlideImages');
-        $ImageField->getValidator()->setAllowedMaxFileSize($this->config()->get('flexslider_max_image_size'));
 
-        $fields->removeByName(array('ShowSlide'));
-
-        $fields->addFieldsToTab('Root.Main', array(
-            TextField::create('Name')
-                ->setDescription('for internal reference only'),
-            TextField::create('Headline')
-                ->setDescription('optional, used in template'),
-            TextareaField::create('Description')
-                ->setDescription('optional, used in template'),
-            TreeDropdownField::create('PageLinkID', 'Choose a page to link to:', 'SiteTree'),
-            $ImageField,
-            CheckboxField::create('ShowSlide')->setTitle('Show Slide')
-                ->setDescription('Include this slide in the slider. Uncheck to hide'),
-        ));
-        $fields->removeByName(array(
+        $fields->removeByName([
             'SortOrder',
             'PageID',
-        ));
+        ]);
 
-        $this->extend('updateCMSFields', $fields);
+        $fields->dataFieldByName('Name')
+            ->setDescription('for internal reference only');
+
+        $fields->dataFieldByName('Headline')
+            ->setDescription('optional, used in template');
+
+        $fields->dataFieldByName('Description')
+            ->setDescription('optional, used in template');
+
+        $fields->dataFieldByName('PageLinkID')
+            ->setTitle("'Choose a page to link to:'");
+
+        $image = $fields->dataFieldByName('Image')
+            ->setFolderName('Uploads/SlideImages')
+            ->setAllowedMaxFileNumber(1)
+            ->setAllowedFileCategories('image');
+        $fields->insertBefore($image, 'ShowSlide');
+
+        $fields->dataFieldByName('ShowSlide')
+            ->setDescription('Include this slide in the slider. Uncheck to hide');
 
         return $fields;
     }
@@ -118,5 +167,4 @@ class SlideImage extends DataObject implements PermissionProvider
     {
         return true;
     }
-
 }

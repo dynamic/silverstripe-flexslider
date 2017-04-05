@@ -1,22 +1,48 @@
-.flexslider {
-    margin-bottom: 30px;
+.slideshow .flexslider {
+    border: none;
 }
-.typography .flexslider ul {
+.slideshow .flexslider ul,
+.slideshow .carousel ul{
     margin: 0;
 }
-.typography .flexslider ul li {
+.slideshow .flexslider ul li,
+.slideshow .carousel ul li{
     list-style-type: none;
     margin: 0;
 }
-.typography .flexslider img {
+.slideshow .flexslider ol,
+.slideshow .carousel ol{
+    list-style-type: none;
+    margin: 0;
+}
+.slideshow .flexslider img, .slideshow .carousel img {
     border: 0;
 }
 .flexslider .slide {
     margin-bottom: 10px;
 }
-.typography .flexslider a:hover {
+.slideshow .flexslider a:hover {
     border-bottom: 0;
 }
-.typography .flex-direction-nav a {
+.slideshow .flex-direction-nav a {
     overflow: visible;
+}
+.slideshow a.flex-next:hover, .carousel a.flex-next:hover {border-bottom: none;}
+
+.slideshow .carousel {position: relative;}
+.slideshow .carousel ul.slides li img {cursor: pointer; width: 100%; height: auto; opacity: 0.9;}
+.slideshow .carousel ul.slides li img:hover {opacity: 1;}
+.slideshow .carousel:hover .flex-direction-nav .flex-prev {
+  opacity: 0.7;
+  left: 10px;
+}
+.slideshow .carousel:hover .flex-direction-nav .flex-prev:hover {
+  opacity: 1;
+}
+.slideshow .carousel:hover .flex-direction-nav .flex-next {
+  opacity: 0.7;
+  right: 10px;
+}
+.slideshow .carousel:hover .flex-direction-nav .flex-next:hover {
+  opacity: 1;
 }

@@ -103,14 +103,16 @@ class SlideImageTest extends FlexSliderTest
         $this->assertEquals($expected, $object->providePermissions());
     }
 
-    public function testImageFileSizeLimit()
+    public function testImageSizeLimit()
     {
 
-        $this->assertEquals(Config::inst()->get('SlideImage', 'flexslider_max_image_size'), 512000);
+        $default = 512000;
+        $this->assertEquals(Config::inst()->get('SlideImage', 'image_size_limit'), $default);
 
-        Config::inst()->update('SlideImage', 'flexslider_max_image_size', 1024000);
-
-        $this->assertEquals(Config::inst()->get('SlideImage', 'flexslider_max_image_size'), 1024000);
+        $new = 1024000;
+        Config::inst()->update('SlideImage', 'image_size_limit', $new);
+        $this->assertEquals(Config::inst()->get('SlideImage', 'image_size_limit'), $new);
 
     }
+
 }
