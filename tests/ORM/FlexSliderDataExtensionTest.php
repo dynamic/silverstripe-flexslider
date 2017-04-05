@@ -23,7 +23,8 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
         $extension->updateCMSFields($pageFields);
         $this->assertNotNull($pageFields->fieldByName('Root.Slides'));
 
-        Config::modify()->set(Page::class, 'slide_tab_title', 'MyCustomSlideTitle');
+        Config::modify()
+            ->set(Page::class, 'slide_tab_title', 'MyCustomSlideTitle');
         $page2 = Page::create();
         $page2->write();
         $page2Fields = $page2->getCMSFields();
@@ -51,8 +52,8 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
         $object = singleton(Page::class);
         $object->write();
         $slide1 = $this->objFromFixture('SlideImage', 'slide1');
-        $image = $this->objFromFixture('Image', 'image1');
-        $slide1->ImageID = $image->ID;
+        /*$image = $this->objFromFixture('Image', 'image1');
+        $slide1->ImageID = $image->ID;*/
         $object->Slides()->add($slide1);
         $slides = $object->SlideShow();
         $this->assertInstanceOf(DataList::class, $slides);

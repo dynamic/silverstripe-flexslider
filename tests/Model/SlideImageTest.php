@@ -59,9 +59,9 @@ class SlideImageTest extends FlexSliderTest
             'Dynamic\\FlexSlider\\Model\\SlideImage',
             'slide1'
         );
-        $image = $this->objFromFixture('Image', 'image1');
+        /*$image = $this->objFromFixture('Image', 'image1');
         $object->ImageID = $image->ID;
-        $object->write();
+        $object->write();*/
         $this->logInWithPermission('ADMIN');
         $this->assertTrue($object->canView());
         $this->logOut();
@@ -77,9 +77,9 @@ class SlideImageTest extends FlexSliderTest
             'Dynamic\\FlexSlider\\Model\\SlideImage',
             'slide1'
         );
-        $image = $this->objFromFixture('Image', 'image1');
+        /*$image = $this->objFromFixture('Image', 'image1');
         $object->ImageID = $image->ID;
-        $object->write();
+        $object->write();*/
         $objectID = $object->ID;
         $this->logInWithPermission('ADMIN');
         $originalName = $object->Name;
@@ -98,9 +98,9 @@ class SlideImageTest extends FlexSliderTest
             'Dynamic\\FlexSlider\\Model\\SlideImage',
             'slide1'
         );
-        $image = $this->objFromFixture('Image', 'image1');
+        /*$image = $this->objFromFixture('Image', 'image1');
         $object->ImageID = $image->ID;
-        $object->write();
+        $object->write();*/
         $this->logInWithPermission('ADMIN');
         $this->assertTrue($object->canDelete());
         $checkObject = $object;
