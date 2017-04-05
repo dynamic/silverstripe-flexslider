@@ -12,19 +12,15 @@
   "license": "BSD-3-Clause",
   "type": "silverstripe-module",
   "require": {
-    "silverstripe/framework": "^3.1",
-    "silverstripe/cms": "^3.1",
-    "dynamic/imageuploadfield": "dev-master"
-  },
-  "suggest": {
-    "colymba/gridfield-bulk-editing-tools": "^v2.1",
-    "undefinedoffset/sortablegridfield": "^0.6"
+    "silverstripe/framework": "^4.0",
+    "silverstripe/cms": "^4.0",
+    "silverstripe-australia/gridfieldextensions": "^2.0"
   },
   "authors": [
     {
       "name": "Dynamic",
-      "homepage": "http://www.dynamicagency.com",
-      "email": "dev@dynamicagency.com"
+      "email": "dev@dynamicagency.com",
+      "homepage": "http://www.dynamicagency.com"
     }
   ],
   "extra": {
@@ -32,5 +28,12 @@
     "branch-alias": {
       "dev-master": "3.0.x-dev"
     }
-  }
+  },
+  "autoload": {
+    "psr-4": {
+      "Dynamic\\Flexslider\\": "src/"
+    }
+  },
+  "prefer-stable": true,
+  "minimum-stability": "dev"
 }

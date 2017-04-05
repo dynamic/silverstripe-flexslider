@@ -1,5 +1,13 @@
 <?php
 
+namespace Dynamic\FlexSlider\Test;
+
+use SilverStripe\Dev\FunctionalTest;
+
+/**
+ * Class FlexSliderTest
+ * @package Dynamic\FlexSlider\Test
+ */
 class FlexSliderTest extends FunctionalTest
 {
     protected static $fixture_file = 'flexslider/tests/FlexSliderTest.yml';

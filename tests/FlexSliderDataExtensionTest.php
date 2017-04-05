@@ -1,10 +1,20 @@
 <?php
 
+namespace Dynamic\FlexSlider\Test\ORM;
+
+use \Page;
+use Dynamic\FlexSlider\Test\FlexSliderTest;
+use Dynamic\FlexSlider\ORM\FlexSlider;
+use SilverStripe\Core\Config\Config;
+
+/**
+ * Class FlexSliderDataExtensionTest
+ * @package Dynamic\FlexSlider\Test\ORM
+ */
 class FlexSliderDataExtensionTest extends FlexSliderTest
 {
     public function testTabNameConfig()
     {
-
         $page = new Page();
         $page->write();
         $extension = new FlexSlider();
@@ -12,14 +22,13 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
         $extension->updateCMSFields($pageFields);
         $this->assertNotNull($pageFields->fieldByName('Root.Slides'));
 
-        Config::inst()->update('Page', 'slide_tab_title', 'MyCustomSlideTitle');
+        Config::modify()->set('Page', 'slide_tab_title', 'MyCustomSlideTitle');
         $page2 = Page::create();
         $page2->write();
         $page2Fields = $page2->getCMSFields();
         $extension->updateCMSFields($page2Fields);
         $this->assertNull($page2Fields->fieldByName('Root.Slides'));
         $this->assertNotNull($page2Fields->fieldByName('Root.MyCustomSlideTitle'));
-
     }
 
     public function testUpdateCMSFields()
@@ -48,6 +57,5 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
         $this->assertInstanceOf('DataList', $slides);
     }
 }
-
 
 Page::add_extension('FlexSlider');

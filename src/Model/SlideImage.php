@@ -1,5 +1,28 @@
 <?php
 
+namespace Dynamic\FlexSlider\Model;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\ValidationResult;
+use SilverStripe\Security\PermissionProvider;
+use SilverStripe\Security\Permission;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Assets\Image;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\CMS\Model\SiteTree;
+
+/**
+ * Class SlideImage
+ * @package Dynamic\FlexSlider\Model
+ * @property string $Name
+ * @property string $Headline
+ * @property string $Description
+ * @property int $SortOrder
+ * @property bool $ShowSlide
+ * @property int $ImageID
+ * @property int $PageID
+ * @property int $PageLinkID
+ */
 class SlideImage extends DataObject implements PermissionProvider
 {
     /**
@@ -11,6 +34,11 @@ class SlideImage extends DataObject implements PermissionProvider
      * @var string
      */
     private static $plural_name = 'Slides';
+
+    /**
+     * @var string
+     */
+    private static $table_name = 'SlideImage';
 
     /**
      * @var array
@@ -27,9 +55,8 @@ class SlideImage extends DataObject implements PermissionProvider
      * @var array
      */
     private static $has_one = array(
-        'Image' => 'Image',
-        'Page' => 'Page',
-        'PageLink' => 'SiteTree',
+        'Image' => Image::class,
+        'PageLink' => SiteTree::class,
     );
 
     /**
@@ -90,14 +117,19 @@ class SlideImage extends DataObject implements PermissionProvider
         $fields->dataFieldByName('PageLinkID')
             ->setTitle("'Choose a page to link to:'");
 
-        $image = $fields->dataFieldByName('Image')
-            ->setFolderName('Uploads/SlideImages')
-            ->setAllowedMaxFileNumber(1)
-            ->setAllowedFileCategories('image');
-        $fields->insertBefore($image, 'ShowSlide');
+        $image = $fields->dataFieldByName('Image');
+        if (class_exists('SilverStripe\\AssetAdmin\\Forms\\UploadField')) {
+            if ($image instanceof UploadField) {
+                $image->setFolderName('Uploads/SlideImages')
+                    ->setIsMultiUpload(false)
+                    ->setAllowedFileCategories('image/supported');
+            }
+        }
+
+        $fields->insertBefore('ShowSlide', $image);
 
         $fields->dataFieldByName('ShowSlide')
-            ->setDescription('Include this slide in the slider. Uncheck to hide');
+            ->setDescription('Include this slide in the slider. Un-check to hide');
 
         return $fields;
     }
@@ -110,11 +142,11 @@ class SlideImage extends DataObject implements PermissionProvider
         $result = parent::validate();
 
         if (!$this->Name) {
-            $result->error('A Name is required before you can save');
+            $result->addError('A Name is required before you can save');
         }
 
         if (!$this->ImageID) {
-            $result->error('An Image is required before you can save');
+            $result->addError('An Image is required before you can save');
         }
 
         return $result;

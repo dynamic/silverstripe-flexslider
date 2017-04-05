@@ -1,5 +1,15 @@
 <?php
 
+namespace Dynamic\FlexSlider\Task;
+
+use SilverStripe\Dev\BuildTask;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\CMS\Model\SiteTree;
+
+/**
+ * Class SlideThumbnailNavMigrationTask
+ * @package Dynamic\FlexSlider\Task
+ */
 class SlideThumbnailNavMigrationTask extends BuildTask
 {
     /**
@@ -14,6 +24,7 @@ class SlideThumbnailNavMigrationTask extends BuildTask
      * @var bool
      */
     protected $enabled = true;
+
     /**
      * @param $request
      */
@@ -21,6 +32,7 @@ class SlideThumbnailNavMigrationTask extends BuildTask
     {
         $this->defaultSliderSettings();
     }
+
     /**
      *
      */
@@ -41,10 +53,10 @@ class SlideThumbnailNavMigrationTask extends BuildTask
                         $result->CarouselControlNav = 0;
                         $result->CarouselDirectionNav = 1;
                         $result->CarouselThumbnailCt = 6;
-                        if ($result InstanceOf SiteTree || singleton($object)->hasExtension('VersionedDataobject')) {
+                        if ($result instanceof SiteTree || singleton($object)->hasExtension('VersionedDataobject')) {
                             $result->writeToStage('Stage');
                             if ($result->isPublished()) {
-                                $result->publish('Stage', 'Live');
+                                $result->copyVersionToStage('Stage', 'Live');
                             }
                         } else {
                             $result->write();
@@ -54,6 +66,6 @@ class SlideThumbnailNavMigrationTask extends BuildTask
                 }
             }
         }
-        echo '<p>'.$ct.' Sliders updated.</p>';
+        echo '<p>' . $ct . ' Sliders updated.</p>';
     }
 }

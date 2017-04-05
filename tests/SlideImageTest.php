@@ -1,5 +1,16 @@
 <?php
 
+namespace Dynamic\FlexSlider\Test\Model;
+
+use Dynamic\FlexSlider\Test\FlexSliderTest;
+use Dynamic\FlexSlider\Model\SlideImage;
+use SilverStripe\Security\Member;
+use SilverStripe\Core\Config\Config;
+
+/**
+ * Class SlideImageTest
+ * @package Dynamic\FlexSlider\Test\Model
+ */
 class SlideImageTest extends FlexSliderTest
 {
     protected static $use_draft_site = true;
@@ -13,14 +24,17 @@ class SlideImageTest extends FlexSliderTest
     {
         $object = new SlideImage();
         $fieldset = $object->getCMSFields();
-        $this->assertTrue(is_a($fieldset, 'FieldList'));
+        $this->assertInstanceOf('SilverStripe\\Forms\\FieldList', $fieldset);
         $this->assertNotNull($fieldset->dataFieldByName('Name'));
         $this->assertNotNull($fieldset->dataFieldByName('Image'));
     }
 
     public function testValidateName()
     {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $object = $this->objFromFixture(
+            'Dynamic\\FlexSlider\\Model\\SlideImage',
+            'slide1'
+        );
         $object->Name = '';
         $this->setExpectedException('ValidationException');
         $object->write();
@@ -28,7 +42,10 @@ class SlideImageTest extends FlexSliderTest
 
     public function testValidateImage()
     {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $object = $this->objFromFixture(
+            'Dynamic\\FlexSlider\\Model\\SlideImage',
+            'slide1'
+        );
         $object->ImageID = '';
         $this->setExpectedException('ValidationException');
         $object->write();
@@ -36,7 +53,10 @@ class SlideImageTest extends FlexSliderTest
 
     public function testCanView()
     {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $object = $this->objFromFixture(
+            'Dynamic\\FlexSlider\\Model\\SlideImage',
+            'slide1'
+        );
         $image = $this->objFromFixture('Image', 'image1');
         $object->ImageID = $image->ID;
         $object->write();
@@ -51,7 +71,10 @@ class SlideImageTest extends FlexSliderTest
 
     public function testCanEdit()
     {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $object = $this->objFromFixture(
+            'Dynamic\\FlexSlider\\Model\\SlideImage',
+            'slide1'
+        );
         $image = $this->objFromFixture('Image', 'image1');
         $object->ImageID = $image->ID;
         $object->write();
@@ -69,7 +92,10 @@ class SlideImageTest extends FlexSliderTest
 
     public function testCanDelete()
     {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $object = $this->objFromFixture(
+            'Dynamic\\FlexSlider\\Model\\SlideImage',
+            'slide1'
+        );
         $image = $this->objFromFixture('Image', 'image1');
         $object->ImageID = $image->ID;
         $object->write();
@@ -82,7 +108,7 @@ class SlideImageTest extends FlexSliderTest
 
     public function testCanCreate()
     {
-        $object = singleton('SlideImage');
+        $object = singleton('Dynamic\\FlexSlider\\Model\\SlideImage');
         $this->logInWithPermission('ADMIN');
         $this->assertTrue($object->canCreate());
         $this->logOut();
@@ -94,7 +120,7 @@ class SlideImageTest extends FlexSliderTest
 
     public function testProvidePermissions()
     {
-        $object = singleton('SlideImage');
+        $object = singleton('Dynamic\\FlexSlider\\Model\\SlideImage');
         $expected = array(
             'Slide_EDIT' => 'Slide Edit',
             'Slide_DELETE' => 'Slide Delete',
@@ -107,12 +133,16 @@ class SlideImageTest extends FlexSliderTest
     {
 
         $default = 512000;
-        $this->assertEquals(Config::inst()->get('SlideImage', 'image_size_limit'), $default);
+        $this->assertEquals(
+            Config::inst()->get(SlideImage::class, 'image_size_limit'),
+            $default
+        );
 
         $new = 1024000;
-        Config::inst()->update('SlideImage', 'image_size_limit', $new);
-        $this->assertEquals(Config::inst()->get('SlideImage', 'image_size_limit'), $new);
-
+        Config::modify()->set(SlideImage::class, 'image_size_limit', $new);
+        $this->assertEquals(Config::inst()
+            ->get(SlideImage::class, 'image_size_limit'), $new);
     }
 
 }
+

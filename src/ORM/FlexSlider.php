@@ -1,5 +1,34 @@
 <?php
 
+namespace Dynamic\FlexSlider\ORM;
+
+use Dynamic\FlexSlider\Model\SlideImage;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use SilverStripe\Forms\ToggleCompositeField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\NumericField;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Core\Object;
+use SilverStripe\View\Requirements;
+use SilverStripe\GridFieldExtensions\GridFieldOrderableRows;
+
+/**
+ * Class FlexSlider
+ * @package Dynamic\FlexSlider\ORM
+ * @property string $Animation
+ * @property bool $Loop
+ * @property bool $Animate
+ * @property bool $ThumbnailNav
+ * @property bool $SliderControlNav
+ * @property bool $CarouselControlNav
+ * @property bool $CarouselDirectionNav
+ * @property int $CarouselThumbnailCt
+ */
 class FlexSlider extends DataExtension
 {
     /**
@@ -21,7 +50,7 @@ class FlexSlider extends DataExtension
      * @var array
      */
     public static $has_many = array(
-        'Slides' => 'SlideImage',
+        'Slides' => SlideImage::class,
     );
 
     /**
@@ -60,40 +89,75 @@ class FlexSlider extends DataExtension
         if ($this->owner->ID) {
             $config = GridFieldConfig_RecordEditor::create();
             $config->addComponent(new GridFieldOrderableRows('SortOrder'));
-            if (class_exists('GridFieldBulkUpload')) {
-                $config->addComponent(new GridFieldBulkUpload());
-                $config->addComponent(new GridFieldBulkManager());
-            }
             $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
             $config->removeComponentsByType('GridFieldDeleteAction');
             $config->addComponent(new GridFieldDeleteAction(false));
-            $SlidesField = GridField::create('Slides', 'Slides', $this->owner->Slides()->sort('SortOrder'), $config);
+            $SlidesField = GridField::create(
+                'Slides',
+                'Slides',
+                $this->owner->Slides()->sort('SortOrder'),
+                $config
+            );
 
             $slideTitle = $this->owner->stat('slide_tab_title') ? $this->owner->stat('slide_tab_title') : 'Slides';
 
-            $fields->addFieldsToTab("Root.{$slideTitle}", array(
-                $SlidesField,
-                ToggleCompositeField::create('ConfigHD', 'Slider Settings', array(
-                    DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
-                    CheckboxField::create('Animate', 'Animate automatically'),
-                    CheckboxField::create('Loop', 'Loop the carousel'),
-                    CheckboxField::create('SliderControlNav', 'Show ControlNav'),
-                    CheckboxField::create('SliderDirectionNav', 'Show DirectionNav'),
-                    CheckboxField::create('ThumbnailNav', 'Thumbnail Navigation'),
-                    DisplayLogicWrapper::create(
-                        CheckboxField::create('CarouselControlNav', 'Show Carousel ControlNav'),
-                        CheckboxField::create('CarouselDirectionNav', 'Show Carousel DirectionNav'),
-                        NumericField::create('CarouselThumbnailCt', 'Number of thumbnails')
-                    )->displayIf('ThumbnailNav')->isChecked()->end()
-                )),
-            ));
+            $fields->addFieldsToTab(
+                "Root.{$slideTitle}",
+                array(
+                    $SlidesField,
+                    ToggleCompositeField::create(
+                        'ConfigHD',
+                        'Slider Settings',
+                        array(
+                            DropdownField::create(
+                                'Animation',
+                                'Animation option',
+                                $this->owner->dbObject('Animation')
+                                    ->enumValues()
+                            ),
+                            CheckboxField::create(
+                                'Animate',
+                                'Animate automatically'
+                            ),
+                            CheckboxField::create(
+                                'Loop',
+                                'Loop the carousel'
+                            ),
+                            CheckboxField::create(
+                                'SliderControlNav',
+                                'Show ControlNav'
+                            ),
+                            CheckboxField::create(
+                                'SliderDirectionNav',
+                                'Show DirectionNav'
+                            ),
+                            CheckboxField::create(
+                                'ThumbnailNav',
+                                'Thumbnail Navigation'
+                            ),
+                            CheckboxField::create(
+                                'CarouselControlNav',
+                                'Show Carousel ControlNav'
+                            ),
+                            CheckboxField::create(
+                                'CarouselDirectionNav',
+                                'Show Carousel DirectionNav'
+                            ),
+                            NumericField::create(
+                                'CarouselThumbnailCt',
+                                'Number of thumbnails'
+                            )
+                        )
+                    ),
+                )
+            );
         }
     }
 
     /**
      * @return DataList
      */
-    public function SlideShow()
+    public function getSlideShow()
     {
         $owner = $this->owner;
 
@@ -101,11 +165,13 @@ class FlexSlider extends DataExtension
             $this->getCustomScript();
         }
 
-        return $this->owner->Slides()->filter(array('ShowSlide' => 1))->sort('SortOrder');
+        return $this->owner->Slides()
+            ->filter(array('ShowSlide' => 1))
+            ->sort('SortOrder');
     }
 
     /**
-     * add requirements to Page_Controller init()
+     * add requirements to PageController init()
      */
     public function contentcontrollerInit()
     {
@@ -125,11 +191,17 @@ class FlexSlider extends DataExtension
         // Flexslider options
         $sync = ($this->owner->ThumbnailNav == true) ? "sync: '.carousel:eq('+index+')'," : '';
 
-        $before = (method_exists($this->owner->ClassName, 'flexSliderBeforeAction'))
+        $before = (method_exists(
+            $this->owner->ClassName,
+            'flexSliderBeforeAction'
+        ))
             ? $this->owner->flexSliderBeforeAction()
             : 'function(){}';
 
-        $after = (method_exists($this->owner->ClassName, 'flexSliderAfterAction'))
+        $after = (method_exists(
+            $this->owner->ClassName,
+            'flexSliderAfterAction'
+        ))
             ? $this->owner->flexSliderAfterAction()
             : 'function(){}';
 
@@ -144,11 +216,15 @@ class FlexSlider extends DataExtension
 					 
                          if(jQuery('.carousel').eq(index).length) {
                              jQuery('.carousel').eq(index).flexslider({
-                                slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
+                                slideshow: " . $this->owner->obj('Animate')
+                ->NiceAsBoolean() . ",
                                 animation: '" . $this->owner->Animation . "',
-                                animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
-                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ", 
-                                directionNav: " . $this->owner->obj('CarouselDirectionNav')->NiceAsBoolean() . ",
+                                animationLoop: " . $this->owner->obj('Loop')
+                ->NiceAsBoolean() . ",
+                                controlNav: " . $this->owner->obj('CarouselControlNav')
+                ->NiceAsBoolean() . ", 
+                                directionNav: " . $this->owner->obj('CarouselDirectionNav')
+                ->NiceAsBoolean() . ",
                                 prevText: '',
                                 nextText: '',
                                 pausePlay: false,
@@ -163,11 +239,15 @@ class FlexSlider extends DataExtension
  
                         if(jQuery('.flexslider').eq(index).length){
                             jQuery('.flexslider').eq(index).flexslider({
-                                slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
+                                slideshow: " . $this->owner->obj('Animate')
+                ->NiceAsBoolean() . ",
                                 animation: '" . $this->owner->Animation . "',
-                                animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
-                                controlNav: " . $this->owner->obj('SliderControlNav')->NiceAsBoolean() . ",
-                                directionNav: " . $this->owner->obj('SliderDirectionNav')->NiceAsBoolean() . ",
+                                animationLoop: " . $this->owner->obj('Loop')
+                ->NiceAsBoolean() . ",
+                                controlNav: " . $this->owner->obj('SliderControlNav')
+                ->NiceAsBoolean() . ",
+                                directionNav: " . $this->owner->obj('SliderDirectionNav')
+                ->NiceAsBoolean() . ",
                                 prevText: '',
                                 nextText: '',
                                 pauseOnAction: true,
@@ -183,8 +263,7 @@ class FlexSlider extends DataExtension
                         }
                     })
                 });
-            }(jQuery));'
-        );
+            }(jQuery));');
     }
 
     /**
@@ -197,6 +276,6 @@ class FlexSlider extends DataExtension
         if (!$this->owner->CarouselThumbnailCt) {
             $this->owner->CarouselThumbnailCt = 6;
         }
-
     }
+
 }
