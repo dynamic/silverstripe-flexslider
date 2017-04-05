@@ -47,11 +47,11 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
         $this->assertNotNull($fields->dataFieldbyName('Slides'));
     }
 
-    public function testGetSlideshow()
+    public function testGetSlideShow()
     {
         $object = singleton(Page::class);
         $object->write();
-        $slide1 = $this->objFromFixture('SlideImage', 'slide1');
+        $slide1 = $this->objFromFixture('Dynamic\\FlexSlider\\Model\\SlideImage', 'slide1');
         /*$image = $this->objFromFixture('Image', 'image1');
         $slide1->ImageID = $image->ID;*/
         $object->Slides()->add($slide1);

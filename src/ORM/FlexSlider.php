@@ -99,7 +99,9 @@ class FlexSlider extends DataExtension
                 $config
             );
 
-            $slideTitle = $this->owner->stat('slide_tab_title') ? $this->owner->stat('slide_tab_title') : 'Slides';
+            $slideTitle = $this->owner->config()->get('slide_tab_title')
+                ? $this->owner->config()->get('slide_tab_title')
+                : 'Slides';
 
             $fields->addFieldsToTab(
                 "Root.{$slideTitle}",
