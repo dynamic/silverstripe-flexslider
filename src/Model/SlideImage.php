@@ -166,36 +166,40 @@ class SlideImage extends DataObject implements PermissionProvider
 
     /**
      * @param null $member
+     * @param array $context
      * @return bool|int
      */
-    public function canCreate($member = null)
+    public function canCreate($member = null, $context = [])
     {
         return Permission::check('Slide_CREATE');
     }
 
     /**
      * @param null $member
+     * @param array $context
      * @return bool|int
      */
-    public function canEdit($member = null)
+    public function canEdit($member = null, $context = [])
     {
         return Permission::check('Slide_EDIT');
     }
 
     /**
      * @param null $member
+     * @param array $context
      * @return bool|int
      */
-    public function canDelete($member = null)
+    public function canDelete($member = null, $context = [])
     {
         return Permission::check('Slide_DELETE');
     }
 
     /**
      * @param null $member
-     * @return bool
+     * @param array $context
+     * @return bool|int
      */
-    public function canView($member = null)
+    public function canView($member = null, $context = [])
     {
         return true;
     }
