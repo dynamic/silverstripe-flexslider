@@ -40,13 +40,6 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @var array
      */
-    private static $defaults = array(
-        'ShowSlide' => true,
-    );
-
-    /**
-     * @var array
-     */
     private static $summary_fields = array(
         'Image.CMSThumbnail' => 'Image',
         'Name' => 'Name',
@@ -67,6 +60,13 @@ class SlideImage extends DataObject implements PermissionProvider
     private static $image_size_limit = 512000;
 
     /**
+     * @var array
+     */
+    private static $extensions = [
+        'VersionedDataObject',
+    ];
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
@@ -74,6 +74,7 @@ class SlideImage extends DataObject implements PermissionProvider
         $fields = parent::getCMSFields();
 
         $fields->removeByName([
+            'ShowSlide',
             'SortOrder',
             'PageID',
         ]);
@@ -88,16 +89,15 @@ class SlideImage extends DataObject implements PermissionProvider
             ->setDescription('optional, used in template');
 
         $fields->dataFieldByName('PageLinkID')
-            ->setTitle("'Choose a page to link to:'");
+            ->setTitle("Choose a page to link to:");
 
         $image = $fields->dataFieldByName('Image')
             ->setFolderName('Uploads/SlideImages')
             ->setAllowedMaxFileNumber(1)
             ->setAllowedFileCategories('image');
-        $fields->insertBefore($image, 'ShowSlide');
+        $fields->insertAfter($image, 'Description');
 
-        $fields->dataFieldByName('ShowSlide')
-            ->setDescription('Include this slide in the slider. Uncheck to hide');
+        $this->extend('updateSlideImageFields', $fields);
 
         return $fields;
     }
@@ -138,7 +138,7 @@ class SlideImage extends DataObject implements PermissionProvider
      */
     public function canCreate($member = null)
     {
-        return Permission::check('Slide_CREATE');
+        return Permission::check('Slide_CREATE', 'any', $member);
     }
 
     /**
@@ -147,7 +147,7 @@ class SlideImage extends DataObject implements PermissionProvider
      */
     public function canEdit($member = null)
     {
-        return Permission::check('Slide_EDIT');
+        return Permission::check('Slide_EDIT', 'any', $member);
     }
 
     /**
@@ -156,7 +156,7 @@ class SlideImage extends DataObject implements PermissionProvider
      */
     public function canDelete($member = null)
     {
-        return Permission::check('Slide_DELETE');
+        return Permission::check('Slide_DELETE', 'any', $member);
     }
 
     /**

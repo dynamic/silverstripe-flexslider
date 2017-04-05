@@ -101,7 +101,7 @@ class FlexSlider extends DataExtension
             $this->getCustomScript();
         }
 
-        return $this->owner->Slides()->filter(array('ShowSlide' => 1))->sort('SortOrder');
+        return $this->owner->Slides()->sort('SortOrder');
     }
 
     /**
