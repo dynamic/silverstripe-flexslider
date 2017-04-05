@@ -58,4 +58,4 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
     }
 }
 
-Page::add_extension('FlexSlider');
+Page::add_extension(FlexSlider::class);
