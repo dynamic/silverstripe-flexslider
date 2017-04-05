@@ -6,6 +6,7 @@ use \Page;
 use Dynamic\FlexSlider\Test\FlexSliderTest;
 use Dynamic\FlexSlider\ORM\FlexSlider;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Object;
 use SilverStripe\ORM\DataList;
 
 /**
@@ -51,7 +52,10 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
     {
         $object = singleton(Page::class);
         $object->write();
-        $slide1 = $this->objFromFixture('Dynamic\\FlexSlider\\Model\\SlideImage', 'slide1');
+        $slide1 = $this->objFromFixture(
+            'Dynamic\\FlexSlider\\Model\\SlideImage',
+            'slide1'
+        );
         /*$image = $this->objFromFixture('Image', 'image1');
         $slide1->ImageID = $image->ID;*/
         $object->Slides()->add($slide1);
@@ -60,4 +64,4 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
     }
 }
 
-Page::add_extension(FlexSlider::class);
+Object::add_extension(Page::class, FlexSlider::class);
