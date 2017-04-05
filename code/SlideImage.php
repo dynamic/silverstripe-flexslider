@@ -78,23 +78,28 @@ class SlideImage extends DataObject implements PermissionProvider
             'PageID',
         ]);
 
-        $fields->dataFieldByName('Name')
-            ->setDescription('for internal reference only');
+        if($name = $fields->dataFieldByName('Name')){
+            $name->setDescription('for internal reference only');
+        }
 
-        $fields->dataFieldByName('Headline')
-            ->setDescription('optional, used in template');
+        if($headline = $fields->dataFieldByName('Headline')){
+            $headline->setDescription('optional, used in template');
+        }
 
-        $fields->dataFieldByName('Description')
-            ->setDescription('optional, used in template');
+        if($description = $fields->dataFieldByName('Description')){
+            $description->setDescription('optional, used in template');
+        }
 
-        $fields->dataFieldByName('PageLinkID')
-            ->setTitle("'Choose a page to link to:'");
+        if($link = $fields->dataFieldByName('PageLinkID')){
+            $link->setTitle("'Choose a page to link to:'");
+        }
 
-        $image = $fields->dataFieldByName('Image')
-            ->setFolderName('Uploads/SlideImages')
-            ->setAllowedMaxFileNumber(1)
-            ->setAllowedFileCategories('image');
-        $fields->insertBefore($image, 'ShowSlide');
+        if($image = $fields->dataFieldByName('Image')){
+            $image->setFolderName('Uploads/SlideImages')
+                ->setAllowedMaxFileNumber(1)
+                ->setAllowedFileCategories('image');
+            $fields->insertBefore($image, 'ShowSlide');
+        }
 
         $fields->dataFieldByName('ShowSlide')
             ->setDescription('Include this slide in the slider. Uncheck to hide');
