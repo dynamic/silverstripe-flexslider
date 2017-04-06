@@ -6,7 +6,7 @@ use \Page;
 use Dynamic\FlexSlider\Test\FlexSliderTest;
 use Dynamic\FlexSlider\ORM\FlexSlider;
 use SilverStripe\Core\Config\Config;
-use SilverStripe\Core\Object;
+use SilverStripe\Dev\Tests\FixtureBlueprintTest\TestPage;
 use SilverStripe\ORM\DataList;
 
 /**
@@ -37,7 +37,7 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
     public function testUpdateCMSFields()
     {
         $extension = new FlexSlider();
-        $object = Page::create();
+        $object = TestPage::create();
         $fields = $object->getCMSFields();
         $extension->updateCMSFields($fields);
         $this->assertNull($fields->dataFieldByName('Slides'));
@@ -50,7 +50,7 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
 
     public function testGetSlideShow()
     {
-        $object = singleton(Page::class);
+        $object = singleton(TestPage::class);
         $object->write();
         $slide1 = $this->objFromFixture(
             'Dynamic\\FlexSlider\\Model\\SlideImage',
@@ -63,5 +63,3 @@ class FlexSliderDataExtensionTest extends FlexSliderTest
         $this->assertInstanceOf(DataList::class, $slides);
     }
 }
-
-Object::add_extension(Page::class, FlexSlider::class);
