@@ -32,7 +32,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Dynamic\\Flexslider\\": "src/"
+      "Dynamic\\FlexSlider\\": "src/",
+      "Dynamic\\FlexSlider\\Test\\": "tests/"
     }
   },
   "prefer-stable": true,
