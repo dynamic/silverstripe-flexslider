@@ -56,6 +56,7 @@ class SlideImage extends DataObject implements PermissionProvider
      */
     private static $has_one = array(
         'Image' => Image::class,
+        'Page' => SiteTree::class,
         'PageLink' => SiteTree::class,
     );
 
@@ -102,6 +103,7 @@ class SlideImage extends DataObject implements PermissionProvider
 
         $fields->removeByName([
             'SortOrder',
+            'Page',
             'PageID',
         ]);
 
