@@ -63,7 +63,7 @@ class SlideImage extends DataObject implements PermissionProvider
      * @var array
      */
     private static $extensions = [
-        'VersionedDataObject',
+	    'Heyday\VersionedDataObjects\VersionedDataObject',
     ];
 
     /**
