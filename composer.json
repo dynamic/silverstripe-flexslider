@@ -8,7 +8,7 @@
     	"silverstripe/framework": "^3.1",
         "silverstripe/cms": "^3.1",
         "dynamic/imageuploadfield": "^1.0",
-        "silverstripe-australia/gridfieldextensions": "^1.2",
+        "symbiote/silverstripe-gridfieldextensions": "^1.2",
         "unclecheese/display-logic": "^1.2"
     },
     "suggest": {
