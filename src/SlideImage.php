@@ -1,5 +1,26 @@
 <?php
 
+namespace Dynamic\FlexSlider\Model;
+
+use SilverStripe\Assets\Image;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Forms\FileHandleField;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\Permission;
+use SilverStripe\Security\PermissionProvider;
+
+/**
+ * Class SlideImage
+ * @package Dynamic\FlexSlider\Model
+ * @property string $Name
+ * @property string $Headline
+ * @property string $Description
+ * @property int $SortOrder
+ * @property int $ImageID
+ * @property int $PageID
+ * @property int $PageLinkID
+ */
 class SlideImage extends DataObject implements PermissionProvider
 {
     /**
@@ -20,17 +41,21 @@ class SlideImage extends DataObject implements PermissionProvider
         'Headline' => 'Varchar(255)',
         'Description' => 'Text',
         'SortOrder' => 'Int',
-        'ShowSlide' => 'Boolean',
     );
 
     /**
      * @var array
      */
     private static $has_one = array(
-        'Image' => 'Image',
-        'Page' => 'Page',
-        'PageLink' => 'SiteTree',
+        'Image' => Image::class,
+        'Page' => \Page::class,
+        'PageLink' => SiteTree::class,
     );
+
+    /**
+     * @var string
+     */
+    private static $table_name = 'SlideImage';
 
     /**
      * @var string
@@ -60,14 +85,7 @@ class SlideImage extends DataObject implements PermissionProvider
     private static $image_size_limit = 512000;
 
     /**
-     * @var array
-     */
-    private static $extensions = [
-        'VersionedDataObject',
-    ];
-
-    /**
-     * @return FieldList
+     * @return \SilverStripe\Forms\FieldList
      */
     public function getCMSFields()
     {
@@ -77,6 +95,7 @@ class SlideImage extends DataObject implements PermissionProvider
             'ShowSlide',
             'SortOrder',
             'PageID',
+            'Image',
         ]);
 
         $fields->dataFieldByName('Name')
@@ -91,10 +110,14 @@ class SlideImage extends DataObject implements PermissionProvider
         $fields->dataFieldByName('PageLinkID')
             ->setTitle("Choose a page to link to:");
 
+        /*
         $image = $fields->dataFieldByName('Image')
             ->setFolderName('Uploads/SlideImages')
-            ->setAllowedMaxFileNumber(1)
-            ->setAllowedFileCategories('image');
+            ->setIsMultiUpload(false)
+            ->setAllowedFileCategories('image/supported')
+        ;
+        */
+        $image = Injector::inst()->create(FileHandleField::class, 'Image');
         $fields->insertAfter($image, 'Description');
 
         $this->extend('updateSlideImageFields', $fields);
@@ -103,18 +126,18 @@ class SlideImage extends DataObject implements PermissionProvider
     }
 
     /**
-     * @return ValidationResult
+     * @return \SilverStripe\ORM\ValidationResult
      */
     public function validate()
     {
         $result = parent::validate();
 
         if (!$this->Name) {
-            $result->error('A Name is required before you can save');
+            $result->addError('A Name is required before you can save');
         }
 
         if (!$this->ImageID) {
-            $result->error('An Image is required before you can save');
+            $result->addError('An Image is required before you can save');
         }
 
         return $result;
@@ -134,36 +157,40 @@ class SlideImage extends DataObject implements PermissionProvider
 
     /**
      * @param null $member
+     * @param array $context
      * @return bool|int
      */
-    public function canCreate($member = null)
+    public function canCreate($member = null, $context = [])
     {
         return Permission::check('Slide_CREATE', 'any', $member);
     }
 
     /**
      * @param null $member
+     * @param array $context
      * @return bool|int
      */
-    public function canEdit($member = null)
+    public function canEdit($member = null, $context = [])
     {
         return Permission::check('Slide_EDIT', 'any', $member);
     }
 
     /**
      * @param null $member
+     * @param array $context
      * @return bool|int
      */
-    public function canDelete($member = null)
+    public function canDelete($member = null, $context = [])
     {
         return Permission::check('Slide_DELETE', 'any', $member);
     }
 
     /**
      * @param null $member
+     * @param array $context
      * @return bool
      */
-    public function canView($member = null)
+    public function canView($member = null, $context = [])
     {
         return true;
     }

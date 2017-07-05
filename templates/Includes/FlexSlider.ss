@@ -34,5 +34,5 @@
   	<% end_if %>
   </div>
 <% end_if %>
-<% require javascript('framework/thirdparty/jquery/jquery.js') %>
+<% require javascript('silverstripe-admin/thirdparty/jquery/jquery.min.js') %>
 <% require javascript('flexslider/thirdparty/flexslider/jquery.flexslider-min.js') %>

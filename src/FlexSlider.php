@@ -1,11 +1,40 @@
 <?php
 
+namespace Dynamic\FlexSlider\ORM;
+
+use Dynamic\FlexSlider\Model\SlideImage;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use SilverStripe\Forms\NumericField;
+use SilverStripe\Forms\ToggleCompositeField;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\View\Requirements;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
+
+/**
+ * Class FlexSlider
+ * @package Dynamic\FlexSlider\ORM
+ * @property string $Animation
+ * @property bool $Loop
+ * @property bool $Animate
+ * @property bool $ThumbnailNav
+ * @property bool $SliderControlNav
+ * @property bool $CarouselControlNav
+ * @property bool $CarouselDirectionNav
+ * @property int $CarouselThumbnailCt
+ */
 class FlexSlider extends DataExtension
 {
     /**
      * @var array
      */
-    public static $db = array(
+    private static $db = array(
         'Animation' => "Enum('slide, fade', 'slide')",
         'Loop' => 'Boolean',
         'Animate' => 'Boolean',
@@ -20,8 +49,8 @@ class FlexSlider extends DataExtension
     /**
      * @var array
      */
-    public static $has_many = array(
-        'Slides' => 'SlideImage',
+    private static $has_many = array(
+        'Slides' => SlideImage::class,
     );
 
     /**
@@ -60,10 +89,6 @@ class FlexSlider extends DataExtension
         if ($this->owner->ID) {
             $config = GridFieldConfig_RecordEditor::create();
             $config->addComponent(new GridFieldOrderableRows('SortOrder'));
-            if (class_exists('GridFieldBulkUpload')) {
-                $config->addComponent(new GridFieldBulkUpload());
-                $config->addComponent(new GridFieldBulkManager());
-            }
             $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
             $config->removeComponentsByType('GridFieldDeleteAction');
             $config->addComponent(new GridFieldDeleteAction(false));
@@ -80,20 +105,20 @@ class FlexSlider extends DataExtension
                     CheckboxField::create('SliderControlNav', 'Show ControlNav'),
                     CheckboxField::create('SliderDirectionNav', 'Show DirectionNav'),
                     CheckboxField::create('ThumbnailNav', 'Thumbnail Navigation'),
-                    DisplayLogicWrapper::create(
+                    //DisplayLogicWrapper::create(
                         CheckboxField::create('CarouselControlNav', 'Show Carousel ControlNav'),
                         CheckboxField::create('CarouselDirectionNav', 'Show Carousel DirectionNav'),
                         NumericField::create('CarouselThumbnailCt', 'Number of thumbnails')
-                    )->displayIf('ThumbnailNav')->isChecked()->end()
+                    //)->displayIf('ThumbnailNav')->isChecked()->end()
                 )),
             ));
         }
     }
 
     /**
-     * @return DataList
+     * @return mixed
      */
-    public function SlideShow()
+    public function getSlideShow()
     {
         $owner = $this->owner;
 
@@ -105,13 +130,13 @@ class FlexSlider extends DataExtension
     }
 
     /**
-     * add requirements to Page_Controller init()
+     * add requirements to PageController init()
      */
     public function contentcontrollerInit()
     {
         // only call custom script if page has Slides and DataExtension
-        if (Object::has_extension($this->owner->ClassName, 'FlexSlider')) {
-            if ($this->owner->SlideShow()->exists()) {
+        if (DataObject::has_extension($this->owner->Classname, FlexSlider::class)) {
+            if ($this->owner->getSlideShow()->exists()) {
                 $this->getCustomScript();
             }
         }
@@ -125,15 +150,15 @@ class FlexSlider extends DataExtension
         // Flexslider options
         $sync = ($this->owner->ThumbnailNav == true) ? "sync: '.carousel:eq('+index+')'," : '';
 
-        $before = (method_exists($this->owner->ClassName, 'flexSliderBeforeAction'))
+        $before = $this->owner->hasMethod('flexSliderBeforeAction')
             ? $this->owner->flexSliderBeforeAction()
             : 'function(){}';
 
-        $after = (method_exists($this->owner->ClassName, 'flexSliderAfterAction'))
+        $after = $this->owner->hasMethod('flexSliderAfterAction')
             ? $this->owner->flexSliderAfterAction()
             : 'function(){}';
 
-        $speed = (method_exists($this->owner->ClassName, 'setFlexSliderSpeed'))
+        $speed = $this->owner->hasMethod('setFlexSliderSpeed')
             ? $this->owner->setFlexSliderSpeed()
             : 7000;
 

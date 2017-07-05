@@ -1,3 +1,6 @@
 ---
 Name: FlexSlider
 ---
+Dynamic\FlexSLider\Model\SlideImage:
+  extensions:
+    - SilverStripe\Versioned\Versioned('Stage','Live')

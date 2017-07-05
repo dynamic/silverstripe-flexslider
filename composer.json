@@ -12,13 +12,13 @@
   "license": "BSD-3-Clause",
   "type": "silverstripe-module",
   "require": {
-    "silverstripe/framework": "^3.1",
-    "silverstripe/cms": "^3.1",
-    "dynamic/imageuploadfield": "dev-master"
+    "silverstripe/framework": "4.0.0-beta1",
+    "silverstripe/cms": "4.0.0-beta1",
+    "silverstripe/asset-admin": "1.0.0-beta1",
+    "symbiote/silverstripe-gridfieldextensions": "^3.0"
   },
-  "suggest": {
-    "colymba/gridfield-bulk-editing-tools": "^v2.1",
-    "undefinedoffset/sortablegridfield": "^0.6"
+  "require-dev": {
+    "phpunit/PHPUnit": "^5.7"
   },
   "authors": [
     {
@@ -27,6 +27,14 @@
       "email": "dev@dynamicagency.com"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "Dynamic\\FlexSlider\\": "src/",
+      "Dynamic\\FlexSlider\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "extra": {
     "installer-name": "flexslider",
     "branch-alias": {
