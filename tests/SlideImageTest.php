@@ -1,100 +1,61 @@
 <?php
 
-class SlideImageTest extends FlexSliderTest
+namespace Dynamic\FlexSlider\Tests;
+
+use Dynamic\FlexSlider\Model\SlideImage;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Dev\SapphireTest;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\ValidationException;
+use SilverStripe\Security\Member;
+
+class SlideImageTest extends SapphireTest
 {
-    protected static $use_draft_site = true;
+    /**
+     * @var string
+     */
+    protected static $fixture_file = 'flexslider/tests/fixtures.yml';
 
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
+    /**
+     *
+     */
     public function testGetCMSFields()
     {
         $object = new SlideImage();
         $fieldset = $object->getCMSFields();
-        $this->assertTrue(is_a($fieldset, 'FieldList'));
+        $this->assertInstanceOf(FieldList::class, $fieldset);
         $this->assertNotNull($fieldset->dataFieldByName('Name'));
         $this->assertNotNull($fieldset->dataFieldByName('Image'));
     }
 
+    /**
+     *
+     */
     public function testValidateName()
     {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $object = $this->objFromFixture(SlideImage::class, 'slide1');
         $object->Name = '';
-        $this->setExpectedException('ValidationException');
+        $this->setExpectedException(ValidationException::class);
         $object->write();
     }
 
+    /**
+     *
+     */
     public function testValidateImage()
     {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
+        $object = $this->objFromFixture(SlideImage::class, 'slide1');
         $object->ImageID = '';
-        $this->setExpectedException('ValidationException');
+        $this->setExpectedException(ValidationException::class);
         $object->write();
     }
 
-    public function testCanView()
-    {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
-        $image = $this->objFromFixture('Image', 'image1');
-        $object->ImageID = $image->ID;
-        $object->write();
-        $this->logInWithPermission('ADMIN');
-        $this->assertTrue($object->canView());
-        $this->logOut();
-        $nullMember = Member::create();
-        $nullMember->write();
-        $this->assertTrue($object->canView($nullMember));
-        $nullMember->delete();
-    }
-
-    public function testCanEdit()
-    {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
-        $image = $this->objFromFixture('Image', 'image1');
-        $object->ImageID = $image->ID;
-        $object->write();
-        $objectID = $object->ID;
-        $this->logInWithPermission('ADMIN');
-        $originalName = $object->Name;
-        $this->assertEquals($originalName, 'Hello World');
-        $this->assertTrue($object->canEdit());
-        $object->Name = 'Changed Name';
-        $object->write();
-        $testEdit = SlideImage::get()->byID($objectID);
-        $this->assertEquals($testEdit->Name, 'Changed Name');
-        $this->logOut();
-    }
-
-    public function testCanDelete()
-    {
-        $object = $this->objFromFixture('SlideImage', 'slide1');
-        $image = $this->objFromFixture('Image', 'image1');
-        $object->ImageID = $image->ID;
-        $object->write();
-        $this->logInWithPermission('ADMIN');
-        $this->assertTrue($object->canDelete());
-        $checkObject = $object;
-        $object->delete();
-        $this->assertEquals($checkObject->ID, 0);
-    }
-
-    public function testCanCreate()
-    {
-        $object = singleton('SlideImage');
-        $this->logInWithPermission('ADMIN');
-        $this->assertTrue($object->canCreate());
-        $this->logOut();
-        $nullMember = Member::create();
-        $nullMember->write();
-        $this->assertFalse($object->canCreate($nullMember));
-        $nullMember->delete();
-    }
-
+    /**
+     *
+     */
     public function testProvidePermissions()
     {
-        $object = singleton('SlideImage');
+        $object = singleton(SlideImage::class);
         $expected = array(
             'Slide_EDIT' => 'Slide Edit',
             'Slide_DELETE' => 'Slide Delete',
@@ -103,16 +64,80 @@ class SlideImageTest extends FlexSliderTest
         $this->assertEquals($expected, $object->providePermissions());
     }
 
-    public function testImageSizeLimit()
+    /**
+     *
+     */
+    public function testCanCreate()
     {
+        $object = $this->objFromFixture(SlideImage::class, 'slide1');
+        $admin = $this->objFromFixture(Member::class, 'admin');
+        $this->assertTrue($object->canCreate($admin));
 
-        $default = 512000;
-        $this->assertEquals(Config::inst()->get('SlideImage', 'image_size_limit'), $default);
+        $author = $this->objFromFixture(Member::class, 'author');
+        $this->assertTrue($object->canCreate($author));
 
-        $new = 1024000;
-        Config::inst()->update('SlideImage', 'image_size_limit', $new);
-        $this->assertEquals(Config::inst()->get('SlideImage', 'image_size_limit'), $new);
-
+        $member = $this->objFromFixture(Member::class, 'default');
+        $this->assertFalse($object->canCreate($member));
     }
 
+    /**
+     *
+     */
+    public function testCanEdit()
+    {
+        $object = $this->objFromFixture(SlideImage::class, 'slide1');
+        $admin = $this->objFromFixture(Member::class, 'admin');
+        $this->assertTrue($object->canEdit($admin));
+
+        $author = $this->objFromFixture(Member::class, 'author');
+        $this->assertTrue($object->canEdit($author));
+
+        $member = $this->objFromFixture(Member::class, 'default');
+        $this->assertFalse($object->canEdit($member));
+    }
+
+    /**
+     *
+     */
+    public function testCanDelete()
+    {
+        $object = $this->objFromFixture(SlideImage::class, 'slide1');
+        $admin = $this->objFromFixture(Member::class, 'admin');
+        $this->assertTrue($object->canDelete($admin));
+
+        $author = $this->objFromFixture(Member::class, 'author');
+        $this->assertTrue($object->canDelete($author));
+
+        $member = $this->objFromFixture(Member::class, 'default');
+        $this->assertFalse($object->canDelete($member));
+    }
+
+    /**
+     *
+     */
+    public function testCanView()
+    {
+        $object = $this->objFromFixture(SlideImage::class, 'slide1');
+        $admin = $this->objFromFixture(Member::class, 'admin');
+        $this->assertTrue($object->canView($admin));
+
+        $author = $this->objFromFixture(Member::class, 'author');
+        $this->assertTrue($object->canView($author));
+
+        $member = $this->objFromFixture(Member::class, 'default');
+        $this->assertTrue($object->canView($member));
+    }
+
+    /**
+     *
+     */
+    public function testImageSizeLimit()
+    {
+        $default = 512000;
+        $this->assertEquals(Config::modify()->get(SlideImage::class, 'image_size_limit'), $default);
+
+        $new = 1024000;
+        Config::modify()->update(SlideImage::class , 'image_size_limit', $new);
+        $this->assertEquals(Config::modify()->get(SlideImage::class, 'image_size_limit'), $new);
+    }
 }

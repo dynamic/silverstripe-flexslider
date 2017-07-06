@@ -1,0 +1,14 @@
+<phpunit bootstrap="framework/tests/bootstrap.php" colors="true">
+    <testsuite name="flexslider">
+        <directory>flexslider/tests</directory>
+    </testsuite>
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">flexslider/src/</directory>
+            <exclude>
+                <directory suffix=".php">flexslider/tests/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

@@ -1,19 +1,30 @@
 <?php
 
+namespace Dynamic\FlexSlider\Tasks;
+
+use SilverStripe\Dev\BuildTask;
+
+/**
+ * Class SlidePublishTask
+ * @package Dynamic\FlexSlider\Tasks
+ */
 class SlidePublishTask extends BuildTask
 {
     /**
      * @var string
      */
     protected $title = 'Publish all SlideImages';
+
     /**
      * @var string
      */
     protected $description = 'Migration task - pre versioning on SlideImage';
+
     /**
      * @var bool
      */
     protected $enabled = true;
+
     /**
      * @param $request
      */
@@ -21,6 +32,7 @@ class SlidePublishTask extends BuildTask
     {
         $this->publishSlides();
     }
+
     /**
      * mark all ProductDetail records as ShowInMenus = 0.
      */

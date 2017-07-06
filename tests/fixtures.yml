@@ -1,0 +1,48 @@
+SilverStripe\Security\Group:
+  administrators:
+    Title: Administrators
+  content_authors:
+    Title: "Content Authors"
+SilverStripe\Security\Permission:
+  administrators:
+    Code: ADMIN
+    Type: 1
+    Group: =>SilverStripe\Security\Group.administrators
+  slide_edit:
+    Code: Slide_EDIT
+    Type: 1
+    Group: =>SilverStripe\Security\Group.content_authors
+  slide_delete:
+    Code: Slide_DELETE
+    Type: 1
+    Group: =>SilverStripe\Security\Group.content_authors
+  slide_create:
+    Code: Slide_CREATE
+    Type: 1
+    Group: =>SilverStripe\Security\Group.content_authors
+SilverStripe\Security\Member:
+  admin:
+    FirstName: Default
+    Surname: Admin
+    Email: administrator
+    Groups: =>SilverStripe\Security\Group.administrators
+  author:
+    FirstName: "Content"
+    Surname: "Author"
+    Email: "content"
+    Groups: =>SilverStripe\Security\Group.content_authors
+  default:
+    FirstName: Default
+    Surname: Member
+    Email: member
+Dynamic\FlexSlider\Model\SlideImage:
+  slide1:
+    Name: 'Hello World'
+    Description: 'What a fine place it is too!'
+  slide2:
+    Name: 'Goodbye World'
+    Description: 'It was fun while it lasted!'
+SilverStripe\Assets\Image:
+  image1:
+    Name: Test Image
+    Filename: test.jpg
