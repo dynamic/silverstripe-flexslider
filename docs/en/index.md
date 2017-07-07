@@ -11,12 +11,10 @@ In your `mysite/_config/config.yml` add the following to the desired page type o
 ```
 Page:
   extensions:
-    - FlexSlider
+    - Dynamic\FlexSlider\ORM\FlexSlider
 ```
 
-After attaching the DataExtension to your page type or DataObject run a `dev/build`. 
-
-This module uses [ImageUploadField](https://github.com/dynamic/silverstripe-imageuploadfield/) for the slide image field. See the [docs](https://github.com/dynamic/silverstripe-imageuploadfield/blob/master/docs/en/index.md) for configuration options such as changing the max upload limit.
+After attaching the DataExtension to your page type or DataObject run a `dev/build`.
 
 ### User Guide
 
