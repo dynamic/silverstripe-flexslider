@@ -30,13 +30,15 @@ class SlidePublishTask extends BuildTask
         $ct = 0;
         foreach ($slides as $slide) {
             if ($slide->ShowSlide == 1) {
-                $title = $slide->Title;
+                if (!$slide->Name) {
+                    $slide->Name = ($slide->Headline) ? $slide->Headline : 'New Slide';
+                }
                 $slide->writeToStage('Stage');
                 $slide->publish('Stage', 'Live');
-                echo $title.'<br><br>';
+                echo '<p>' . $slide->Name . '</p>';
                 ++$ct;
             }
         }
-        echo '<p>'.$ct.' slides updated.</p>';
+        echo '<h3>'.$ct.' slides updated.</h3>';
     }
 }
