@@ -18,15 +18,11 @@ The FlexSlider module allows a developer to attach a [Woothemes FlexSlider](http
 
 ## Requirements
 
-* [silverstripe/silverstripe-framework](https://github.com/silverstripe/silverstripe-framework) ^3.1
+* [silverstripe/silverstripe-framework](https://github.com/silverstripe/silverstripe-framework) ^4.0
 
 ## Installation
 
-`composer require dynamic/flexslider`
-
-## Recommended Add-Ons
-
-* [colymba/gridfield-bulk-editing-tools](https://github.com/colymba/GridFieldBulkEditingTools)
+`composer require dynamic/flexslider 3.0.x-dev`
 
 ## Example usage
 

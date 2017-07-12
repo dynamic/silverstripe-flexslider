@@ -1,6 +1,66 @@
 # Change Log
 
-## [1.0.0](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.0) (2017-03-01)
+## [3.0.0-alpha1](https://github.com/dynamic/silverstripe-flexslider/tree/3.0.0-alpha1) (2017-07-06)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/2.0.0-alpha1...3.0.0-alpha1)
+
+**Merged pull requests:**
+
+- codecov - update default branch to master [\#115](https://github.com/dynamic/silverstripe-flexslider/pull/115) ([jsirish](https://github.com/jsirish))
+- SilverStripe 4 upgrade [\#114](https://github.com/dynamic/silverstripe-flexslider/pull/114) ([jsirish](https://github.com/jsirish))
+- UPDATE silverstripe-australia now symbiote [\#112](https://github.com/dynamic/silverstripe-flexslider/pull/112) ([muskie9](https://github.com/muskie9))
+- composer - require versioneddataobjects [\#110](https://github.com/dynamic/silverstripe-flexslider/pull/110) ([jsirish](https://github.com/jsirish))
+
+## [2.0.0-alpha1](https://github.com/dynamic/silverstripe-flexslider/tree/2.0.0-alpha1) (2017-06-30)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/1.0.4...2.0.0-alpha1)
+
+**Fixed bugs:**
+
+- BUG removing cms fields via DataExtension causes call to function on null [\#107](https://github.com/dynamic/silverstripe-flexslider/issues/107)
+
+**Merged pull requests:**
+
+- UPDATE silverstripe-australia now symbiote [\#113](https://github.com/dynamic/silverstripe-flexslider/pull/113) ([muskie9](https://github.com/muskie9))
+- UPDATE versioned data object requirement version [\#111](https://github.com/dynamic/silverstripe-flexslider/pull/111) ([muskie9](https://github.com/muskie9))
+
+## [1.0.4](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.4) (2017-04-05)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/1.0.3...1.0.4)
+
+**Merged pull requests:**
+
+- BUGFIX removing cms fields via DataExtension causes call to function on null [\#108](https://github.com/dynamic/silverstripe-flexslider/pull/108) ([muskie9](https://github.com/muskie9))
+- SlideImage - Versioned [\#106](https://github.com/dynamic/silverstripe-flexslider/pull/106) ([jsirish](https://github.com/jsirish))
+- UPDATE branch alias [\#104](https://github.com/dynamic/silverstripe-flexslider/pull/104) ([muskie9](https://github.com/muskie9))
+
+## [1.0.3](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.3) (2017-03-14)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/1.0.2...1.0.3)
+
+**Fixed bugs:**
+
+- SlideImage - unable to customize field descriptions via DataExtension [\#100](https://github.com/dynamic/silverstripe-flexslider/issues/100)
+
+**Merged pull requests:**
+
+- SlideImage - refactor CMSFields [\#103](https://github.com/dynamic/silverstripe-flexslider/pull/103) ([jsirish](https://github.com/jsirish))
+
+## [1.0.2](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.2) (2017-03-09)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/1.0.1...1.0.2)
+
+**Merged pull requests:**
+
+- SlideThumbnailNavMigrationTask - publish if isPublished\(\) [\#97](https://github.com/dynamic/silverstripe-flexslider/pull/97) ([jsirish](https://github.com/jsirish))
+
+## [1.0.1](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.1) (2017-03-06)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/1.0.0...1.0.1)
+
+**Fixed bugs:**
+
+- SlideThumbnailNavMigrationTask - handle pages and versioned dataobjects [\#94](https://github.com/dynamic/silverstripe-flexslider/issues/94)
+
+**Merged pull requests:**
+
+- migration task - publish if instance of page [\#95](https://github.com/dynamic/silverstripe-flexslider/pull/95) ([jsirish](https://github.com/jsirish))
+
+## [1.0.0](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.0) (2017-03-02)
 [Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/1.0.0-rc5...1.0.0)
 
 **Implemented enhancements:**
@@ -8,15 +68,33 @@
 - FlexSlider.ss - styling tweaks, directionNav on carousel [\#90](https://github.com/dynamic/silverstripe-flexslider/issues/90)
 - FlexSlider - carousel config in CMS [\#83](https://github.com/dynamic/silverstripe-flexslider/issues/83)
 - SlideImage - switch to ImageUploadField [\#82](https://github.com/dynamic/silverstripe-flexslider/issues/82)
+- FlexSlider - contentcontrollerInit\(\) [\#58](https://github.com/dynamic/silverstripe-flexslider/issues/58)
+- Composer [\#47](https://github.com/dynamic/silverstripe-flexslider/issues/47)
+- CI Setup [\#44](https://github.com/dynamic/silverstripe-flexslider/issues/44)
+- Documentation [\#40](https://github.com/dynamic/silverstripe-flexslider/issues/40)
+- Javascript - remove unused flexslider\_init.js [\#39](https://github.com/dynamic/silverstripe-flexslider/issues/39)
+- SlideImage - Title field [\#37](https://github.com/dynamic/silverstripe-flexslider/issues/37)
+- Travis integration [\#7](https://github.com/dynamic/silverstripe-flexslider/issues/7)
+- Write unit tests [\#6](https://github.com/dynamic/silverstripe-flexslider/issues/6)
 - Choose FlexSlider style via CMS [\#1](https://github.com/dynamic/silverstripe-flexslider/issues/1)
 
 **Fixed bugs:**
 
+- SlideThumbnailNavMigrationTask - only publish if currently isPublished\(\) [\#96](https://github.com/dynamic/silverstripe-flexslider/issues/96)
 - FlexSlider JS - directionNav shows even if there's only one slide [\#80](https://github.com/dynamic/silverstripe-flexslider/issues/80)
 - CMSFields - remove `Slides` HeaderFIeld [\#67](https://github.com/dynamic/silverstripe-flexslider/issues/67)
+- Touch devices break direction/control click [\#65](https://github.com/dynamic/silverstripe-flexslider/issues/65)
+- FlexSlider DataExtension - Show Thumbnail Nav [\#50](https://github.com/dynamic/silverstripe-flexslider/issues/50)
+
+**Closed issues:**
+
+- Tag 1.0.0 [\#73](https://github.com/dynamic/silverstripe-flexslider/issues/73)
+- Write Readme [\#3](https://github.com/dynamic/silverstripe-flexslider/issues/3)
+- Slide Width/Slide Height not used in FlexSlider, remove options from model/cms [\#2](https://github.com/dynamic/silverstripe-flexslider/issues/2)
 
 **Merged pull requests:**
 
+- doc updates [\#93](https://github.com/dynamic/silverstripe-flexslider/pull/93) ([jsirish](https://github.com/jsirish))
 - FlexSlider - config options update [\#92](https://github.com/dynamic/silverstripe-flexslider/pull/92) ([jsirish](https://github.com/jsirish))
 - adjust include and styles [\#91](https://github.com/dynamic/silverstripe-flexslider/pull/91) ([korthjp17](https://github.com/korthjp17))
 - Slider Config - init mapping [\#89](https://github.com/dynamic/silverstripe-flexslider/pull/89) ([jsirish](https://github.com/jsirish))
@@ -40,14 +118,6 @@
 ## [1.0.0-rc4](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.0-rc4) (2016-11-22)
 [Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/1.0.0-rc3...1.0.0-rc4)
 
-**Implemented enhancements:**
-
-- FlexSlider - contentcontrollerInit\(\) [\#58](https://github.com/dynamic/silverstripe-flexslider/issues/58)
-
-**Fixed bugs:**
-
-- Touch devices break direction/control click [\#65](https://github.com/dynamic/silverstripe-flexslider/issues/65)
-
 **Merged pull requests:**
 
 - upgrade to latest flexslider js version [\#70](https://github.com/dynamic/silverstripe-flexslider/pull/70) ([korthjp17](https://github.com/korthjp17))
@@ -70,24 +140,11 @@
 ## [1.0.0-rc1](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.0-rc1) (2016-04-15)
 [Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/0.18...1.0.0-rc1)
 
-**Implemented enhancements:**
-
-- Composer [\#47](https://github.com/dynamic/silverstripe-flexslider/issues/47)
-- CI Setup [\#44](https://github.com/dynamic/silverstripe-flexslider/issues/44)
-- Documentation [\#40](https://github.com/dynamic/silverstripe-flexslider/issues/40)
-- Javascript - remove unused flexslider\_init.js [\#39](https://github.com/dynamic/silverstripe-flexslider/issues/39)
-- SlideImage - Title field [\#37](https://github.com/dynamic/silverstripe-flexslider/issues/37)
-
 **Fixed bugs:**
 
-- FlexSlider DataExtension - Show Thumbnail Nav [\#50](https://github.com/dynamic/silverstripe-flexslider/issues/50)
 - default include image variable [\#33](https://github.com/dynamic/silverstripe-flexslider/issues/33)
 - SlideImage needs PermissionProvider [\#29](https://github.com/dynamic/silverstripe-flexslider/issues/29)
 - BUG current FlexSliderExtension doesn't allow for multiple slider setup [\#15](https://github.com/dynamic/silverstripe-flexslider/issues/15)
-
-**Closed issues:**
-
-- Write Readme [\#3](https://github.com/dynamic/silverstripe-flexslider/issues/3)
 
 **Merged pull requests:**
 
@@ -135,12 +192,6 @@
 **Implemented enhancements:**
 
 - ENHANCEMENT utilize PermissionProvider on SlideImage [\#9](https://github.com/dynamic/silverstripe-flexslider/issues/9)
-- Travis integration [\#7](https://github.com/dynamic/silverstripe-flexslider/issues/7)
-- Write unit tests [\#6](https://github.com/dynamic/silverstripe-flexslider/issues/6)
-
-**Closed issues:**
-
-- Slide Width/Slide Height not used in FlexSlider, remove options from model/cms [\#2](https://github.com/dynamic/silverstripe-flexslider/issues/2)
 
 **Merged pull requests:**
 
