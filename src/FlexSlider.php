@@ -92,9 +92,9 @@ class FlexSlider extends DataExtension
             $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
             $config->removeComponentsByType('GridFieldDeleteAction');
             $config->addComponent(new GridFieldDeleteAction(false));
-            $SlidesField = GridField::create('Slides', 'Slides', $this->owner->Slides()->sort('SortOrder'), $config);
-
             $slideTitle = $this->owner->stat('slide_tab_title') ? $this->owner->stat('slide_tab_title') : 'Slides';
+
+            $SlidesField = GridField::create('Slides', $slideTitle, $this->owner->Slides()->sort('SortOrder'), $config);
 
             $fields->addFieldsToTab("Root.{$slideTitle}", array(
                 $SlidesField,
