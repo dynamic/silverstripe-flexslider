@@ -183,7 +183,7 @@ class FlexSlider extends DataExtension
                         }
                     })
                 });
-            }(jQuery));'
+            }(jQuery));', 'jqueryFlexSlider'
         );
     }
 
