@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\FlexSlider\Tests;
+namespace Dynamic\flexslider\tests;
 
 use Dynamic\FlexSlider\ORM\FlexSlider;
 use SilverStripe\Dev\TestOnly;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\FlexSlider\Tests;
+namespace Dynamic\flexslider\tests;
 
 use Dynamic\FlexSlider\Model\SlideImage;
 use SilverStripe\Assets\Image;
@@ -21,7 +21,7 @@ class FlexSliderTest extends SapphireTest
     /**
      * @var string
      */
-    protected static $fixture_file = 'flexslider/tests/fixtures.yml';
+    protected static $fixture_file = 'fixtures.yml';
 
     /**
      *

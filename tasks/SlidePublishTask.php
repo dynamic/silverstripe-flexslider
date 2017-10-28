@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\FlexSlider\Tasks;
+namespace Dynamic\flexslider\tasks;
 
 use SilverStripe\Dev\BuildTask;
 

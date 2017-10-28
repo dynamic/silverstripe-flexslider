@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\FlexSlider\Tests;
+namespace Dynamic\flexslider\tests;
 
 use Dynamic\FlexSlider\Model\SlideImage;
 use SilverStripe\Core\Config\Config;
@@ -14,7 +14,7 @@ class SlideImageTest extends SapphireTest
     /**
      * @var string
      */
-    protected static $fixture_file = 'flexslider/tests/fixtures.yml';
+    protected static $fixture_file = 'fixtures.yml';
 
     /**
      *
@@ -137,7 +137,7 @@ class SlideImageTest extends SapphireTest
         $this->assertEquals(Config::modify()->get(SlideImage::class, 'image_size_limit'), $default);
 
         $new = 1024000;
-        Config::modify()->update(SlideImage::class , 'image_size_limit', $new);
+        Config::modify()->update(SlideImage::class, 'image_size_limit', $new);
         $this->assertEquals(Config::modify()->get(SlideImage::class, 'image_size_limit'), $new);
     }
 }
