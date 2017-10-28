@@ -63,6 +63,13 @@ class SlideImage extends DataObject implements PermissionProvider
     private static $default_sort = 'SortOrder';
 
     /**
+     * Adds Publish button to SlideImage record
+     *
+     * @var bool
+     */
+    private static $versioned_gridfield_extensions = true;
+
+    /**
      * @var array
      */
     private static $summary_fields = array(
