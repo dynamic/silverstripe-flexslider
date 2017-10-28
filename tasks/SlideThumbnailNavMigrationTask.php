@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\FlexSlider\Tasks;
+namespace Dynamic\flexslider\tasks;
 
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\ClassInfo;
@@ -55,7 +55,7 @@ class SlideThumbnailNavMigrationTask extends BuildTask
                         $result->CarouselControlNav = 0;
                         $result->CarouselDirectionNav = 1;
                         $result->CarouselThumbnailCt = 6;
-                        if ($result InstanceOf SiteTree || singleton($object)->hasExtension('VersionedDataobject')) {
+                        if ($result instanceof SiteTree || singleton($object)->hasExtension('VersionedDataobject')) {
                             $result->writeToStage('Stage');
                             if ($result->isPublished()) {
                                 $result->publish('Stage', 'Live');

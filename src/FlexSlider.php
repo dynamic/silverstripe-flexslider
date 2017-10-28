@@ -99,7 +99,11 @@ class FlexSlider extends DataExtension
             $fields->addFieldsToTab("Root.{$slideTitle}", array(
                 $SlidesField,
                 ToggleCompositeField::create('ConfigHD', 'Slider Settings', array(
-                    DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
+                    DropdownField::create(
+                        'Animation',
+                        'Animation option',
+                        $this->owner->dbObject('Animation')->enumValues()
+                    ),
                     CheckboxField::create('Animate', 'Animate automatically'),
                     CheckboxField::create('Loop', 'Loop the carousel'),
                     CheckboxField::create('SliderControlNav', 'Show ControlNav'),
@@ -208,8 +212,7 @@ class FlexSlider extends DataExtension
                         }
                     })
                 });
-            }(jQuery));'
-        );
+            }(jQuery));');
     }
 
     /**
@@ -222,6 +225,5 @@ class FlexSlider extends DataExtension
         if (!$this->owner->CarouselThumbnailCt) {
             $this->owner->CarouselThumbnailCt = 6;
         }
-
     }
 }
