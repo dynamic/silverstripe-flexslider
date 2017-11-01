@@ -2,7 +2,6 @@
 <% require css('dynamic/flexslider: css/silverstripe-flexslider.css') %>
 <% if $SlideShow %>
   <div class="slideshow">
-	  test
     <div class="flexslider">
       <ul class="slides">
 		<% loop $SlideShow %>
