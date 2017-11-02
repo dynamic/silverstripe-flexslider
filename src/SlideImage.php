@@ -2,10 +2,9 @@
 
 namespace Dynamic\FlexSlider\Model;
 
+use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Forms\FileHandleField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
@@ -63,13 +62,6 @@ class SlideImage extends DataObject implements PermissionProvider
     private static $default_sort = 'SortOrder';
 
     /**
-     * Adds Publish button to SlideImage record
-     *
-     * @var bool
-     */
-    private static $versioned_gridfield_extensions = true;
-
-    /**
      * @var array
      */
     private static $summary_fields = array(
@@ -105,26 +97,46 @@ class SlideImage extends DataObject implements PermissionProvider
             'Image',
         ]);
 
+        // Name
         $fields->dataFieldByName('Name')
-            ->setDescription('for internal reference only');
+            ->setTitle(
+                _t(__CLASS__ . '.NAME', 'Name')
+            )
+            ->setDescription(
+                _t(__CLASS__ . '.INTERNAL_USE', 'for internal reference only')
+            );
 
+        // Headline
         $fields->dataFieldByName('Headline')
-            ->setDescription('optional, used in template');
+            ->setTitle(
+                _t(__CLASS__ . '.HEADLINE', 'Headline')
+            )
+            ->setDescription(
+                _t(__CLASS__ . '.USED_IN_TEMPLATE', 'optional, used in template')
+            );
 
+        // Description
         $fields->dataFieldByName('Description')
-            ->setDescription('optional, used in template');
+            ->setTitle(
+                _t(__CLASS__ . '.DESCRIPTION', 'Description')
+            )
+            ->setDescription(
+                _t(__CLASS__ . '.USED_IN_TEMPLATE', 'optional, used in template')
+            );
 
+        // Page link
         $fields->dataFieldByName('PageLinkID')
-            ->setTitle("Choose a page to link to:");
+            ->setTitle(
+                _t(__CLASS__ . '.PAGE_LINK', "Choose a page to link to:")
+            );
 
-        /*
-        $image = $fields->dataFieldByName('Image')
-            ->setFolderName('Uploads/SlideImages')
-            ->setIsMultiUpload(false)
-            ->setAllowedFileCategories('image/supported')
-        ;
-        */
-        $image = Injector::inst()->create(FileHandleField::class, 'Image');
+        // Image
+        $image = UploadField::create('Image',
+            _t(__CLASS__ . '.IMAGE', 'Image')
+        )->setFolderName('Uploads/SlideImages');
+
+        $image->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif']);
+
         $fields->insertAfter($image, 'Description');
 
         $this->extend('updateSlideImageFields', $fields);
@@ -139,12 +151,16 @@ class SlideImage extends DataObject implements PermissionProvider
     {
         $result = parent::validate();
 
-        if (!$this->Name) {
-            $result->addError('A Name is required before you can save');
+        if ( !$this->Name) {
+            $result->addError(
+                _t(__CLASS__ . '.NAME_REQUIRED', 'A Name is required before you can save')
+            );
         }
 
-        if (!$this->ImageID) {
-            $result->addError('An Image is required before you can save');
+        if ( !$this->ImageID) {
+            $result->addError(
+                _t(__CLASS__ . '.IMAGE_REQUIRED', 'An Image is required before you can save')
+            );
         }
 
         return $result;
@@ -165,6 +181,7 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @param null $member
      * @param array $context
+     *
      * @return bool|int
      */
     public function canCreate($member = null, $context = [])
@@ -175,6 +192,7 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @param null $member
      * @param array $context
+     *
      * @return bool|int
      */
     public function canEdit($member = null, $context = [])
@@ -185,6 +203,7 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @param null $member
      * @param array $context
+     *
      * @return bool|int
      */
     public function canDelete($member = null, $context = [])
@@ -195,6 +214,7 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @param null $member
      * @param array $context
+     *
      * @return bool
      */
     public function canView($member = null, $context = [])

@@ -1,0 +1,29 @@
+en:
+  Dynamic\FlexSlider\Model\SlideImage:
+    NAME: 'Name'
+    HEADLINE: 'Headline'
+    DESCRIPTION: 'Description'
+    IMAGE: 'Image'
+    PAGE_LINK: 'Choose a page to link to:'
+    INTERNAL_USE: 'for internal reference only'
+    USED_IN_TEMPLATE: 'optional, used in template'
+    SINGULARNAME: 'Slide Image'
+    PLURALNAME: 'Slide Images'
+    PLURALS:
+      one: 'A Slide Image'
+      other: '{count} Slide Images'
+
+  Dynamic\FlexSlider\ORM\FlexSlider:
+    SLIDES: 'Slides'
+    ANIMATION_OPTION: 'Animation option'
+    ANIMATE: 'Animate automatically'
+    slide: 'Slide'
+    fade: 'Fade'
+    LOOP: 'Loop the carousel'
+    CONTROL_NAV: 'Show ControlNav'
+    DIRECTION_NAV: 'Show DirectionNav'
+    THUMBNAIL_NAV: 'Thumbnail Navigation'
+    CAROUSEL_CONTROL_NAV: 'Show Carousel Control Navigation'
+    CAROUSEL_DIRECTION_NAV: 'Show Carousel Direction Navigation'
+    CAROUSEL_THUMBNAIL_COUNT: 'Number of thumbnails'
+    LEARN_MORE: 'Learn More'
