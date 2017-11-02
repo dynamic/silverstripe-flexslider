@@ -62,6 +62,13 @@ class SlideImage extends DataObject implements PermissionProvider
     private static $default_sort = 'SortOrder';
 
     /**
+     * Adds Publish button to SlideImage record
+    *
+    * @var bool
+    */
+    private static $versioned_gridfield_extensions = true;
+
+    /**
      * @var array
      */
     private static $summary_fields = array(
@@ -131,7 +138,8 @@ class SlideImage extends DataObject implements PermissionProvider
             );
 
         // Image
-        $image = UploadField::create('Image',
+        $image = UploadField::create(
+            'Image',
             _t(__CLASS__ . '.IMAGE', 'Image')
         )->setFolderName('Uploads/SlideImages');
 
@@ -151,13 +159,13 @@ class SlideImage extends DataObject implements PermissionProvider
     {
         $result = parent::validate();
 
-        if ( !$this->Name) {
+        if (!$this->Name) {
             $result->addError(
                 _t(__CLASS__ . '.NAME_REQUIRED', 'A Name is required before you can save')
             );
         }
 
-        if ( !$this->ImageID) {
+        if (!$this->ImageID) {
             $result->addError(
                 _t(__CLASS__ . '.IMAGE_REQUIRED', 'An Image is required before you can save')
             );
