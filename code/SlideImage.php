@@ -91,7 +91,13 @@ class SlideImage extends DataObject implements PermissionProvider
         }
 
         if($link = $fields->dataFieldByName('PageLinkID')){
-            $link->setTitle("'Choose a page to link to:'");
+            if(!$link instanceof TreeDropdownField){
+                $fields->replaceField(
+                    'PageLinkID',
+                    $link = TreeDropdownField::create('PageLinkID', null, SiteTree::class)
+                );
+            }
+            $link->setTitle("Choose a page to link to:");
         }
 
         if($image = $fields->dataFieldByName('Image')){
