@@ -52,6 +52,13 @@ class SlideImage extends DataObject implements PermissionProvider
     );
 
     /**
+     * @var array
+     */
+    private static $owns = array(
+        'Image'
+    );
+
+    /**
      * @var string
      */
     private static $table_name = 'SlideImage';
