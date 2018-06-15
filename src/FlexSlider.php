@@ -8,6 +8,7 @@ use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\NumericField;
@@ -90,9 +91,10 @@ class FlexSlider extends DataExtension
         if ($this->owner->ID) {
             $config = GridFieldConfig_RecordEditor::create();
             $config->addComponent(new GridFieldOrderableRows('SortOrder'));
-            $config->removeComponentsByType('GridFieldAddExistingAutocompleter');
-            $config->removeComponentsByType('GridFieldDeleteAction');
-            $config->addComponent(new GridFieldDeleteAction(false));
+            $config->removeComponentsByType([
+                GridFieldAddExistingAutocompleter::class,
+                GridFieldDeleteAction::class,
+            ]);
             $SlidesField = GridField::create(
                 'Slides',
                 _t(__CLASS__ . '.SLIDES', 'Slides'),
