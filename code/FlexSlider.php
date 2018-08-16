@@ -5,7 +5,7 @@ class FlexSlider extends DataExtension
     /**
      * @var array
      */
-    public static $db = array(
+    public static $db = [
         'Animation' => "Enum('slide, fade', 'slide')",
         'Loop' => 'Boolean',
         'Animate' => 'Boolean',
@@ -15,14 +15,19 @@ class FlexSlider extends DataExtension
         'CarouselControlNav' => 'Boolean',
         'CarouselDirectionNav' => 'Boolean',
         'CarouselThumbnailCt' => 'Int',
-    );
+    ];
 
     /**
      * @var array
      */
-    public static $has_many = array(
+    public static $has_many = [
         'Slides' => 'SlideImage',
-    );
+    ];
+
+    /**
+     * @var bool
+     */
+    private $init_loaded = false;
 
     /**
      *
@@ -44,7 +49,7 @@ class FlexSlider extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        $fields->removeByName(array(
+        $fields->removeByName([
             'Animation',
             'Loop',
             'Animate',
@@ -53,8 +58,8 @@ class FlexSlider extends DataExtension
             'SliderDirectionNav',
             'CarouselControlNav',
             'CarouselDirectionNav',
-            'CarouselThumbnailCt'
-        ));
+            'CarouselThumbnailCt',
+        ]);
 
         // Slides
         if ($this->owner->ID) {
@@ -71,9 +76,9 @@ class FlexSlider extends DataExtension
 
             $slideTitle = $this->owner->stat('slide_tab_title') ? $this->owner->stat('slide_tab_title') : 'Slides';
 
-            $fields->addFieldsToTab("Root.{$slideTitle}", array(
+            $fields->addFieldsToTab("Root.{$slideTitle}", [
                 $SlidesField,
-                ToggleCompositeField::create('ConfigHD', 'Slider Settings', array(
+                ToggleCompositeField::create('ConfigHD', 'Slider Settings', [
                     DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
                     CheckboxField::create('Animate', 'Animate automatically'),
                     CheckboxField::create('Loop', 'Loop the carousel'),
@@ -84,9 +89,9 @@ class FlexSlider extends DataExtension
                         CheckboxField::create('CarouselControlNav', 'Show Carousel ControlNav'),
                         CheckboxField::create('CarouselDirectionNav', 'Show Carousel DirectionNav'),
                         NumericField::create('CarouselThumbnailCt', 'Number of thumbnails')
-                    )->displayIf('ThumbnailNav')->isChecked()->end()
-                )),
-            ));
+                    )->displayIf('ThumbnailNav')->isChecked()->end(),
+                ]),
+            ]);
         }
     }
 
@@ -111,8 +116,9 @@ class FlexSlider extends DataExtension
     {
         // only call custom script if page has Slides and DataExtension
         if (Object::has_extension($this->owner->ClassName, 'FlexSlider')) {
-            if ($this->owner->SlideShow()->exists()) {
+            if ($this->owner->SlideShow()->exists() && !$this->init_loaded) {
                 $this->getCustomScript();
+                $this->init_loaded = true;
             }
         }
     }
@@ -125,17 +131,31 @@ class FlexSlider extends DataExtension
         // Flexslider options
         $sync = ($this->owner->ThumbnailNav == true) ? "sync: '.carousel:eq('+index+')'," : '';
 
-        $before = (method_exists($this->owner->ClassName, 'flexSliderBeforeAction'))
+        $owner = $this->owner;
+
+        $before = $owner->hasMethod('flexSliderBeforeAction')
             ? $this->owner->flexSliderBeforeAction()
             : 'function(){}';
 
-        $after = (method_exists($this->owner->ClassName, 'flexSliderAfterAction'))
+        $after = $owner->hasMethod('flexSliderAfterAction')
             ? $this->owner->flexSliderAfterAction()
             : 'function(){}';
 
-        $speed = (method_exists($this->owner->ClassName, 'setFlexSliderSpeed'))
+        $speed = $owner->hasMethod('setFlexSliderSpeed')
             ? $this->owner->setFlexSliderSpeed()
             : 7000;
+
+        $itemWidthConfig = Config::inst()->get($owner->ClassName, 'flexslider_item_width');
+
+        $itemWidth = $itemWidthConfig && $itemWidthConfig === (int)$itemWidthConfig
+            ? $itemWidthConfig
+            : 100;
+
+        $itemMarginConfig = Config::inst()->get($owner->ClassName, 'flexslider_item_margin');
+
+        $itemMargin = $itemMarginConfig === (int)$itemMarginConfig
+            ? $itemMarginConfig
+            : 10;
 
         Requirements::customScript("
             (function($) {
@@ -144,30 +164,30 @@ class FlexSlider extends DataExtension
 					 
                          if(jQuery('.carousel').eq(index).length) {
                              jQuery('.carousel').eq(index).flexslider({
-                                slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
-                                animation: '" . $this->owner->Animation . "',
-                                animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
-                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ", 
-                                directionNav: " . $this->owner->obj('CarouselDirectionNav')->NiceAsBoolean() . ",
+                                slideshow: " . $owner->obj('Animate')->NiceAsBoolean() . ",
+                                animation: '" . $owner->Animation . "',
+                                animationLoop: " . $owner->obj('Loop')->NiceAsBoolean() . ",
+                                controlNav: " . $owner->obj('CarouselControlNav')->NiceAsBoolean() . ", 
+                                directionNav: " . $owner->obj('CarouselDirectionNav')->NiceAsBoolean() . ",
                                 prevText: '',
                                 nextText: '',
                                 pausePlay: false,
                                 asNavFor: '.flexslider:eq('+index+')',
-                                minItems: " . $this->owner->obj('CarouselThumbnailCt') . ",
-                                maxItems: " . $this->owner->obj('CarouselThumbnailCt') . ",
-                                move: " . $this->owner->obj('CarouselThumbnailCt') . ",
-                                itemWidth: 100,
-                                itemMargin: 10
+                                minItems: " . $owner->obj('CarouselThumbnailCt') . ",
+                                maxItems: " . $owner->obj('CarouselThumbnailCt') . ",
+                                move: " . $owner->obj('CarouselThumbnailCt') . ",
+                                itemWidth: " . $itemWidth . ",
+                                itemMargin: " . $itemMargin . "
                               });
                          }
  
                         if(jQuery('.flexslider').eq(index).length){
                             jQuery('.flexslider').eq(index).flexslider({
-                                slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
-                                animation: '" . $this->owner->Animation . "',
-                                animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
-                                controlNav: " . $this->owner->obj('SliderControlNav')->NiceAsBoolean() . ",
-                                directionNav: " . $this->owner->obj('SliderDirectionNav')->NiceAsBoolean() . ",
+                                slideshow: " . $owner->obj('Animate')->NiceAsBoolean() . ",
+                                animation: '" . $owner->Animation . "',
+                                animationLoop: " . $owner->obj('Loop')->NiceAsBoolean() . ",
+                                controlNav: " . $owner->obj('SliderControlNav')->NiceAsBoolean() . ",
+                                directionNav: " . $owner->obj('SliderDirectionNav')->NiceAsBoolean() . ",
                                 prevText: '',
                                 nextText: '',
                                 pauseOnAction: true,
