@@ -71,31 +71,33 @@ class SlideImage extends DataObject implements PermissionProvider
      */
     public function getCMSFields()
     {
+        $this->beforeUpdateCMSFields(function(FieldList $fields){
+            $fields->removeByName([
+                'ShowSlide',
+                'SortOrder',
+                'PageID',
+            ]);
+
+            $fields->dataFieldByName('Name')
+                ->setDescription('for internal reference only');
+
+            $fields->dataFieldByName('Headline')
+                ->setDescription('optional, used in template');
+
+            $fields->dataFieldByName('Description')
+                ->setDescription('optional, used in template');
+
+            $fields->dataFieldByName('PageLinkID')
+                ->setTitle("Choose a page to link to:");
+
+            $image = $fields->dataFieldByName('Image')
+                ->setFolderName('Uploads/SlideImages')
+                ->setAllowedMaxFileNumber(1)
+                ->setAllowedFileCategories('image');
+            $fields->insertAfter($image, 'Description');
+        });
+
         $fields = parent::getCMSFields();
-
-        $fields->removeByName([
-            'ShowSlide',
-            'SortOrder',
-            'PageID',
-        ]);
-
-        $fields->dataFieldByName('Name')
-            ->setDescription('for internal reference only');
-
-        $fields->dataFieldByName('Headline')
-            ->setDescription('optional, used in template');
-
-        $fields->dataFieldByName('Description')
-            ->setDescription('optional, used in template');
-
-        $fields->dataFieldByName('PageLinkID')
-            ->setTitle("Choose a page to link to:");
-
-        $image = $fields->dataFieldByName('Image')
-            ->setFolderName('Uploads/SlideImages')
-            ->setAllowedMaxFileNumber(1)
-            ->setAllowedFileCategories('image');
-        $fields->insertAfter($image, 'Description');
 
         $this->extend('updateSlideImageFields', $fields);
 
