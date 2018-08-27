@@ -102,57 +102,59 @@ class SlideImage extends DataObject implements PermissionProvider
      */
     public function getCMSFields()
     {
+        $this->beforeUpdateCMSFields(function ($fields) {
+            $fields->removeByName([
+                'ShowSlide',
+                'SortOrder',
+                'PageID',
+                'Image',
+            ]);
+
+            // Name
+            $fields->dataFieldByName('Name')
+                ->setTitle(
+                    _t(__CLASS__ . '.NAME', 'Name')
+                )
+                ->setDescription(
+                    _t(__CLASS__ . '.INTERNAL_USE', 'for internal reference only')
+                );
+
+            // Headline
+            $fields->dataFieldByName('Headline')
+                ->setTitle(
+                    _t(__CLASS__ . '.HEADLINE', 'Headline')
+                )
+                ->setDescription(
+                    _t(__CLASS__ . '.USED_IN_TEMPLATE', 'optional, used in template')
+                );
+
+            // Description
+            $fields->dataFieldByName('Description')
+                ->setTitle(
+                    _t(__CLASS__ . '.DESCRIPTION', 'Description')
+                )
+                ->setDescription(
+                    _t(__CLASS__ . '.USED_IN_TEMPLATE', 'optional, used in template')
+                );
+
+            // Page link
+            $fields->dataFieldByName('PageLinkID')
+                ->setTitle(
+                    _t(__CLASS__ . '.PAGE_LINK', "Choose a page to link to:")
+                );
+
+            // Image
+            $image = UploadField::create(
+                'Image',
+                _t(__CLASS__ . '.IMAGE', 'Image')
+            )->setFolderName('Uploads/SlideImages');
+
+            $image->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif']);
+
+            $fields->insertAfter($image, 'Description');
+        });
+
         $fields = parent::getCMSFields();
-
-        $fields->removeByName([
-            'ShowSlide',
-            'SortOrder',
-            'PageID',
-            'Image',
-        ]);
-
-        // Name
-        $fields->dataFieldByName('Name')
-            ->setTitle(
-                _t(__CLASS__ . '.NAME', 'Name')
-            )
-            ->setDescription(
-                _t(__CLASS__ . '.INTERNAL_USE', 'for internal reference only')
-            );
-
-        // Headline
-        $fields->dataFieldByName('Headline')
-            ->setTitle(
-                _t(__CLASS__ . '.HEADLINE', 'Headline')
-            )
-            ->setDescription(
-                _t(__CLASS__ . '.USED_IN_TEMPLATE', 'optional, used in template')
-            );
-
-        // Description
-        $fields->dataFieldByName('Description')
-            ->setTitle(
-                _t(__CLASS__ . '.DESCRIPTION', 'Description')
-            )
-            ->setDescription(
-                _t(__CLASS__ . '.USED_IN_TEMPLATE', 'optional, used in template')
-            );
-
-        // Page link
-        $fields->dataFieldByName('PageLinkID')
-            ->setTitle(
-                _t(__CLASS__ . '.PAGE_LINK', "Choose a page to link to:")
-            );
-
-        // Image
-        $image = UploadField::create(
-            'Image',
-            _t(__CLASS__ . '.IMAGE', 'Image')
-        )->setFolderName('Uploads/SlideImages');
-
-        $image->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif']);
-
-        $fields->insertAfter($image, 'Description');
 
         $this->extend('updateSlideImageFields', $fields);
 
