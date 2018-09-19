@@ -40,6 +40,7 @@ class SlideImage extends DataObject implements PermissionProvider
         'Headline' => 'Varchar(255)',
         'Description' => 'Text',
         'SortOrder' => 'Int',
+        'ShowSlide' => 'Boolean',
     );
 
     /**
@@ -70,9 +71,9 @@ class SlideImage extends DataObject implements PermissionProvider
 
     /**
      * Adds Publish button to SlideImage record
-    *
-    * @var bool
-    */
+     *
+     * @var bool
+     */
     private static $versioned_gridfield_extensions = true;
 
     /**

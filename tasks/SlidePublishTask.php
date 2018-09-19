@@ -1,7 +1,9 @@
 <?php
 
-namespace Dynamic\flexslider\tasks;
+namespace Dynamic\Flexslider\Tasks;
 
+use Dynamic\FlexSlider\Model\SlideImage;
+use SilverStripe\Control\Director;
 use SilverStripe\Dev\BuildTask;
 
 /**
@@ -18,7 +20,7 @@ class SlidePublishTask extends BuildTask
     /**
      * @var string
      */
-    protected $description = 'Migration task - pre versioning on SlideImage';
+    protected $description = 'Migration task - pre versioning on SlideImage (3.x)';
 
     /**
      * @var bool
@@ -42,13 +44,28 @@ class SlidePublishTask extends BuildTask
         $ct = 0;
         foreach ($slides as $slide) {
             if ($slide->ShowSlide == 1) {
-                $title = $slide->Title;
+                if (!$slide->Name) {
+                    $slide->Name = "No Name";
+                }
+                $title = $slide->Name;
                 $slide->writeToStage('Stage');
                 $slide->publish('Stage', 'Live');
-                echo $title.'<br><br>';
+                static::write_message($slide->Name . " updated");
                 ++$ct;
             }
         }
-        echo '<p>'.$ct.' slides updated.</p>';
+        static::write_message($ct . " SlideImages updated");
+    }
+
+    /**
+     * @param $message
+     */
+    protected static function write_message($message)
+    {
+        if (Director::is_cli()) {
+            echo "{$message}\n";
+        } else {
+            echo "{$message}<br><br>";
+        }
     }
 }
