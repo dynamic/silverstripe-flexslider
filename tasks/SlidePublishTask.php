@@ -57,10 +57,8 @@ class SlidePublishTask extends BuildTask
                 if (!$slide->Name) {
                     $slide->Name = "No Name";
                 }
-                $title = $slide->Name;
                 $slide->writeToStage('Stage');
                 $slide->publishRecursive();
-                static::write_message($slide->Name . " updated");
                 ++$ct;
             }
         }

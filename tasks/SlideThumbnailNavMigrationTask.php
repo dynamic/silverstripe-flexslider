@@ -4,6 +4,7 @@ namespace Dynamic\flexslider\tasks;
 
 use Dynamic\FlexSlider\ORM\FlexSlider;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Director;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DataObject;
@@ -65,7 +66,7 @@ class SlideThumbnailNavMigrationTask extends BuildTask
                     foreach ($this->getObjectSet($object) as $result) {
                         $result->Loop = 1;
                         $result->Animate = 1;
-                        $result->SliderControlNav = 1;
+                        $result->SliderControlNav = 0;
                         $result->SliderDirectionNav = 1;
                         $result->CarouselControlNav = 0;
                         $result->CarouselDirectionNav = 1;
@@ -83,6 +84,18 @@ class SlideThumbnailNavMigrationTask extends BuildTask
                 }
             }
         }
-        echo '<p>'.$ct.' Sliders updated.</p>';
+        static::write_message($ct . " Sliders updated");
+    }
+
+    /**
+     * @param $message
+     */
+    protected static function write_message($message)
+    {
+        if (Director::is_cli()) {
+            echo "{$message}\n";
+        } else {
+            echo "{$message}<br><br>";
+        }
     }
 }
