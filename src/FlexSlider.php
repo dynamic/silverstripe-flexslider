@@ -62,7 +62,7 @@ class FlexSlider extends DataExtension
         parent::populateDefaults();
         $this->owner->Loop = 1;
         $this->owner->Animate = 1;
-        $this->owner->SliderControlNav = 1;
+        $this->owner->SliderControlNav = 0;
         $this->owner->SliderDirectionNav = 1;
         $this->owner->CarouselControlNav = 0;
         $this->owner->CarouselDirectionNav = 1;
