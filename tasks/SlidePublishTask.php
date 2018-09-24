@@ -36,20 +36,30 @@ class SlidePublishTask extends BuildTask
     }
 
     /**
+     * @return \Generator
+     */
+    protected function getSlides()
+    {
+        foreach (SlideImage::get() as $slide) {
+            yield $slide;
+        }
+    }
+
+    /**
      * mark all ProductDetail records as ShowInMenus = 0.
      */
     public function publishSlides()
     {
         $slides = SlideImage::get();
         $ct = 0;
-        foreach ($slides as $slide) {
+        foreach ($this->getSlides() as $slide) {
             if ($slide->ShowSlide == 1) {
                 if (!$slide->Name) {
                     $slide->Name = "No Name";
                 }
                 $title = $slide->Name;
                 $slide->writeToStage('Stage');
-                $slide->publish('Stage', 'Live');
+                $slide->publishRecursive();
                 static::write_message($slide->Name . " updated");
                 ++$ct;
             }
