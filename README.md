@@ -38,6 +38,12 @@ We've added some additional configuration options since the 1.0.0 pre-releases. 
 
 See the [docs/en](docs/en/index.md) folder.
 
+## Troubleshooting
+
+- I've applied the `FlexSlider` DataExtension to a DataObject or Page and am receiving errors.
+  - Be sure you have run a `dev/build?flush=all`
+  - If this is an existing site installation and `FlexSlider` is being applied to existing records, be sure to run `dev/tasks/SlideThumbnailNavMigrationTask`. This will ensure default values expeceted for the module are setup for the existing records.
+
 ## Maintainer Contact
 
  *  [Dynamic](http://www.dynamicagency.com) (<dev@dynamicagency.com>)
