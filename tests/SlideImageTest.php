@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\flexslider\tests;
+namespace Dynamic\FlexSlider\Test;
 
 use Dynamic\FlexSlider\Model\SlideImage;
 use SilverStripe\Core\Config\Config;
