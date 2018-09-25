@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\flexslider\tests;
+namespace Dynamic\FlexSlider\Test;
 
 use Dynamic\FlexSlider\ORM\FlexSlider;
 use SilverStripe\Dev\TestOnly;
@@ -16,4 +16,6 @@ class TestPage extends \Page implements TestOnly
     private static $extensions = array(
         FlexSlider::class,
     );
+
+    private static $table_name = 'FlexsliderTestPage';
 }
