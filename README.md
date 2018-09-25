@@ -22,7 +22,7 @@ The FlexSlider module allows a developer to attach a [Woothemes FlexSlider](http
 
 ## Installation
 
-`composer require dynamic/flexslider 3.0.x-dev`
+`composer require dynamic/flexslider ^3.0`
 
 ## Example usage
 
