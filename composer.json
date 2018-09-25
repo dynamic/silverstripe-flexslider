@@ -31,7 +31,7 @@
   "autoload": {
     "psr-4": {
       "Dynamic\\FlexSlider\\": "src/",
-      "Dynamic\\FlexSlider\\Tests\\": "tests/"
+      "Dynamic\\FlexSlider\\Test\\": "tests/"
     }
   },
   "minimum-stability": "dev",
