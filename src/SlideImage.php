@@ -5,6 +5,7 @@ namespace Dynamic\FlexSlider\Model;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
@@ -139,10 +140,13 @@ class SlideImage extends DataObject implements PermissionProvider
                 );
 
             // Page link
-            $fields->dataFieldByName('PageLinkID')
-                ->setTitle(
-                    _t(__CLASS__ . '.PAGE_LINK', "Choose a page to link to:")
-                );
+            $fields->replaceField(
+                'PageLinkID',
+                TreeDropdownField::create('PageLinkID', '', SiteTree::class)
+                    ->setTitle(
+                        _t(__CLASS__ . '.PAGE_LINK', "Choose a page to link to:")
+                    )
+            );
 
             // Image
             $image = UploadField::create(
