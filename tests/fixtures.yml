@@ -39,9 +39,14 @@ Dynamic\FlexSlider\Model\SlideImage:
   slide1:
     Name: 'Hello World'
     Description: 'What a fine place it is too!'
+    SlideType: 'Image'
   slide2:
     Name: 'Goodbye World'
     Description: 'It was fun while it lasted!'
+    SlideType: 'Video'
+  slide3:
+    Name: 'Baz'
+    Description: 'Text Slide Description'
 SilverStripe\Assets\Image:
   image1:
     Name: Test Image

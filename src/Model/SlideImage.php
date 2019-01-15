@@ -2,13 +2,20 @@
 
 namespace Dynamic\FlexSlider\Model;
 
+use Sheadawson\Linkable\Forms\EmbeddedObjectField;
+use Sheadawson\Linkable\Models\EmbeddedObject;
+use Sheadawson\Linkable\Models\Link;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Forms\CompositeField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
+use UncleCheese\DisplayLogic\Forms\Wrapper;
 
 /**
  * Class SlideImage
@@ -17,9 +24,12 @@ use SilverStripe\Security\PermissionProvider;
  * @property string $Headline
  * @property string $Description
  * @property int $SortOrder
+ * @property string $SlideType
  * @property int $ImageID
+ * @property int $VideoID
  * @property int $PageID
  * @property int $PageLinkID
+ * @property int $LinkID
  */
 class SlideImage extends DataObject implements PermissionProvider
 {
@@ -36,29 +46,31 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @var array
      */
-    private static $db = array(
+    private static $db = [
         'Name' => 'Varchar(255)',
         'Headline' => 'Varchar(255)',
         'Description' => 'Text',
         'SortOrder' => 'Int',
-        'ShowSlide' => 'Boolean',
-    );
+        'SlideType' => 'Varchar',
+    ];
 
     /**
      * @var array
      */
-    private static $has_one = array(
+    private static $has_one = [
         'Image' => Image::class,
+        'Video' => EmbeddedObject::class,
         'Page' => \Page::class,
         'PageLink' => SiteTree::class,
-    );
+        'Link' => Link::class,
+    ];
 
     /**
      * @var array
      */
-    private static $owns = array(
-        'Image'
-    );
+    private static $owns = [
+        'Image',
+    ];
 
     /**
      * @var string
@@ -80,19 +92,26 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @var array
      */
-    private static $summary_fields = array(
-        'Image.CMSThumbnail' => 'Image',
-        'Name' => 'Name',
-    );
+    private static $defaults = [
+        'SlideType' => 'Image',
+    ];
 
     /**
      * @var array
      */
-    private static $searchable_fields = array(
+    private static $summary_fields = [
+        'Image.CMSThumbnail' => 'Image',
+        'Name' => 'Name',
+    ];
+
+    /**
+     * @var array
+     */
+    private static $searchable_fields = [
         'Name',
         'Headline',
         'Description',
-    );
+    ];
 
     /**
      * @var int
@@ -100,16 +119,28 @@ class SlideImage extends DataObject implements PermissionProvider
     private static $image_size_limit = 512000;
 
     /**
+     * @var array
+     */
+    private static $slide_types = [
+        'Image',
+        'Video',
+        'Text',
+    ];
+
+    /**
      * @return \SilverStripe\Forms\FieldList
      */
     public function getCMSFields()
     {
+        $this->getViewerTemplates();
         $this->beforeUpdateCMSFields(function ($fields) {
             $fields->removeByName([
                 'ShowSlide',
                 'SortOrder',
                 'PageID',
                 'Image',
+                'SlideType',
+                'VideoID',
             ]);
 
             // Name
@@ -156,7 +187,23 @@ class SlideImage extends DataObject implements PermissionProvider
 
             $image->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif']);
 
-            $fields->insertAfter($image, 'Description');
+            $fields->addFieldToTab(
+                'Root.Main',
+                CompositeField::create(FieldList::create(
+                    DropdownField::create('SlideType')
+                        ->setSource($this->getTypeSource())
+                        ->setTitle('Image or Video'),
+                    Wrapper::create(
+                        $image
+                    )->displayIf('SlideType')->isEqualTo('Image')->end(),
+                    Wrapper::create(
+                        $videoField = EmbeddedObjectField::create('Video')
+                            ->setTitle('Video URL')
+                            ->setDescription('Supported links: YouTube, Vimeo')
+                    )->displayIf('SlideType')->isEqualTo('Video')->end()
+                ))->setName('MediaFields'),
+                'Description'
+            );
         });
 
         $fields = parent::getCMSFields();
@@ -179,9 +226,23 @@ class SlideImage extends DataObject implements PermissionProvider
             );
         }
 
-        if (!$this->ImageID) {
+        $types = $this->getTypeSource();
+
+        if (isset($types['Video']) && $this->SlideType == 'Video' && !$this->VideoID) {
+            $result->addError(
+                _t(__CLASS__ . '.VIDEO_REQUIRED', 'An Video Link is required before you can save')
+            );
+        }
+
+        if (isset($types['Image']) && $this->SlideType == 'Image' && !$this->ImageID) {
             $result->addError(
                 _t(__CLASS__ . '.IMAGE_REQUIRED', 'An Image is required before you can save')
+            );
+        }
+
+        if (isset($types['Text']) && $this->SlideType == 'Text' && !$this->Description) {
+            $result->addError(
+                _t(__CLASS__ . '.DESCRIPTION_REQUIRED', 'A Description is required before you can save')
             );
         }
 
@@ -193,11 +254,11 @@ class SlideImage extends DataObject implements PermissionProvider
      */
     public function providePermissions()
     {
-        return array(
+        return [
             'Slide_EDIT' => 'Slide Edit',
             'Slide_DELETE' => 'Slide Delete',
             'Slide_CREATE' => 'Slide Create',
-        );
+        ];
     }
 
     /**
@@ -242,5 +303,28 @@ class SlideImage extends DataObject implements PermissionProvider
     public function canView($member = null, $context = [])
     {
         return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTypeSource()
+    {
+        $types = $this->config()->get('slide_types');
+        asort($types);
+        return array_combine($types, $types);
+    }
+
+    /**
+     * @param string $suffix
+     * @return array
+     */
+    public function getViewerTemplates($suffix = '')
+    {
+        $suffix = isset($this->getTypeSource()[$this->SlideType])
+            ? "_{$this->SlideType}"
+            : '';
+
+        return parent::getViewerTemplates($suffix);
     }
 }

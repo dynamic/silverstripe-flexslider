@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\Flexslider\Tasks;
+namespace Dynamic\Flexslider\Task;
 
 use Dynamic\FlexSlider\Model\SlideImage;
 use SilverStripe\Control\Director;
@@ -21,6 +21,11 @@ class SlidePublishTask extends BuildTask
      * @var string
      */
     protected $description = 'Migration task - pre versioning on SlideImage (3.x)';
+
+    /**
+     * @var string
+     */
+    private static $segment = 'slide-publish-task';
 
     /**
      * @var bool
