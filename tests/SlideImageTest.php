@@ -3,12 +3,20 @@
 namespace Dynamic\FlexSlider\Test;
 
 use Dynamic\FlexSlider\Model\SlideImage;
+use Sheadawson\Linkable\Forms\EmbeddedObjectField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\ValidationException;
 use SilverStripe\Security\Member;
 
+/**
+ * Class SlideImageTest
+ * @package Dynamic\FlexSlider\Test
+ */
 class SlideImageTest extends SapphireTest
 {
     /**
@@ -21,33 +29,73 @@ class SlideImageTest extends SapphireTest
      */
     public function testGetCMSFields()
     {
-        $object = new SlideImage();
-        $fieldset = $object->getCMSFields();
-        $this->assertInstanceOf(FieldList::class, $fieldset);
-        $this->assertNotNull($fieldset->dataFieldByName('Name'));
-        $this->assertNotNull($fieldset->dataFieldByName('Image'));
+        $object = SlideImage::singleton();
+        $fields = $object->getCMSFields();
+
+        $this->assertInstanceOf(FieldList::class, $fields);
+        $this->assertInstanceOf(TextField::class, $fields->dataFieldByName('Name'));
+        $this->assertInstanceOf(UploadField::class, $fields->dataFieldByName('Image'));
+        $this->assertInstanceOf(EmbeddedObjectField::class, $fields->dataFieldByName('Video'));
+        $this->assertInstanceOf(TextareaField::class, $fields->dataFieldByName('Description'));
     }
 
     /**
-     *
+     * @throws ValidationException
      */
     public function testValidateName()
     {
         $object = $this->objFromFixture(SlideImage::class, 'slide1');
         $object->Name = '';
+        $object->ImageID = 1;
         $this->setExpectedException(ValidationException::class);
         $object->write();
+
+        $object->Name = 'Foo';
+        $this->assertGreaterThan(0, $object->write());
     }
 
     /**
-     *
+     * @throws ValidationException
      */
     public function testValidateImage()
     {
         $object = $this->objFromFixture(SlideImage::class, 'slide1');
-        $object->ImageID = '';
+        $object->ImageID = null;
         $this->setExpectedException(ValidationException::class);
         $object->write();
+
+        $base->ImageID = 1;
+        $this->assertGreaterThan(0, $object->write());
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function testValidateVideo()
+    {
+        $object = $this->objFromFixture(SlideImage::class, 'slide2');
+        $object->VideoID = null;
+        $this->setExpectedException(ValidationException::class);
+        $object->write();
+
+        $object->VideoID = 1;
+        $this->assertGreaterThan(0, $object->write());
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function testValidateText()
+    {
+        $object = $this->objFromFixture(SlideImage::class, 'slide3');
+        $description = $object->Description;
+
+        $object->Description = null;
+        $this->setExpectedException(ValidationException::class);
+        $object->write();
+
+        $object->Description = $description;
+        $this->assertGreaterThan(0, $object->write());
     }
 
     /**
@@ -55,12 +103,14 @@ class SlideImageTest extends SapphireTest
      */
     public function testProvidePermissions()
     {
-        $object = singleton(SlideImage::class);
-        $expected = array(
+        $object = SlideImage::singleton();
+
+        $expected = [
             'Slide_EDIT' => 'Slide Edit',
             'Slide_DELETE' => 'Slide Delete',
             'Slide_CREATE' => 'Slide Create',
-        );
+        ];
+
         $this->assertEquals($expected, $object->providePermissions());
     }
 
@@ -139,5 +189,28 @@ class SlideImageTest extends SapphireTest
         $new = 1024000;
         Config::modify()->update(SlideImage::class, 'image_size_limit', $new);
         $this->assertEquals(Config::modify()->get(SlideImage::class, 'image_size_limit'), $new);
+    }
+
+    /**
+     *
+     */
+    public function testGetViewerTemplates()
+    {
+        $slide = SlideImage::singleton();
+
+        $slide->SlideType = 'Image';
+        $imageTemplate = SlideImage::class . "_Image";
+
+        $this->assertTrue(in_array($imageTemplate, $slide->getViewerTemplates()));
+
+        $slide->SlideType = 'Video';
+        $videoTemplate = SlideImage::class . "_Video";
+
+        $this->assertTrue(in_array($videoTemplate, $slide->getViewerTemplates()));
+
+        $slide->SlideType = 'Text';
+        $textTemplate = SlideImage::class . "_Text";
+
+        $this->assertTrue(in_array($textTemplate, $slide->getViewerTemplates()));
     }
 }

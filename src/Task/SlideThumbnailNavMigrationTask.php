@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\flexslider\tasks;
+namespace Dynamic\flexslider\Task;
 
 use Dynamic\FlexSlider\ORM\FlexSlider;
 use SilverStripe\CMS\Model\SiteTree;
@@ -25,6 +25,11 @@ class SlideThumbnailNavMigrationTask extends BuildTask
      * @var string
      */
     protected $description = 'Set default values for slider after the thumbnail nav update';
+
+    /**
+     * @var string
+     */
+    private static $segment = 'slide-thumbnail-nav-migration-task';
 
     /**
      * @var bool
