@@ -2,12 +2,14 @@
 
 namespace Dynamic\FlexSlider\Model;
 
+use function GuzzleHttp\Psr7\parse_request;
 use Sheadawson\Linkable\Forms\EmbeddedObjectField;
 use Sheadawson\Linkable\Models\EmbeddedObject;
 use Sheadawson\Linkable\Models\Link;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Dev\Debug;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -132,7 +134,6 @@ class SlideImage extends DataObject implements PermissionProvider
      */
     public function getCMSFields()
     {
-        $this->getViewerTemplates();
         $this->beforeUpdateCMSFields(function ($fields) {
             $fields->removeByName([
                 'ShowSlide',
@@ -316,15 +317,25 @@ class SlideImage extends DataObject implements PermissionProvider
     }
 
     /**
-     * @param string $suffix
-     * @return array
+     * @param null $template
+     * @param null $customFields
+     * @return \SilverStripe\ORM\FieldType\DBHTMLText
      */
-    public function getViewerTemplates($suffix = '')
+    public function renderWith($template = null, $customFields = null)
     {
-        $suffix = isset($this->getTypeSource()[$this->SlideType])
-            ? "_{$this->SlideType}"
-            : '';
+        if ($template === null) {
+            $template = static::class;
+            $template = ($this->SlideType) ? $template . "_{$this->SlideType}" : '';
+        }
 
-        return parent::getViewerTemplates($suffix);
+        return parent::renderWith($template);
+    }
+
+    /**
+     * @return \SilverStripe\ORM\FieldType\DBHTMLText
+     */
+    public function forTemplate()
+    {
+        return $this->renderWith();
     }
 }

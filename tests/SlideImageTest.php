@@ -10,6 +10,7 @@ use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\ORM\ValidationException;
 use SilverStripe\Security\Member;
 
@@ -194,23 +195,22 @@ class SlideImageTest extends SapphireTest
     /**
      *
      */
-    public function testGetViewerTemplates()
+    public function testRenderWith()
     {
-        $slide = SlideImage::singleton();
+        $this->markTestSkipped("Todo SlideImageText::testRenderWith()");
+        //$slide = SlideImage::singleton();
 
-        $slide->SlideType = 'Image';
-        $imageTemplate = SlideImage::class . "_Image";
+        //$this->assertInstanceOf(DBHTMLText::class, $slide->renderWith());
+    }
 
-        $this->assertTrue(in_array($imageTemplate, $slide->getViewerTemplates()));
+    /**
+     *
+     */
+    public function testForTemplate()
+    {
+        $this->markTestSkipped("Todo SlideImageText::testForTemplate()");
+        //$slide = SlideImage::singleton();
 
-        $slide->SlideType = 'Video';
-        $videoTemplate = SlideImage::class . "_Video";
-
-        $this->assertTrue(in_array($videoTemplate, $slide->getViewerTemplates()));
-
-        $slide->SlideType = 'Text';
-        $textTemplate = SlideImage::class . "_Text";
-
-        $this->assertTrue(in_array($textTemplate, $slide->getViewerTemplates()));
+        //$this->assertInstanceOf(DBHTMLText::class, $slide->forTemplate());
     }
 }
