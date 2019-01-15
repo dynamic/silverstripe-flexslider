@@ -47,6 +47,7 @@ Dynamic\FlexSlider\Model\SlideImage:
   slide3:
     Name: 'Baz'
     Description: 'Text Slide Description'
+    SlideType: 'Text'
 SilverStripe\Assets\Image:
   image1:
     Name: Test Image
