@@ -199,15 +199,11 @@ class SlideImage extends DataObject implements PermissionProvider
     public function getRequiresImage() {
         $require = $this->config()->require_image;
 
-        var_dump($this->hasOne());
-
         // default realtion to \Page class
         foreach ($this->hasOne() as $relation => $type) {
             // strict check due to null equating to false otherwise
-            if ($this->{$relation}()) {
-                if ($this->{$relation}()->config()->require_image === false) {
-                    $require = false;
-                }
+            if ($this->{$relation}()->config()->require_image === false) {
+                $require = false;
             }
         }
 
