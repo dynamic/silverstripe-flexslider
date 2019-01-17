@@ -53,6 +53,7 @@ class SlideImageTest extends SapphireTest
      */
     public function testValidateImage()
     {
+        /** @var SlideImage $object */
         $object = $this->objFromFixture(SlideImage::class, 'slide1');
         $object->Name = 'Test';
         $object->ImageID = 0;
@@ -76,8 +77,9 @@ class SlideImageTest extends SapphireTest
         $this->assertTrue($result->isValid());
 
         // TestPage init
+        /** @var \Dynamic\FlexSlider\Test\TestPage $page */
         $page = Injector::inst()->get(TestPage::class);
-        $object->ParentID = $page->ID;
+        $object->PageID = $page->ID;
 
         // test valid if require_image is true on TestPage
         $object->config()->set('require_image', true);
