@@ -78,6 +78,11 @@ class SlideImage extends DataObject implements PermissionProvider
     private static $versioned_gridfield_extensions = true;
 
     /**
+     * @var bool
+     */
+    private static $require_image = true;
+
+    /**
      * @var array
      */
     private static $summary_fields = array(
@@ -179,13 +184,35 @@ class SlideImage extends DataObject implements PermissionProvider
             );
         }
 
-        if (!$this->ImageID) {
+        if (!$this->ImageID && $this->getRequiresImage()) {
             $result->addError(
                 _t(__CLASS__ . '.IMAGE_REQUIRED', 'An Image is required before you can save')
             );
         }
 
         return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getRequiresImage() {
+        $require = $this->config()->require_image;
+
+        var_dump($this->hasOne());
+
+        // default realtion to \Page class
+        foreach ($this->hasOne() as $relation => $type) {
+            // strict check due to null equating to false otherwise
+            if ($this->{$relation}()) {
+                if ($this->{$relation}()->config()->require_image === false) {
+                    $require = false;
+                }
+            }
+        }
+
+        $this->extend('updateRequiresImage', $require);
+        return $require;
     }
 
     /**
