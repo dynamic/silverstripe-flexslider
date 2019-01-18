@@ -141,7 +141,7 @@ class SlideImage extends DataObject implements PermissionProvider
                 'PageID',
                 'Image',
                 'SlideType',
-                'VideoID',
+                'Video',
             ]);
 
             // Name
@@ -196,7 +196,7 @@ class SlideImage extends DataObject implements PermissionProvider
                         ->setTitle('Image or Video'),
                     Wrapper::create(
                         $image
-                    )->displayIf('SlideType')->isEqualTo('Image')->end(),
+                    )->displayIf('SlideType')->isEqualTo('Image')->orIf('SlideType')->isEqualTo('Video')->end(),
                     Wrapper::create(
                         $videoField = EmbeddedObjectField::create('Video')
                             ->setTitle('Video URL')
