@@ -4,6 +4,7 @@ namespace Dynamic\FlexSlider\Model;
 
 use function GuzzleHttp\Psr7\parse_request;
 use Sheadawson\Linkable\Forms\EmbeddedObjectField;
+use Sheadawson\Linkable\Forms\LinkField;
 use Sheadawson\Linkable\Models\EmbeddedObject;
 use Sheadawson\Linkable\Models\Link;
 use SilverStripe\AssetAdmin\Forms\UploadField;
@@ -64,7 +65,7 @@ class SlideImage extends DataObject implements PermissionProvider
         'Video' => EmbeddedObject::class,
         'Page' => \Page::class,
         'PageLink' => SiteTree::class,
-        'Link' => Link::class,
+        'SlideLink' => Link::class,
     ];
 
     /**
@@ -141,7 +142,8 @@ class SlideImage extends DataObject implements PermissionProvider
                 'PageID',
                 'Image',
                 'SlideType',
-                'VideoID',
+                'Video',
+                'SlideLinkID',
             ]);
 
             // Name
@@ -174,7 +176,7 @@ class SlideImage extends DataObject implements PermissionProvider
             // Page link
             $fields->replaceField(
                 'PageLinkID',
-                TreeDropdownField::create('PageLinkID', '', SiteTree::class)
+                LinkField::create('SlideLinkID')
                     ->setTitle(
                         _t(__CLASS__ . '.PAGE_LINK', "Choose a page to link to:")
                     )
@@ -196,7 +198,7 @@ class SlideImage extends DataObject implements PermissionProvider
                         ->setTitle('Image or Video'),
                     Wrapper::create(
                         $image
-                    )->displayIf('SlideType')->isEqualTo('Image')->end(),
+                    )->displayIf('SlideType')->isEqualTo('Image')->orIf('SlideType')->isEqualTo('Video')->end(),
                     Wrapper::create(
                         $videoField = EmbeddedObjectField::create('Video')
                             ->setTitle('Video URL')
