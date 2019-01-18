@@ -14,122 +14,122 @@ use SilverStripe\ORM\DB;
  */
 class SlideLinkTask extends BuildTask
 {
-	/**
-	 * @var string
-	 */
-	protected $title = 'Slide Link Migration Task';
+    /**
+     * @var string
+     */
+    protected $title = 'Slide Link Migration Task';
 
-	/**
-	 * @var string
-	 */
-	private static $segment = 'slide-link-migration-task';
+    /**
+     * @var string
+     */
+    private static $segment = 'slide-link-migration-task';
 
-	/**
-	 * @var array
-	 */
-	private $known_links = [];
+    /**
+     * @var array
+     */
+    private $known_links = [];
 
-	/**
-	 * @param \SilverStripe\Control\HTTPRequest $request
-	 * @throws \SilverStripe\ORM\ValidationException
-	 */
-	public function run($request)
-	{
-		$this->migrateLinks();
-	}
+    /**
+     * @param \SilverStripe\Control\HTTPRequest $request
+     * @throws \SilverStripe\ORM\ValidationException
+     */
+    public function run($request)
+    {
+        $this->migrateLinks();
+    }
 
-	/**
-	 * @throws \SilverStripe\ORM\ValidationException
-	 */
-	protected function migrateLinks()
-	{
-		$baseTable = SlideImage::singleton()->baseTable();
+    /**
+     * @throws \SilverStripe\ORM\ValidationException
+     */
+    protected function migrateLinks()
+    {
+        $baseTable = SlideImage::singleton()->baseTable();
 
-		$tables = [
-			$baseTable,
-			"{$baseTable}_Versions",
-			"{$baseTable}_Live",
-		];
+        $tables = [
+            $baseTable,
+            "{$baseTable}_Versions",
+            "{$baseTable}_Live",
+        ];
 
-		foreach ($tables as $table) {
-			foreach ($this->yieldSingle(DB::query("SELECT * FROM \"{$table}\"")) as $record) {
-				$linkID = $record['PageLinkID'];
-				$linkLabel = $record['LinkLabel'];
+        foreach ($tables as $table) {
+            foreach ($this->yieldSingle(DB::query("SELECT * FROM \"{$table}\"")) as $record) {
+                $linkID = $record['PageLinkID'];
+                $linkLabel = $record['LinkLabel'];
 
-				$slideLink = $this->findOrMakeLink($linkID, $linkLabel);
+                $slideLink = $this->findOrMakeLink($linkID, $linkLabel);
 
-				if ($slideLink !== false && $slideLink instanceof Link) {
-					DB::prepared_query(
-						"UPDATE \"{$table}\" SET \"SlideLinkID\" = ? WHERE \"ID\" = ?",
-						[$slideLink->ID, $record['ID']]
-					);
-				}
-			}
-		}
-	}
+                if ($slideLink !== false && $slideLink instanceof Link) {
+                    DB::prepared_query(
+                        "UPDATE \"{$table}\" SET \"SlideLinkID\" = ? WHERE \"ID\" = ?",
+                        [$slideLink->ID, $record['ID']]
+                    );
+                }
+            }
+        }
+    }
 
-	/**
-	 * @param $list
-	 * @return \Generator
-	 */
-	private function yieldSingle($list)
-	{
-		foreach ($list as $item) {
-			yield $item;
-		}
-	}
+    /**
+     * @param $list
+     * @return \Generator
+     */
+    private function yieldSingle($list)
+    {
+        foreach ($list as $item) {
+            yield $item;
+        }
+    }
 
-	/**
-	 * @param int $linkID
-	 * @param string $linkLabel
-	 * @return bool|mixed|Link
-	 * @throws \SilverStripe\ORM\ValidationException
-	 */
-	private function findOrMakeLink($linkID = 0, $linkLabel = '')
-	{
-		if (!$linkID || !($page = SiteTree::get()->byID($linkID))) {
-			return false;
-		}
+    /**
+     * @param int $linkID
+     * @param string $linkLabel
+     * @return bool|mixed|Link
+     * @throws \SilverStripe\ORM\ValidationException
+     */
+    private function findOrMakeLink($linkID = 0, $linkLabel = '')
+    {
+        if (!$linkID || !($page = SiteTree::get()->byID($linkID))) {
+            return false;
+        }
 
-		if (isset($this->getKnownLinks()[$linkID])) {
-			return $this->getKnownLinks()[$linkID];
-		}
+        if (isset($this->getKnownLinks()[$linkID])) {
+            return $this->getKnownLinks()[$linkID];
+        }
 
-		$link = Link::create();
-		$link->Type = 'SiteTree';
-		$link->SiteTreeID = $linkID;
-		$link->Template = 'button';
+        $link = Link::create();
+        $link->Type = 'SiteTree';
+        $link->SiteTreeID = $linkID;
+        $link->Template = 'button';
 
-		if ($linkLabel !== null && $linkLabel !== '') {
-			$link->Title = $linkLabel;
-		} else {
-			$link->Title = $page->Title;
-		}
+        if ($linkLabel !== null && $linkLabel !== '') {
+            $link->Title = $linkLabel;
+        } else {
+            $link->Title = $page->Title;
+        }
 
-		$link->write();
+        $link->write();
 
-		$this->addKnownLink($linkID, $link);
+        $this->addKnownLink($linkID, $link);
 
-		return $link;
-	}
+        return $link;
+    }
 
-	/**
-	 * @param $linkID
-	 * @param $linkableLinkID
-	 * @return $this
-	 */
-	private function addKnownLink($linkID, $linkableLinkID)
-	{
-		$this->known_links[$linkID] = $linkableLinkID;
+    /**
+     * @param $linkID
+     * @param $linkableLinkID
+     * @return $this
+     */
+    private function addKnownLink($linkID, $linkableLinkID)
+    {
+        $this->known_links[$linkID] = $linkableLinkID;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return array
-	 */
-	private function getKnownLinks()
-	{
-		return $this->known_links;
-	}
+    /**
+     * @return array
+     */
+    private function getKnownLinks()
+    {
+        return $this->known_links;
+    }
 }
