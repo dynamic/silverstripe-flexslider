@@ -143,6 +143,7 @@ class SlideImage extends DataObject implements PermissionProvider
                 'Image',
                 'SlideType',
                 'Video',
+                'VideoID',
                 'SlideLinkID',
             ]);
 
