@@ -54,7 +54,7 @@ class SlideLinkTask extends BuildTask
         foreach ($tables as $table) {
             foreach ($this->yieldSingle(DB::query("SELECT * FROM \"{$table}\"")) as $record) {
                 $linkID = $record['PageLinkID'];
-                $linkLabel = $record['LinkLabel'];
+                $linkLabel = isset($record['LinkLabel']) ? $record['LinkLabel'] : null;
 
                 $slideLink = $this->findOrMakeLink($linkID, $linkLabel);
 
