@@ -6,6 +6,10 @@ use Dynamic\FlexSlider\Model\SlideImage;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DB;
 
+/**
+ * Class DefaultSlideTypeTask
+ * @package Dynamic\Flexslider\Task
+ */
 class DefaultSlideTypeTask extends BuildTask
 {
     /**
@@ -43,7 +47,9 @@ class DefaultSlideTypeTask extends BuildTask
             ];
 
             foreach ($tables as $table) {
-                foreach ($this->yieldSingle(DB::query("SELECT * FROM \"{$table}\" WHERE \"SlideType\" IS NULL")) as $record) {
+                $query = DB::query("SELECT * FROM \"{$table}\" WHERE \"SlideType\" IS NULL");
+
+                foreach ($this->yieldSingle($query) as $record) {
                     DB::prepared_query(
                         "UPDATE \"{$table}\" SET \"SlideType\" = ? WHERE \"ID\" = ?",
                         [$default['SlideType'], $record['ID']]
