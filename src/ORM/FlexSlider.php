@@ -4,6 +4,7 @@ namespace Dynamic\FlexSlider\ORM;
 
 use Dynamic\FlexSlider\Model\SlideImage;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -267,7 +268,7 @@ class FlexSlider extends DataExtension
             return (int) $this->owner->config()->get('FlexSliderSpeed');
         }
 
-        return 7000;
+        return Config::inst()->get(self::class, 'FlexSliderSpeed');
     }
 
     /**

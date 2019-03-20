@@ -37,6 +37,12 @@ public function setFlexSliderSpeed()
 }
 ```
 
+Adjusting the defualt for all sliders can also be done in the config.
+```yml
+Dynamic\FlexSlider\ORM\FlexSlider:
+  FlexSliderSpeed: 3000
+```
+
 ### User Guide
 
 You should now see a "Slides" tab on the page type or DataObject to which you applied the DataExtension. Simply create Slides to be included in the slide show that link to other pages on your website.
