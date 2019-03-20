@@ -82,7 +82,7 @@ class FlexSliderTest extends SapphireTest
         $object = TestPage::create();
         $this->assertEquals(7000, $object->getSlideshowSpeed());
 
-        Config::modify()->set(FlexSlider::class, 5000);
+        Config::modify()->set(FlexSlider::class, 'FlexSliderSpeed', 5000);
         $this->assertEquals(5000, $object->getSlideshowSpeed());
 
         $object->config()->set('FlexSliderSpeed', 3000);
