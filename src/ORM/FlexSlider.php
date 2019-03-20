@@ -200,9 +200,7 @@ class FlexSlider extends DataExtension
             ? $this->owner->flexSliderAfterAction()
             : 'function(){}';
 
-        $speed = $this->owner->hasMethod('setFlexSliderSpeed')
-            ? $this->owner->setFlexSliderSpeed()
-            : 7000;
+        $speed = $this->getSlideshowSpeed();
 
         Requirements::customScript(
             "(function($) {
@@ -252,6 +250,24 @@ class FlexSlider extends DataExtension
                 });
             }(jQuery));'
         );
+    }
+
+    /**
+     * @return int
+     */
+    private function getSlideshowSpeed()
+    {
+        if ($this->owner->hasMethod('setFlexSliderSpeed') && $this->owner->setFlexSliderSpeed()) {
+            return $this->owner->setFlexSliderSpeed();
+        }
+
+        // check the config for an integer
+        $configSpeed = $this->owner->config()->get('FlexSliderSpeed');
+        if ($configSpeed && (int) $configSpeed == $configSpeed) {
+            return $this->owner->config()->get('FlexSliderSpeed');
+        }
+
+        return 7000;
     }
 
     /**
