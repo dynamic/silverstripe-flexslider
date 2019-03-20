@@ -71,4 +71,20 @@ class FlexSliderTest extends SapphireTest
         $slides = $object->getSlideShow();
         $this->assertInstanceOf(DataList::class, $slides);
     }
+
+    /**
+     *
+     */
+    public function testGetSlideshowSpeed()
+    {
+        /** @var \Dynamic\FlexSlider\ORM\FlexSlider|\Page $object */
+        $object = TestPage::create();
+        $this->assertEquals(7000, $object->getSlideshowSpeed());
+
+        $object->config()->set('FlexSliderSpeed', 3000);
+        $this->assertEquals(3000, $object->getSlideshowSpeed());
+
+        $object->config()->set('setFlexSliderSpeed', true);
+        $this->assertEquals(1000, $object->getSlideshowSpeed());
+    }
 }

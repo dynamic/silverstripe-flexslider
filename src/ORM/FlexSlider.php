@@ -255,7 +255,7 @@ class FlexSlider extends DataExtension
     /**
      * @return int
      */
-    private function getSlideshowSpeed()
+    public function getSlideshowSpeed()
     {
         if ($this->owner->hasMethod('setFlexSliderSpeed') && $this->owner->setFlexSliderSpeed()) {
             return $this->owner->setFlexSliderSpeed();
@@ -264,7 +264,7 @@ class FlexSlider extends DataExtension
         // check the config for an integer
         $configSpeed = $this->owner->config()->get('FlexSliderSpeed');
         if ($configSpeed && (int) $configSpeed == $configSpeed) {
-            return $this->owner->config()->get('FlexSliderSpeed');
+            return (int) $this->owner->config()->get('FlexSliderSpeed');
         }
 
         return 7000;
