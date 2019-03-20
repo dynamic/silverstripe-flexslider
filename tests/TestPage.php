@@ -18,4 +18,13 @@ class TestPage extends \Page implements TestOnly
     );
 
     private static $table_name = 'FlexsliderTestPage';
+
+    public function setFlexSliderSpeed()
+    {
+        if (!$this->config()->get('setFlexSliderSpeed')) {
+            return;
+        }
+
+        return 1000;
+    }
 }

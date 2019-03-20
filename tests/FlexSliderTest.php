@@ -3,6 +3,7 @@
 namespace Dynamic\FlexSlider\Test;
 
 use Dynamic\FlexSlider\Model\SlideImage;
+use Dynamic\FlexSlider\ORM\FlexSlider;
 use SilverStripe\Assets\Image;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
@@ -70,5 +71,24 @@ class FlexSliderTest extends SapphireTest
         $object->Slides()->add($slide1);
         $slides = $object->getSlideShow();
         $this->assertInstanceOf(DataList::class, $slides);
+    }
+
+    /**
+     *
+     */
+    public function testGetSlideshowSpeed()
+    {
+        /** @var \Dynamic\FlexSlider\ORM\FlexSlider|\Page $object */
+        $object = TestPage::create();
+        $this->assertEquals(7000, $object->getSlideshowSpeed());
+
+        Config::modify()->set(FlexSlider::class, 'FlexSliderSpeed', 5000);
+        $this->assertEquals(5000, $object->getSlideshowSpeed());
+
+        $object->config()->set('FlexSliderSpeed', 3000);
+        $this->assertEquals(3000, $object->getSlideshowSpeed());
+
+        $object->config()->set('setFlexSliderSpeed', true);
+        $this->assertEquals(1000, $object->getSlideshowSpeed());
     }
 }
