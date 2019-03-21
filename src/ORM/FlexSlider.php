@@ -304,7 +304,7 @@ class FlexSlider extends DataExtension
     {
         return
             Config::inst()->get(FlexSlider::class, 'ShowSpeedInCMS') ||
-            $this->owner->config()->get('ShowSPeedInCMS');
+            $this->owner->config()->get('ShowSpeedInCMS');
     }
 
     /**
