@@ -174,6 +174,7 @@ class FlexSlider extends DataExtension
                         _t(__CLASS__ . '.SLIDER_SPEED', 'Slider Speed')
                     )
                         ->setDescription('In Seconds')
+                        ->setScale(2)
                 );
             }
         }
