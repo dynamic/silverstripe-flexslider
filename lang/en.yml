@@ -22,6 +22,7 @@ en:
     CAROUSEL_THUMBNAIL_COUNT: 'Number of thumbnails'
     CONTROL_NAV: 'Show ControlNav'
     DIRECTION_NAV: 'Show DirectionNav'
+    SLIDER_SPEED: 'Slider Speed'
     fade: 'Fade'
     LEARN_MORE: 'Learn More'
     LOOP: 'Loop the carousel'

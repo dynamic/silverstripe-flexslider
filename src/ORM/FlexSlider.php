@@ -30,6 +30,9 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
  * @property bool $CarouselControlNav
  * @property bool $CarouselDirectionNav
  * @property int $CarouselThumbnailCt
+ * @property double $FlexSliderSpeed
+ *
+ * @property-read DataObject|FlexSlider $owner
  */
 class FlexSlider extends DataExtension
 {
@@ -46,6 +49,7 @@ class FlexSlider extends DataExtension
         'CarouselControlNav' => 'Boolean',
         'CarouselDirectionNav' => 'Boolean',
         'CarouselThumbnailCt' => 'Int',
+        'FlexSliderSpeed' => 'Double',
     );
 
     /**
@@ -60,7 +64,6 @@ class FlexSlider extends DataExtension
      */
     public function populateDefaults()
     {
-        parent::populateDefaults();
         $this->owner->Loop = 1;
         $this->owner->Animate = 1;
         $this->owner->SliderControlNav = 0;
@@ -68,6 +71,13 @@ class FlexSlider extends DataExtension
         $this->owner->CarouselControlNav = 0;
         $this->owner->CarouselDirectionNav = 1;
         $this->owner->CarouselThumbnailCt = 6;
+
+        $this->owner->FlexSliderSpeed = Config::inst()->get(FlexSlider::class, 'FlexSliderSpeed') / 1000;
+        if (Config::inst()->get(FlexSlider::class, 'FlexSliderSpeed')) {
+            $this->FlexSliderSpeed = $this->owner->config()->get('FlexSliderSpeed') / 1000;
+        }
+
+        return parent::populateDefaults();
     }
 
     /**
@@ -85,6 +95,7 @@ class FlexSlider extends DataExtension
             'CarouselControlNav',
             'CarouselDirectionNav',
             'CarouselThumbnailCt',
+            'FlexSliderSpeed',
             'Slides'
         ));
 
@@ -152,9 +163,19 @@ class FlexSlider extends DataExtension
                         'CarouselThumbnailCt',
                         _t(__CLASS__ . '.CAROUSEL_THUMBNAIL_COUNT', 'Number of thumbnails')
                     )
-                    //)->displayIf('ThumbnailNav')->isChecked()->end()
-                )),
+                ))
             ));
+
+            if ($this->getShowSpeedInCMS()) {
+                $fields->insertAfter(
+                    'CarouselThumbnailCt',
+                    NumericField::create(
+                        'FlexSliderSpeed',
+                        _t(__CLASS__ . '.SLIDER_SPEED', 'Slider Speed')
+                    )
+                        ->setDescription('In Seconds')
+                );
+            }
         }
     }
 
@@ -258,17 +279,31 @@ class FlexSlider extends DataExtension
      */
     public function getSlideshowSpeed()
     {
+        if ($this->getShowSpeedInCMS()) {
+            return $this->owner->FlexSliderSpeed * 1000;
+        }
+
         if ($this->owner->hasMethod('setFlexSliderSpeed') && $this->owner->setFlexSliderSpeed()) {
             return $this->owner->setFlexSliderSpeed();
         }
 
         // check the config for an integer
         $configSpeed = $this->owner->config()->get('FlexSliderSpeed');
-        if ($configSpeed && (int) $configSpeed == $configSpeed) {
-            return (int) $this->owner->config()->get('FlexSliderSpeed');
+        if ($configSpeed && (int)$configSpeed == $configSpeed) {
+            return (int)$this->owner->config()->get('FlexSliderSpeed');
         }
 
         return Config::inst()->get(self::class, 'FlexSliderSpeed');
+    }
+
+    /**
+     * @return bool
+     */
+    public function getShowSpeedInCMS()
+    {
+        return
+            Config::inst()->get(FlexSlider::class, 'ShowSpeedInCMS') ||
+            $this->owner->config()->get('ShowSPeedInCMS');
     }
 
     /**
