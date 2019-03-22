@@ -92,8 +92,9 @@ class FlexSliderTest extends SapphireTest
         $this->assertEquals(1000, $object->getSlideshowSpeed());
 
         $object->config()->set('ShowSpeedInCMS', true);
-        $object->FlexSliderSpeed = 14;
-        $this->assertEquals(14000, $object->getSlideshowSpeed());
+        $object->FlexSliderSpeed = 0.5;
+        $object->write();
+        $this->assertEquals(500, $object->getSlideshowSpeed());
     }
 
     public function testGetShowSpeedInCMS()
