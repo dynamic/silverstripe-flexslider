@@ -115,7 +115,7 @@ class FlexSlider extends DataExtension
     public function contentcontrollerInit()
     {
         // only call custom script if page has Slides and DataExtension
-        if (Object::has_extension($this->owner->ClassName, 'FlexSlider')) {
+        if (DataObject::has_extension($this->owner->ClassName, 'FlexSlider')) {
             if ($this->owner->SlideShow()->exists() && !$this->init_loaded) {
                 $this->getCustomScript();
                 $this->init_loaded = true;
