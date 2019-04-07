@@ -187,8 +187,7 @@ class SlideImage extends DataObject implements PermissionProvider
             // Page link
             $fields->replaceField(
                 'PageLinkID',
-                LinkField::create('SlideLinkID')
-                    ->setTitle($this->fieldLabel('SlideLinkID'))
+                LinkField::create('SlideLinkID', $this->fieldLabel('SlideLinkID'))
             );
 
             // Image
