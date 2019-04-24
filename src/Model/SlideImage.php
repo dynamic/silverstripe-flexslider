@@ -131,6 +131,25 @@ class SlideImage extends DataObject implements PermissionProvider
     ];
 
     /**
+     * @param bool $includerelations
+     * @return array
+     */
+    public function fieldLabels($includerelations = true)
+    {
+        $labels = parent::fieldLabels($includerelations);
+
+        $labels['Name'] = _t(__CLASS__ . '.NAME', 'Name');
+        $labels['Headline'] = _t(__CLASS__ . '.HEADLINE', 'Headline');
+        $labels['Description'] = _t(__CLASS__ . '.DESCRIPTION', 'Description');
+        $labels['SlideLinkID'] =  _t(__CLASS__ . '.PAGE_LINK', "Call to action link");
+        $labels['Image'] = _t(__CLASS__ . '.IMAGE', 'Image');
+        $labels['SlideType'] = _t(__CLASS__ . '.SlideType', 'Image or Video');
+        $labels['Video'] = _t(__CLASS__ . '.VideoLabel', 'Video URL');
+
+        return $labels;
+    }
+
+    /**
      * @return \SilverStripe\Forms\FieldList
      */
     public function getCMSFields()
@@ -149,27 +168,18 @@ class SlideImage extends DataObject implements PermissionProvider
 
             // Name
             $fields->dataFieldByName('Name')
-                ->setTitle(
-                    _t(__CLASS__ . '.NAME', 'Name')
-                )
                 ->setDescription(
                     _t(__CLASS__ . '.INTERNAL_USE', 'for internal reference only')
                 );
 
             // Headline
             $fields->dataFieldByName('Headline')
-                ->setTitle(
-                    _t(__CLASS__ . '.HEADLINE', 'Headline')
-                )
                 ->setDescription(
                     _t(__CLASS__ . '.USED_IN_TEMPLATE', 'optional, used in template')
                 );
 
             // Description
             $fields->dataFieldByName('Description')
-                ->setTitle(
-                    _t(__CLASS__ . '.DESCRIPTION', 'Description')
-                )
                 ->setDescription(
                     _t(__CLASS__ . '.USED_IN_TEMPLATE', 'optional, used in template')
                 );
@@ -177,33 +187,26 @@ class SlideImage extends DataObject implements PermissionProvider
             // Page link
             $fields->replaceField(
                 'PageLinkID',
-                LinkField::create('SlideLinkID')
-                    ->setTitle(
-                        _t(__CLASS__ . '.PAGE_LINK', "Choose a page to link to:")
-                    )
+                LinkField::create('SlideLinkID', $this->fieldLabel('SlideLinkID'))
             );
 
             // Image
-            $image = UploadField::create(
-                'Image',
-                _t(__CLASS__ . '.IMAGE', 'Image')
-            )->setFolderName('Uploads/SlideImages');
+            $image = UploadField::create('Image', $this->fieldLabel('Image'))
+                ->setFolderName('Uploads/SlideImages');
 
             $image->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif']);
 
             $fields->addFieldToTab(
                 'Root.Main',
                 CompositeField::create(FieldList::create(
-                    DropdownField::create('SlideType')
-                        ->setSource($this->getTypeSource())
-                        ->setTitle('Image or Video'),
+                    DropdownField::create('SlideType', $this->fieldLabel('SlideType'))
+                        ->setSource($this->getTypeSource()),
                     Wrapper::create(
                         $image
                     )->displayIf('SlideType')->isEqualTo('Image')->orIf('SlideType')->isEqualTo('Video')->end(),
                     Wrapper::create(
-                        $videoField = EmbeddedObjectField::create('Video')
-                            ->setTitle('Video URL')
-                            ->setDescription('Supported links: YouTube, Vimeo')
+                        $videoField = EmbeddedObjectField::create('Video', $this->fieldLabel('Video'))
+                            ->setDescription(_t(__CLASS__ . '.VideoDescription', 'Supported links: YouTube, Vimeo'))
                     )->displayIf('SlideType')->isEqualTo('Video')->end()
                 ))->setName('MediaFields'),
                 'Description'

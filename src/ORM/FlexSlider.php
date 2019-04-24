@@ -113,7 +113,7 @@ class FlexSlider extends DataExtension
 
             $fields->addFieldsToTab("Root.{$slideTitle}", array(
                 $SlidesField,
-                ToggleCompositeField::create('ConfigHD', 'Slider Settings', array(
+                ToggleCompositeField::create('ConfigHD', _t(__CLASS__.'.SettingsLabel', 'Slider Settings'), array(
                     DropdownField::create(
                         'Animation',
                         _t(__CLASS__ . '.ANIMATION_OPTION', 'Animation option'),
