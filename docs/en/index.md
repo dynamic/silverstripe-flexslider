@@ -6,7 +6,7 @@ Display FlexSlider slide shows on your SilverStripe website.
 
 ### Configuration
 
-In your `mysite/_config/config.yml` add the following to the desired page type or DataObject you wish to add the FlexSlider to:
+In your `app/_config/config.yml` add the following to the desired page type or DataObject you wish to add the FlexSlider to:
 
 ```
 Page:
@@ -22,6 +22,6 @@ You should now see a "Slides" tab on the page type or DataObject to which you ap
 
 ![screen shot](../../images/FlexSliderCMS.png)
 
-You can inculde FlexSlider in your layout by using `<% include FlexSlider %>`
+You can include FlexSlider in your layout by using `<% include FlexSlider %>`
 
 ![screen shot](../../images/FlexSlider.png)
