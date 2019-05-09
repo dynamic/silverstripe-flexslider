@@ -211,7 +211,7 @@ class FlexSlider extends DataExtension
                          if(jQuery('.carousel').eq(index).length) {
                              jQuery('.carousel').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
-                                animation: '" . $this->owner->Animation . "',
+                                animation: 'slide',
                                 animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
                                 controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ", 
                                 directionNav: " . $this->owner->obj('CarouselDirectionNav')->NiceAsBoolean() . ",
