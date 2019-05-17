@@ -17,7 +17,7 @@ class SlideLinkTask extends BuildTask
     /**
      * @var string
      */
-    protected $title = 'Slide Link Migration Task';
+    protected $title = 'Flexslider - Slide Link Migration Task';
 
     /**
      * @var string
