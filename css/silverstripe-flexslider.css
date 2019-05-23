@@ -2,20 +2,20 @@
     border: none;
 }
 .slideshow .flexslider ul,
-.slideshow .carousel ul{
+.slideshow .fs-carousel ul{
     margin: 0;
 }
 .slideshow .flexslider ul li,
-.slideshow .carousel ul li{
+.slideshow .fs-carousel ul li{
     list-style-type: none;
     margin: 0;
 }
 .slideshow .flexslider ol,
-.slideshow .carousel ol{
+.slideshow .fs-carousel ol{
     list-style-type: none;
     margin: 0;
 }
-.slideshow .flexslider img, .slideshow .carousel img {
+.slideshow .flexslider img, .slideshow .fs-carousel img {
     border: 0;
 }
 .flexslider .slide {
@@ -27,22 +27,22 @@
 .slideshow .flex-direction-nav a {
     overflow: visible;
 }
-.slideshow a.flex-next:hover, .carousel a.flex-next:hover {border-bottom: none;}
+.slideshow a.flex-next:hover, .fs-carousel a.flex-next:hover {border-bottom: none;}
 
-.slideshow .carousel {position: relative;}
-.slideshow .carousel ul.slides li img {cursor: pointer; width: 100%; height: auto; opacity: 0.9;}
-.slideshow .carousel ul.slides li img:hover {opacity: 1;}
-.slideshow .carousel:hover .flex-direction-nav .flex-prev {
+.slideshow .fs-carousel {position: relative;}
+.slideshow .fs-carousel ul.slides li img {cursor: pointer; width: 100%; height: auto; opacity: 0.9;}
+.slideshow .fs-carousel ul.slides li img:hover {opacity: 1;}
+.slideshow .fs-carousel:hover .flex-direction-nav .flex-prev {
   opacity: 0.7;
   left: 10px;
 }
-.slideshow .carousel:hover .flex-direction-nav .flex-prev:hover {
+.slideshow .fs-carousel:hover .flex-direction-nav .flex-prev:hover {
   opacity: 1;
 }
-.slideshow .carousel:hover .flex-direction-nav .flex-next {
+.slideshow .fs-carousel:hover .flex-direction-nav .flex-next {
   opacity: 0.7;
   right: 10px;
 }
-.slideshow .carousel:hover .flex-direction-nav .flex-next:hover {
+.slideshow .fs-carousel:hover .flex-direction-nav .flex-next:hover {
   opacity: 1;
 }

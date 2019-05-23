@@ -12,7 +12,7 @@
       </ul>
     </div>
   	<% if $ThumbnailNav && $SlideShow.Count > 1 %>
-      <div class="carousel">
+      <div class="fs-carousel">
         <ul class="slides">
 			<% loop $SlideShow %>
 			  <li>
