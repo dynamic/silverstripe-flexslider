@@ -19,7 +19,7 @@ class SlideThumbnailNavMigrationTask extends BuildTask
     /**
      * @var string
      */
-    protected $title = 'FlexSlider Default Values';
+    protected $title = 'FlexSlider - Default Values';
 
     /**
      * @var string
