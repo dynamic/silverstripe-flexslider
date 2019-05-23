@@ -191,7 +191,7 @@ class FlexSlider extends DataExtension
     public function getCustomScript()
     {
         // Flexslider options
-        $sync = ($this->owner->ThumbnailNav == true) ? "sync: '.carousel:eq('+index+')'," : '';
+        $sync = ($this->owner->ThumbnailNav == true) ? "sync: '.fs-carousel:eq('+index+')'," : '';
 
         $before = $this->owner->hasMethod('flexSliderBeforeAction')
             ? $this->owner->flexSliderBeforeAction()
@@ -208,8 +208,8 @@ class FlexSlider extends DataExtension
                 $(document).ready(function(){
                     jQuery('.flexslider').each(function(index){
 					 
-                         if(jQuery('.carousel').eq(index).length) {
-                             jQuery('.carousel').eq(index).flexslider({
+                         if(jQuery('.fs-carousel').eq(index).length) {
+                             jQuery('.fs-carousel').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
                                 animation: 'slide',
                                 animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
