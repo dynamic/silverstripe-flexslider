@@ -6,4 +6,4 @@ Dynamic\FlexSLider\Model\SlideImage:
     - SilverStripe\Versioned\Versioned('Stage','Live')
 
 Dynamic\FlexSlider\ORM\FlexSlider:
-  FlexSliderSpeed: 7000
+  flex_slider_speed: 7

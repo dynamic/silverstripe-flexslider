@@ -15,14 +15,23 @@ class FlexSliderTest extends SapphireTest
     /**
      * @var array
      */
-    protected static $extra_dataobjects = array(
+    protected static $extra_dataobjects = [
         TestPage::class,
-    );
+    ];
 
     /**
      * @var string
      */
     protected static $fixture_file = 'fixtures.yml';
+
+    /**
+     * @var array
+     */
+    protected static $required_extensions = [
+        TestPage::class => [
+            FlexSlider::class,
+        ],
+    ];
 
     /**
      *
@@ -82,32 +91,8 @@ class FlexSliderTest extends SapphireTest
         $object = TestPage::create();
         $this->assertEquals(7000, $object->getSlideshowSpeed());
 
-        Config::modify()->set(FlexSlider::class, 'FlexSliderSpeed', 5000);
-        $this->assertEquals(5000, $object->getSlideshowSpeed());
-
-        $object->config()->set('FlexSliderSpeed', 3000);
-        $this->assertEquals(3000, $object->getSlideshowSpeed());
-
-        $object->config()->set('setFlexSliderSpeed', true);
-        $this->assertEquals(1000, $object->getSlideshowSpeed());
-
-        $object->config()->set('ShowSpeedInCMS', true);
         $object->FlexSliderSpeed = 0.5;
         $object->write();
         $this->assertEquals(500, $object->getSlideshowSpeed());
-    }
-
-    public function testGetShowSpeedInCMS()
-    {
-        /** @var \Dynamic\FlexSlider\ORM\FlexSlider|\Page $object */
-        $object = TestPage::create();
-        $this->assertFalse($object->getShowSpeedInCMS());
-
-        Config::modify()->set(FlexSlider::class, 'ShowSpeedInCMS', true);
-        $this->assertTrue($object->getShowSpeedInCMS());
-
-        Config::modify()->set(FlexSlider::class, 'ShowSpeedInCMS', false);
-        $object->config()->set('ShowSpeedInCMS', true);
-        $this->assertTrue($object->getShowSpeedInCMS());
     }
 }
