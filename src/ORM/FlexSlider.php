@@ -5,6 +5,7 @@ namespace Dynamic\FlexSlider\ORM;
 use Dynamic\FlexSlider\Model\SlideImage;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -30,13 +31,18 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
  * @property bool $CarouselControlNav
  * @property bool $CarouselDirectionNav
  * @property int $CarouselThumbnailCt
+ * @property double $FlexSliderSpeed
+ *
+ * @property-read DataObject|FlexSlider $owner
  */
 class FlexSlider extends DataExtension
 {
+    use Configurable;
+
     /**
      * @var array
      */
-    private static $db = array(
+    private static $db = [
         'Animation' => "Enum('slide, fade', 'slide')",
         'Loop' => 'Boolean',
         'Animate' => 'Boolean',
@@ -46,21 +52,21 @@ class FlexSlider extends DataExtension
         'CarouselControlNav' => 'Boolean',
         'CarouselDirectionNav' => 'Boolean',
         'CarouselThumbnailCt' => 'Int',
-    );
+        'FlexSliderSpeed' => 'Double',
+    ];
 
     /**
      * @var array
      */
-    private static $has_many = array(
+    private static $has_many = [
         'Slides' => SlideImage::class,
-    );
+    ];
 
     /**
      *
      */
     public function populateDefaults()
     {
-        parent::populateDefaults();
         $this->owner->Loop = 1;
         $this->owner->Animate = 1;
         $this->owner->SliderControlNav = 0;
@@ -68,6 +74,10 @@ class FlexSlider extends DataExtension
         $this->owner->CarouselControlNav = 0;
         $this->owner->CarouselDirectionNav = 1;
         $this->owner->CarouselThumbnailCt = 6;
+        $this->owner->FlexSliderSpeed = $this->owner->config()->get('flex_slider_speed')
+            ?: Config::inst()->get(FlexSlider::class, 'FlexSliderSpeed');
+
+        return parent::populateDefaults();
     }
 
     /**
@@ -75,7 +85,7 @@ class FlexSlider extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        $fields->removeByName(array(
+        $fields->removeByName([
             'Animation',
             'Loop',
             'Animate',
@@ -85,8 +95,9 @@ class FlexSlider extends DataExtension
             'CarouselControlNav',
             'CarouselDirectionNav',
             'CarouselThumbnailCt',
-            'Slides'
-        ));
+            'FlexSliderSpeed',
+            'Slides',
+        ]);
 
         // Slides
         if ($this->owner->ID) {
@@ -105,15 +116,15 @@ class FlexSlider extends DataExtension
 
             $slideTitle = $this->owner->stat('slide_tab_title') ?: _t(__CLASS__ . '.SLIDES', 'Slides');
 
-            $animations = array();
+            $animations = [];
             $animationOptions = $this->owner->dbObject('Animation')->getEnum();
             foreach ($animationOptions as $value) {
                 $animations[$value] = _t(__CLASS__ . ".$value", $value);
             }
 
-            $fields->addFieldsToTab("Root.{$slideTitle}", array(
+            $fields->addFieldsToTab("Root.{$slideTitle}", [
                 $SlidesField,
-                ToggleCompositeField::create('ConfigHD', _t(__CLASS__.'.SettingsLabel', 'Slider Settings'), array(
+                ToggleCompositeField::create('ConfigHD', _t(__CLASS__ . '.SettingsLabel', 'Slider Settings'), [
                     DropdownField::create(
                         'Animation',
                         _t(__CLASS__ . '.ANIMATION_OPTION', 'Animation option'),
@@ -151,10 +162,15 @@ class FlexSlider extends DataExtension
                     NumericField::create(
                         'CarouselThumbnailCt',
                         _t(__CLASS__ . '.CAROUSEL_THUMBNAIL_COUNT', 'Number of thumbnails')
+                    ),
+                    NumericField::create(
+                        'FlexSliderSpeed',
+                        _t(__CLASS__ . '.SLIDER_SPEED', 'Slider Speed')
                     )
-                    //)->displayIf('ThumbnailNav')->isChecked()->end()
-                )),
-            ));
+                        ->setDescription('In Seconds')
+                        ->setScale(2),
+                ]),
+            ]);
         }
     }
 
@@ -258,17 +274,7 @@ class FlexSlider extends DataExtension
      */
     public function getSlideshowSpeed()
     {
-        if ($this->owner->hasMethod('setFlexSliderSpeed') && $this->owner->setFlexSliderSpeed()) {
-            return $this->owner->setFlexSliderSpeed();
-        }
-
-        // check the config for an integer
-        $configSpeed = $this->owner->config()->get('FlexSliderSpeed');
-        if ($configSpeed && (int) $configSpeed == $configSpeed) {
-            return (int) $this->owner->config()->get('FlexSliderSpeed');
-        }
-
-        return Config::inst()->get(self::class, 'FlexSliderSpeed');
+        return $this->owner->FlexSliderSpeed * 1000;
     }
 
     /**

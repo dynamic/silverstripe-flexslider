@@ -13,18 +13,5 @@ class TestPage extends \Page implements TestOnly
 {
     private static $slide_tab_title = '';
 
-    private static $extensions = array(
-        FlexSlider::class,
-    );
-
     private static $table_name = 'FlexsliderTestPage';
-
-    public function setFlexSliderSpeed()
-    {
-        if (!$this->config()->get('setFlexSliderSpeed')) {
-            return;
-        }
-
-        return 1000;
-    }
 }
