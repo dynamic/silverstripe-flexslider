@@ -1,5 +1,185 @@
 # Change Log
 
+## [4.0.0](https://github.com/dynamic/silverstripe-flexslider/tree/4.0.0) (2019-05-28)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/2.0.2...4.0.0)
+
+**Implemented enhancements:**
+
+- NEW options for Slider Control Nav [\#149](https://github.com/dynamic/silverstripe-flexslider/issues/149)
+- change carousel class [\#139](https://github.com/dynamic/silverstripe-flexslider/issues/139)
+- Hide thumbnail fields unless set to use the thumbnail option - SS4 [\#132](https://github.com/dynamic/silverstripe-flexslider/issues/132)
+- Use class references instead of strings [\#126](https://github.com/dynamic/silverstripe-flexslider/issues/126)
+- FlexSlider - contentcontrollerInit\(\) - break into smlaller functions [\#64](https://github.com/dynamic/silverstripe-flexslider/issues/64)
+- Inherited Slides [\#59](https://github.com/dynamic/silverstripe-flexslider/issues/59)
+
+**Fixed bugs:**
+
+- Slide links not being used in templates [\#159](https://github.com/dynamic/silverstripe-flexslider/issues/159)
+- change carousel class [\#139](https://github.com/dynamic/silverstripe-flexslider/issues/139)
+- set carousel to slide [\#138](https://github.com/dynamic/silverstripe-flexslider/issues/138)
+- Hide thumbnail fields unless set to use the thumbnail option - SS4 [\#132](https://github.com/dynamic/silverstripe-flexslider/issues/132)
+- Default values for minItems, maxItems and move. [\#120](https://github.com/dynamic/silverstripe-flexslider/issues/120)
+
+**Closed issues:**
+
+- remove and ignore .DS\_store files [\#170](https://github.com/dynamic/silverstripe-flexslider/issues/170)
+- REVIEW doc files for module [\#169](https://github.com/dynamic/silverstripe-flexslider/issues/169)
+- Specify $owns metadata for slides [\#165](https://github.com/dynamic/silverstripe-flexslider/issues/165)
+- No 'Slider' Tab in CMS [\#136](https://github.com/dynamic/silverstripe-flexslider/issues/136)
+- Conflict with SelectUpload in CWP install [\#98](https://github.com/dynamic/silverstripe-flexslider/issues/98)
+- ENHANCEMENT better buttons integration [\#54](https://github.com/dynamic/silverstripe-flexslider/issues/54)
+- Explore use of extend\(\) function in place of method\_exists\(\) [\#4](https://github.com/dynamic/silverstripe-flexslider/issues/4)
+
+**Merged pull requests:**
+
+- REFACTOR templates to use $SlideLink [\#180](https://github.com/dynamic/silverstripe-flexslider/pull/180) ([muskie9](https://github.com/muskie9))
+- UPDATE remove .DS\_Store [\#178](https://github.com/dynamic/silverstripe-flexslider/pull/178) ([muskie9](https://github.com/muskie9))
+- REFACTOR update carousel class to fs-carousel [\#177](https://github.com/dynamic/silverstripe-flexslider/pull/177) ([muskie9](https://github.com/muskie9))
+- REFACTOR remove SlidePublishTask [\#176](https://github.com/dynamic/silverstripe-flexslider/pull/176) ([muskie9](https://github.com/muskie9))
+- DOCS update module docs [\#174](https://github.com/dynamic/silverstripe-flexslider/pull/174) ([muskie9](https://github.com/muskie9))
+- DOCS module docs [\#173](https://github.com/dynamic/silverstripe-flexslider/pull/173) ([muskie9](https://github.com/muskie9))
+- BUGFIX Carousel option can’t Fade [\#172](https://github.com/dynamic/silverstripe-flexslider/pull/172) ([muskie9](https://github.com/muskie9))
+- BUGFIX Carousel option can’t Fade [\#171](https://github.com/dynamic/silverstripe-flexslider/pull/171) ([muskie9](https://github.com/muskie9))
+- Speed in cms [\#161](https://github.com/dynamic/silverstripe-flexslider/pull/161) ([mak001](https://github.com/mak001))
+
+## [2.0.2](https://github.com/dynamic/silverstripe-flexslider/tree/2.0.2) (2019-04-25)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/2.0.1...2.0.2)
+
+**Merged pull requests:**
+
+- bugfix - add VersionedDataObjectDetailsForm to grid field [\#167](https://github.com/dynamic/silverstripe-flexslider/pull/167) ([jsirish](https://github.com/jsirish))
+- i18n updates [\#164](https://github.com/dynamic/silverstripe-flexslider/pull/164) ([jsirish](https://github.com/jsirish))
+
+## [2.0.1](https://github.com/dynamic/silverstripe-flexslider/tree/2.0.1) (2019-04-04)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/4.0.0-beta3...2.0.1)
+
+**Merged pull requests:**
+
+- bugfix - check has\_extension on DataObject instead of Object [\#162](https://github.com/dynamic/silverstripe-flexslider/pull/162) ([jsirish](https://github.com/jsirish))
+- Added the ability to set slider speed in the config [\#160](https://github.com/dynamic/silverstripe-flexslider/pull/160) ([mak001](https://github.com/mak001))
+
+## [4.0.0-beta3](https://github.com/dynamic/silverstripe-flexslider/tree/4.0.0-beta3) (2019-02-05)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/4.0.0-beta2...4.0.0-beta3)
+
+**Merged pull requests:**
+
+- ENHANCEMENT SlideType default value task [\#158](https://github.com/dynamic/silverstripe-flexslider/pull/158) ([muskie9](https://github.com/muskie9))
+
+## [4.0.0-beta2](https://github.com/dynamic/silverstripe-flexslider/tree/4.0.0-beta2) (2019-01-21)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/4.0.0-beta1...4.0.0-beta2)
+
+**Merged pull requests:**
+
+- REFACTOR hide VideoID scaffold field [\#157](https://github.com/dynamic/silverstripe-flexslider/pull/157) ([muskie9](https://github.com/muskie9))
+
+## [4.0.0-beta1](https://github.com/dynamic/silverstripe-flexslider/tree/4.0.0-beta1) (2019-01-18)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/4.0.0-alpha1...4.0.0-beta1)
+
+**Merged pull requests:**
+
+- Refactor/video image [\#156](https://github.com/dynamic/silverstripe-flexslider/pull/156) ([muskie9](https://github.com/muskie9))
+- REFACTOR use renderWith [\#154](https://github.com/dynamic/silverstripe-flexslider/pull/154) ([muskie9](https://github.com/muskie9))
+
+## [4.0.0-alpha1](https://github.com/dynamic/silverstripe-flexslider/tree/4.0.0-alpha1) (2019-01-15)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/3.0.4...4.0.0-alpha1)
+
+**Implemented enhancements:**
+
+- REFACTOR Linkable and oEmbed support [\#153](https://github.com/dynamic/silverstripe-flexslider/pull/153) ([muskie9](https://github.com/muskie9))
+
+**Fixed bugs:**
+
+- SlideImage - PageLinkID field can depreciate if too many pages [\#150](https://github.com/dynamic/silverstripe-flexslider/issues/150)
+
+## [3.0.4](https://github.com/dynamic/silverstripe-flexslider/tree/3.0.4) (2019-01-09)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/3.0.3...3.0.4)
+
+**Merged pull requests:**
+
+- SlideImage - use TreeDropdownField [\#151](https://github.com/dynamic/silverstripe-flexslider/pull/151) ([jsirish](https://github.com/jsirish))
+- bugfix - composer autoload test namespace [\#148](https://github.com/dynamic/silverstripe-flexslider/pull/148) ([jsirish](https://github.com/jsirish))
+
+## [3.0.3](https://github.com/dynamic/silverstripe-flexslider/tree/3.0.3) (2018-09-25)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/3.0.2...3.0.3)
+
+**Merged pull requests:**
+
+- bugfix - update namespaces for tests [\#147](https://github.com/dynamic/silverstripe-flexslider/pull/147) ([jsirish](https://github.com/jsirish))
+
+## [3.0.2](https://github.com/dynamic/silverstripe-flexslider/tree/3.0.2) (2018-09-24)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/2.0.0...3.0.2)
+
+**Fixed bugs:**
+
+- BUG default value task not compatible with SS4 [\#134](https://github.com/dynamic/silverstripe-flexslider/issues/134)
+
+**Merged pull requests:**
+
+- refactor - tweak default values for Slider settings [\#146](https://github.com/dynamic/silverstripe-flexslider/pull/146) ([jsirish](https://github.com/jsirish))
+- BUGFIX tasks not compatible with SS4 [\#135](https://github.com/dynamic/silverstripe-flexslider/pull/135) ([muskie9](https://github.com/muskie9))
+
+## [2.0.0](https://github.com/dynamic/silverstripe-flexslider/tree/2.0.0) (2018-09-24)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/3.0.1...2.0.0)
+
+**Implemented enhancements:**
+
+- Per Instance Config [\#84](https://github.com/dynamic/silverstripe-flexslider/issues/84)
+
+**Merged pull requests:**
+
+- UPDATE documentation to aid default value issues [\#121](https://github.com/dynamic/silverstripe-flexslider/pull/121) ([muskie9](https://github.com/muskie9))
+
+## [3.0.1](https://github.com/dynamic/silverstripe-flexslider/tree/3.0.1) (2018-09-20)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/3.0.0-beta2...3.0.1)
+
+**Merged pull requests:**
+
+- bugfix - yml formatting on upgrade.yml [\#145](https://github.com/dynamic/silverstripe-flexslider/pull/145) ([jsirish](https://github.com/jsirish))
+- feature - add upgrade.yml for SilverStripe 4 upgrades [\#144](https://github.com/dynamic/silverstripe-flexslider/pull/144) ([jsirish](https://github.com/jsirish))
+
+## [3.0.0-beta2](https://github.com/dynamic/silverstripe-flexslider/tree/3.0.0-beta2) (2018-08-27)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/3.0.0...3.0.0-beta2)
+
+## [3.0.0](https://github.com/dynamic/silverstripe-flexslider/tree/3.0.0) (2018-08-27)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/3.0.0-beta1...3.0.0)
+
+**Merged pull requests:**
+
+- BUGFIX getCMSFields errors [\#143](https://github.com/dynamic/silverstripe-flexslider/pull/143) ([muskie9](https://github.com/muskie9))
+- ENHANCEMENT allow config of itemWidth and itemMargin [\#142](https://github.com/dynamic/silverstripe-flexslider/pull/142) ([muskie9](https://github.com/muskie9))
+- refactor - SlideImage - move CMS fields to onBeforeUpdateCMSFields\(\) [\#141](https://github.com/dynamic/silverstripe-flexslider/pull/141) ([jsirish](https://github.com/jsirish))
+- Removed delete button from slide image gridfield [\#140](https://github.com/dynamic/silverstripe-flexslider/pull/140) ([mak001](https://github.com/mak001))
+
+## [3.0.0-beta1](https://github.com/dynamic/silverstripe-flexslider/tree/3.0.0-beta1) (2018-01-04)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/1.0.6...3.0.0-beta1)
+
+**Merged pull requests:**
+
+- Slide image now owns its image [\#133](https://github.com/dynamic/silverstripe-flexslider/pull/133) ([mak001](https://github.com/mak001))
+
+## [1.0.6](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.6) (2017-12-05)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/1.0.5...1.0.6)
+
+**Merged pull requests:**
+
+- REFACTOR page link field to tree dropdown if not [\#131](https://github.com/dynamic/silverstripe-flexslider/pull/131) ([muskie9](https://github.com/muskie9))
+- Added translation support [\#130](https://github.com/dynamic/silverstripe-flexslider/pull/130) ([mak001](https://github.com/mak001))
+- Updated to be a vendor module [\#129](https://github.com/dynamic/silverstripe-flexslider/pull/129) ([mak001](https://github.com/mak001))
+- REFACTOR - travis setup, phpunit.xml.dist config [\#128](https://github.com/dynamic/silverstripe-flexslider/pull/128) ([jsirish](https://github.com/jsirish))
+- BUGFIX - SlideImage - versioned\_gridfield\_extensions [\#127](https://github.com/dynamic/silverstripe-flexslider/pull/127) ([jsirish](https://github.com/jsirish))
+- Updated range on gridfieldextesions [\#124](https://github.com/dynamic/silverstripe-flexslider/pull/124) ([mak001](https://github.com/mak001))
+
+## [1.0.5](https://github.com/dynamic/silverstripe-flexslider/tree/1.0.5) (2017-10-10)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/3.0.0-alpha1...1.0.5)
+
+**Merged pull requests:**
+
+- Updated range on gridfieldextensions [\#125](https://github.com/dynamic/silverstripe-flexslider/pull/125) ([mak001](https://github.com/mak001))
+- Added unique id to script [\#123](https://github.com/dynamic/silverstripe-flexslider/pull/123) ([mak001](https://github.com/mak001))
+- Added unique id to script [\#122](https://github.com/dynamic/silverstripe-flexslider/pull/122) ([mak001](https://github.com/mak001))
+- SlidePublishTask - Set Name if empty [\#117](https://github.com/dynamic/silverstripe-flexslider/pull/117) ([jsirish](https://github.com/jsirish))
+- SS4 - documentation updates, updated Changelog [\#116](https://github.com/dynamic/silverstripe-flexslider/pull/116) ([jsirish](https://github.com/jsirish))
+
 ## [3.0.0-alpha1](https://github.com/dynamic/silverstripe-flexslider/tree/3.0.0-alpha1) (2017-07-06)
 [Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/2.0.0-alpha1...3.0.0-alpha1)
 
