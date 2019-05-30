@@ -74,8 +74,7 @@ class FlexSlider extends DataExtension
         $this->owner->CarouselControlNav = 0;
         $this->owner->CarouselDirectionNav = 1;
         $this->owner->CarouselThumbnailCt = 6;
-        $this->owner->FlexSliderSpeed = $this->owner->config()->get('flex_slider_speed')
-            ?: Config::inst()->get(FlexSlider::class, 'FlexSliderSpeed');
+        $this->owner->FlexSliderSpeed = $this->getDefaultSpeed();
 
         return parent::populateDefaults();
     }
@@ -274,7 +273,20 @@ class FlexSlider extends DataExtension
      */
     public function getSlideshowSpeed()
     {
-        return $this->owner->FlexSliderSpeed * 1000;
+        $speed = $this->owner->FlexSliderSpeed > 0
+            ? $this->owner->FlexSliderSpeed
+            : $this->getDefaultSpeed();
+
+        return $speed * 1000;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getDefaultSpeed()
+    {
+        return $this->owner->config()->get('flex_slider_speed')
+            ?: Config::inst()->get(FlexSlider::class, 'flex_slider_speed');
     }
 
     /**
