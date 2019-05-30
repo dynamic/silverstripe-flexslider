@@ -90,7 +90,10 @@ class FlexSliderTest extends SapphireTest
         /** @var \Dynamic\FlexSlider\ORM\FlexSlider|\Page $object */
         $object = TestPage::create();
         $object->FlexSliderSpeed = 0;
-        $this->assertEquals(Config::inst()->get(FlexSlider::class, 'flex_slider_speed') * 1000, $object->getSlideshowSpeed());
+        $this->assertEquals(
+            Config::inst()->get(FlexSlider::class, 'flex_slider_speed') * 1000,
+            $object->getSlideshowSpeed()
+        );
 
         $object->FlexSliderSpeed = 0.5;
         $object->write();
