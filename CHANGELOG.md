@@ -1,45 +1,56 @@
 # Change Log
 
-## [4.0.0](https://github.com/dynamic/silverstripe-flexslider/tree/4.0.0) (2019-05-28)
+## [4.0.1](https://github.com/dynamic/silverstripe-flexslider/tree/4.0.1) (2019-05-30)
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/4.0.0...4.0.1)
+
+**Fixed bugs:**
+
+- BUG upgrading to 4.0.0 could have slide speed as 0 when inting [\#181](https://github.com/dynamic/silverstripe-flexslider/issues/181)
+
+**Merged pull requests:**
+
+- BUGFIX upgrading to v4 may cause slider speed to be 0 [\#182](https://github.com/dynamic/silverstripe-flexslider/pull/182) ([muskie9](https://github.com/muskie9))
+
+## [4.0.0](https://github.com/dynamic/silverstripe-flexslider/tree/4.0.0) (2019-05-29)
 [Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/2.0.2...4.0.0)
 
 **Implemented enhancements:**
 
 - NEW options for Slider Control Nav [\#149](https://github.com/dynamic/silverstripe-flexslider/issues/149)
-- change carousel class [\#139](https://github.com/dynamic/silverstripe-flexslider/issues/139)
 - Hide thumbnail fields unless set to use the thumbnail option - SS4 [\#132](https://github.com/dynamic/silverstripe-flexslider/issues/132)
 - Use class references instead of strings [\#126](https://github.com/dynamic/silverstripe-flexslider/issues/126)
 - FlexSlider - contentcontrollerInit\(\) - break into smlaller functions [\#64](https://github.com/dynamic/silverstripe-flexslider/issues/64)
 - Inherited Slides [\#59](https://github.com/dynamic/silverstripe-flexslider/issues/59)
+- change carousel class [\#139](https://github.com/dynamic/silverstripe-flexslider/issues/139)
 
 **Fixed bugs:**
 
-- Slide links not being used in templates [\#159](https://github.com/dynamic/silverstripe-flexslider/issues/159)
-- change carousel class [\#139](https://github.com/dynamic/silverstripe-flexslider/issues/139)
 - set carousel to slide [\#138](https://github.com/dynamic/silverstripe-flexslider/issues/138)
 - Hide thumbnail fields unless set to use the thumbnail option - SS4 [\#132](https://github.com/dynamic/silverstripe-flexslider/issues/132)
 - Default values for minItems, maxItems and move. [\#120](https://github.com/dynamic/silverstripe-flexslider/issues/120)
+- Slide links not being used in templates [\#159](https://github.com/dynamic/silverstripe-flexslider/issues/159)
+- change carousel class [\#139](https://github.com/dynamic/silverstripe-flexslider/issues/139)
 
 **Closed issues:**
 
-- remove and ignore .DS\_store files [\#170](https://github.com/dynamic/silverstripe-flexslider/issues/170)
 - REVIEW doc files for module [\#169](https://github.com/dynamic/silverstripe-flexslider/issues/169)
 - Specify $owns metadata for slides [\#165](https://github.com/dynamic/silverstripe-flexslider/issues/165)
 - No 'Slider' Tab in CMS [\#136](https://github.com/dynamic/silverstripe-flexslider/issues/136)
 - Conflict with SelectUpload in CWP install [\#98](https://github.com/dynamic/silverstripe-flexslider/issues/98)
 - ENHANCEMENT better buttons integration [\#54](https://github.com/dynamic/silverstripe-flexslider/issues/54)
 - Explore use of extend\(\) function in place of method\_exists\(\) [\#4](https://github.com/dynamic/silverstripe-flexslider/issues/4)
+- remove and ignore .DS\_store files [\#170](https://github.com/dynamic/silverstripe-flexslider/issues/170)
 
 **Merged pull requests:**
 
 - REFACTOR templates to use $SlideLink [\#180](https://github.com/dynamic/silverstripe-flexslider/pull/180) ([muskie9](https://github.com/muskie9))
-- UPDATE remove .DS\_Store [\#178](https://github.com/dynamic/silverstripe-flexslider/pull/178) ([muskie9](https://github.com/muskie9))
-- REFACTOR update carousel class to fs-carousel [\#177](https://github.com/dynamic/silverstripe-flexslider/pull/177) ([muskie9](https://github.com/muskie9))
-- REFACTOR remove SlidePublishTask [\#176](https://github.com/dynamic/silverstripe-flexslider/pull/176) ([muskie9](https://github.com/muskie9))
 - DOCS update module docs [\#174](https://github.com/dynamic/silverstripe-flexslider/pull/174) ([muskie9](https://github.com/muskie9))
 - DOCS module docs [\#173](https://github.com/dynamic/silverstripe-flexslider/pull/173) ([muskie9](https://github.com/muskie9))
 - BUGFIX Carousel option can’t Fade [\#172](https://github.com/dynamic/silverstripe-flexslider/pull/172) ([muskie9](https://github.com/muskie9))
 - BUGFIX Carousel option can’t Fade [\#171](https://github.com/dynamic/silverstripe-flexslider/pull/171) ([muskie9](https://github.com/muskie9))
+- UPDATE remove .DS\_Store [\#178](https://github.com/dynamic/silverstripe-flexslider/pull/178) ([muskie9](https://github.com/muskie9))
+- REFACTOR update carousel class to fs-carousel [\#177](https://github.com/dynamic/silverstripe-flexslider/pull/177) ([muskie9](https://github.com/muskie9))
+- REFACTOR remove SlidePublishTask [\#176](https://github.com/dynamic/silverstripe-flexslider/pull/176) ([muskie9](https://github.com/muskie9))
 - Speed in cms [\#161](https://github.com/dynamic/silverstripe-flexslider/pull/161) ([mak001](https://github.com/mak001))
 
 ## [2.0.2](https://github.com/dynamic/silverstripe-flexslider/tree/2.0.2) (2019-04-25)
