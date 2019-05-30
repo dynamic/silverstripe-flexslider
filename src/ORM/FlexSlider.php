@@ -273,9 +273,11 @@ class FlexSlider extends DataExtension
      */
     public function getSlideshowSpeed()
     {
-        return $this->owner->FlexSliderSpeed > 0
-            ? $this->owner->FlexSliderSpeed * 1000
+        $speed = $this->owner->FlexSliderSpeed > 0
+            ? $this->owner->FlexSliderSpeed
             : $this->getDefaultSpeed();
+
+        return $speed * 1000;
     }
 
     /**
