@@ -54,3 +54,9 @@ Please report security issues to the module maintainers directly. Please don't f
 
 ## License
 See [License](license.md)
+
+## Translations
+
+The translations for this project are managed via [Transifex](https://www.transifex.com/dynamicagency/silverstripe-flexslider/)
+and are updated automatically during the release process. To contribute, please head to the link above and get
+translating!
