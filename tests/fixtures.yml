@@ -3,6 +3,7 @@ SilverStripe\Security\Group:
     Title: Administrators
   content_authors:
     Title: "Content Authors"
+
 SilverStripe\Security\Permission:
   administrators:
     Code: ADMIN
@@ -20,6 +21,7 @@ SilverStripe\Security\Permission:
     Code: Slide_CREATE
     Type: 1
     Group: =>SilverStripe\Security\Group.content_authors
+
 SilverStripe\Security\Member:
   admin:
     FirstName: Default
@@ -35,6 +37,7 @@ SilverStripe\Security\Member:
     FirstName: Default
     Surname: Member
     Email: member
+
 Dynamic\FlexSlider\Model\SlideImage:
   slide1:
     Name: 'Hello World'
@@ -42,6 +45,7 @@ Dynamic\FlexSlider\Model\SlideImage:
   slide2:
     Name: 'Goodbye World'
     Description: 'It was fun while it lasted!'
+
 SilverStripe\Assets\Image:
   image1:
     Name: Test Image

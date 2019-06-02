@@ -4,9 +4,11 @@ namespace Dynamic\FlexSlider\Test;
 
 use Dynamic\FlexSlider\Model\SlideImage;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\ValidationException;
+use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Security\Member;
 
 class SlideImageTest extends SapphireTest
@@ -15,6 +17,13 @@ class SlideImageTest extends SapphireTest
      * @var string
      */
     protected static $fixture_file = 'fixtures.yml';
+
+    /**
+     * @var array
+     */
+    protected static $extra_dataobjects = [
+        TestPage::class,
+    ];
 
     /**
      *
@@ -35,7 +44,7 @@ class SlideImageTest extends SapphireTest
     {
         $object = $this->objFromFixture(SlideImage::class, 'slide1');
         $object->Name = '';
-        $this->setExpectedException(ValidationException::class);
+        $this->expectException(ValidationException::class);
         $object->write();
     }
 
@@ -44,10 +53,53 @@ class SlideImageTest extends SapphireTest
      */
     public function testValidateImage()
     {
+        /** @var SlideImage $object */
         $object = $this->objFromFixture(SlideImage::class, 'slide1');
-        $object->ImageID = '';
-        $this->setExpectedException(ValidationException::class);
-        $object->write();
+        $object->Name = 'Test';
+        $object->ImageID = 0;
+
+        // test valid if require_image is default(true) on SlideImage
+        $object->config()->set('require_image', true);
+        $result = $object->validate();
+        $this->assertInstanceOf(ValidationResult::class, $result);
+        $this->assertFalse($result->isValid());
+        $this->assertContains([
+            'message' => 'An Image is required before you can save',
+            'fieldName' => null,
+            'messageType' => 'error',
+            'messageCast' => 'text',
+        ], $result->getMessages());
+
+        // test valid if require_image is false on SlideImage
+        $object->config()->set('require_image', false);
+        $result = $object->validate();
+        $this->assertInstanceOf(ValidationResult::class, $result);
+        $this->assertTrue($result->isValid());
+
+        // TestPage init
+        /** @var \Dynamic\FlexSlider\Test\TestPage $page */
+        $page = Injector::inst()->get(TestPage::class);
+        $object->PageID = $page->ID;
+
+        // test valid if require_image is true on TestPage
+        $object->config()->set('require_image', true);
+        $page->config()->set('require_image', false);
+        $result = $object->validate();
+        $this->assertInstanceOf(ValidationResult::class, $result);
+        $this->assertTrue($result->isValid());
+
+        // test valid if require_image is false on TestPage
+        $object->config()->set('require_image', true);
+        $page->config()->set('require_image', true);
+        $result = $object->validate();
+        $this->assertInstanceOf(ValidationResult::class, $result);
+        $this->assertFalse($result->isValid());
+        $this->assertContains([
+            'message' => 'An Image is required before you can save',
+            'fieldName' => null,
+            'messageType' => 'error',
+            'messageCast' => 'text',
+        ], $result->getMessages());
     }
 
     /**
