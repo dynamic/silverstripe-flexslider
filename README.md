@@ -42,8 +42,7 @@ See the [docs/en](docs/en/index.md) folder.
 
 The translations for this project are managed via [Transifex](https://www.transifex.com/dynamicagency/silverstripe-flexslider/)
 and are updated automatically during the release process. To contribute, please head to the link above and get
-translating!## Development and contribution
-If you would like to make contributions to the module please ensure you raise a pull request and discuss with the module maintainers.
+translating!
 
 ## Maintainer Contact
 
