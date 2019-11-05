@@ -74,25 +74,25 @@ class FlexSlider extends DataExtension
             $config->addComponent(new GridFieldDeleteAction(false));
             $config->removeComponentsByType('GridFieldDetailForm');
             $config->addComponent(new Heyday\VersionedDataObjects\VersionedDataObjectDetailsForm());
-            $SlidesField = GridField::create('Slides', 'Slides', $this->owner->Slides()->sort('SortOrder'), $config);
+            $SlidesField = GridField::create('Slides', 'Slides',
+                $this->owner->Slides()->sort('SortOrder'), $config);
 
             $slideTitle = $this->owner->stat('slide_tab_title') ? $this->owner->stat('slide_tab_title') : 'Slides';
 
             $fields->addFieldsToTab("Root.{$slideTitle}", [
                 $SlidesField,
-                ToggleCompositeField::create('ConfigHD', 'Slider Settings', [
-                    DropdownField::create('Animation', 'Animation option', $this->owner->dbObject('Animation')->enumValues()),
-                    CheckboxField::create('Animate', 'Animate automatically'),
-                    CheckboxField::create('Loop', 'Loop the carousel'),
-                    CheckboxField::create('SliderControlNav', 'Show ControlNav'),
-                    CheckboxField::create('SliderDirectionNav', 'Show DirectionNav'),
-                    CheckboxField::create('ThumbnailNav', 'Thumbnail Navigation'),
-                    DisplayLogicWrapper::create(
-                        CheckboxField::create('CarouselControlNav', 'Show Carousel ControlNav'),
-                        CheckboxField::create('CarouselDirectionNav', 'Show Carousel DirectionNav'),
-                        NumericField::create('CarouselThumbnailCt', 'Number of thumbnails')
-                    )->displayIf('ThumbnailNav')->isChecked()->end(),
-                ]),
+                DropdownField::create('Animation', 'Animation option',
+                    $this->owner->dbObject('Animation')->enumValues()),
+                CheckboxField::create('Animate', 'Animate automatically'),
+                CheckboxField::create('Loop', 'Loop the carousel'),
+                CheckboxField::create('SliderControlNav', 'Show ControlNav'),
+                CheckboxField::create('SliderDirectionNav', 'Show DirectionNav'),
+                CheckboxField::create('ThumbnailNav', 'Thumbnail Navigation'),
+                DisplayLogicWrapper::create(
+                    CheckboxField::create('CarouselControlNav', 'Show Carousel ControlNav'),
+                    CheckboxField::create('CarouselDirectionNav', 'Show Carousel DirectionNav'),
+                    NumericField::create('CarouselThumbnailCt', 'Number of thumbnails')
+                )->displayIf('ThumbnailNav')->isChecked()->end(),
             ]);
         }
     }
@@ -219,6 +219,5 @@ class FlexSlider extends DataExtension
         if (!$this->owner->CarouselThumbnailCt) {
             $this->owner->CarouselThumbnailCt = 6;
         }
-
     }
 }
