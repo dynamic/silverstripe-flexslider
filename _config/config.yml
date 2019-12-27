@@ -1,9 +1,6 @@
 ---
 Name: FlexSlider
 ---
-Dynamic\FlexSLider\Model\SlideImage:
-  extensions:
-    - SilverStripe\Versioned\Versioned('Stage','Live')
 
 Dynamic\FlexSlider\ORM\FlexSlider:
   flex_slider_speed: 7
