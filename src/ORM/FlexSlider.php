@@ -2,8 +2,9 @@
 
 namespace Dynamic\FlexSlider\ORM;
 
-use Dynamic\FlexSlider\Model\SlideImage;
+use Dynamic\FlexSlider\Model\Slide;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Forms\CheckboxField;
@@ -11,13 +12,16 @@ use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\HasManyList;
 use SilverStripe\View\Requirements;
+use Symbiote\GridFieldExtensions\GridFieldAddNewMultiClass;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
 /**
@@ -32,6 +36,8 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
  * @property bool $CarouselDirectionNav
  * @property int $CarouselThumbnailCt
  * @property double $FlexSliderSpeed
+ *
+ * @method HasManyList Slides()
  *
  * @property-read DataObject|FlexSlider $owner
  */
@@ -59,7 +65,7 @@ class FlexSlider extends DataExtension
      * @var array
      */
     private static $has_many = [
-        'Slides' => SlideImage::class,
+        'Slides' => Slide::class,
     ];
 
     /**
@@ -81,6 +87,7 @@ class FlexSlider extends DataExtension
 
     /**
      * @param FieldList $fields
+     * @throws \ReflectionException
      */
     public function updateCMSFields(FieldList $fields)
     {
@@ -100,12 +107,21 @@ class FlexSlider extends DataExtension
 
         // Slides
         if ($this->owner->ID) {
+            $availableSlides = [];
+            foreach (ClassInfo::subclassesFor(Slide::class, false) as $class) {
+                $availableSlides[$class] = $class::singleton()->i18n_singular_name();
+            };
+
             $config = GridFieldConfig_RecordEditor::create();
             $config->addComponent(new GridFieldOrderableRows('SortOrder'));
             $config->removeComponentsByType([
                 GridFieldAddExistingAutocompleter::class,
                 GridFieldDeleteAction::class,
-            ]);
+                GridFieldAddNewButton::class,
+            ])->addComponent($multiClass = new GridFieldAddNewMultiClass());
+
+            $multiClass->setClasses($availableSlides);
+
             $SlidesField = GridField::create(
                 'Slides',
                 _t(__CLASS__ . '.SLIDES', 'Slides'),
@@ -222,13 +238,13 @@ class FlexSlider extends DataExtension
             "(function($) {
                 $(document).ready(function(){
                     jQuery('.flexslider').each(function(index){
-					 
+
                          if(jQuery('.fs-carousel').eq(index).length) {
                              jQuery('.fs-carousel').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
                                 animation: 'slide',
                                 animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
-                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ", 
+                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ",
                                 directionNav: " . $this->owner->obj('CarouselDirectionNav')->NiceAsBoolean() . ",
                                 prevText: '',
                                 nextText: '',
@@ -241,7 +257,7 @@ class FlexSlider extends DataExtension
                                 itemMargin: 10
                               });
                          }
- 
+
                         if(jQuery('.flexslider').eq(index).length){
                             jQuery('.flexslider').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
@@ -259,7 +275,7 @@ class FlexSlider extends DataExtension
                                 },
                                 before: " . $before . ',
                                 after: ' . $after . ',
-                                slideshowSpeed: ' . $speed . ' 
+                                slideshowSpeed: ' . $speed . '
                             });
                         }
                     })

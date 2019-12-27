@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\FlexSlider\Test;
+namespace Dynamic\FlexSlider\Test\TestOnly;
 
 use Dynamic\FlexSlider\ORM\FlexSlider;
 use SilverStripe\Dev\TestOnly;
@@ -11,7 +11,20 @@ use SilverStripe\Dev\TestOnly;
  */
 class TestPage extends \Page implements TestOnly
 {
+    /**
+     * @var string
+     */
     private static $slide_tab_title = '';
 
+    /**
+     * @var string
+     */
     private static $table_name = 'FlexsliderTestPage';
+
+    /**
+     * @var array
+     */
+    private static $extensions = [
+        FlexSlider::class,
+    ];
 }

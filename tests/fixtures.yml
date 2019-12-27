@@ -1,54 +1,60 @@
 SilverStripe\Security\Group:
   administrators:
     Title: Administrators
-  content_authors:
-    Title: "Content Authors"
+  slidecreator:
+    Title: "Slide Creator"
+  slideadministrator:
+    Title: "Slide Administrator"
+
 SilverStripe\Security\Permission:
   administrators:
     Code: ADMIN
-    Type: 1
     Group: =>SilverStripe\Security\Group.administrators
   slide_edit:
-    Code: Slide_EDIT
-    Type: 1
-    Group: =>SilverStripe\Security\Group.content_authors
+    Code: 'SLIDE_EDIT'
+    Group: =>SilverStripe\Security\Group.slidecreator
   slide_delete:
-    Code: Slide_DELETE
-    Type: 1
-    Group: =>SilverStripe\Security\Group.content_authors
+    Code: 'SLIDE_DELETE'
+    Group: =>SilverStripe\Security\Group.slideadministrator
   slide_create:
-    Code: Slide_CREATE
-    Type: 1
-    Group: =>SilverStripe\Security\Group.content_authors
+    Code: 'SLIDE_CREATE'
+    Group: =>SilverStripe\Security\Group.slidecreator
+  slide_publish:
+    Code: 'SLIDE_PUBLISH'
+    Group: =>SilverStripe\Security\Group.slideadministrator
+
 SilverStripe\Security\Member:
   admin:
     FirstName: Default
     Surname: Admin
-    Email: administrator
+    Email: administrator@test.test
     Groups: =>SilverStripe\Security\Group.administrators
-  author:
+  slide_author:
     FirstName: "Content"
     Surname: "Author"
-    Email: "content"
-    Groups: =>SilverStripe\Security\Group.content_authors
-  default:
+    Email: slideauthor@test.test
+    Groups: =>SilverStripe\Security\Group.slidecreator
+  slide_admin:
+    FirstName: Slide
+    Surname: Admin
+    Email: slideadmin@test.test
+    Groups: =>SilverStripe\Security\Group.slideadministrator, =>SilverStripe\Security\Group.slidecreator
+  slide_no_permission:
     FirstName: Default
     Surname: Member
-    Email: member
-Dynamic\FlexSlider\Model\SlideImage:
-  slide1:
-    Name: 'Hello World'
-    Description: 'What a fine place it is too!'
-    SlideType: 'Image'
-  slide2:
-    Name: 'Goodbye World'
-    Description: 'It was fun while it lasted!'
-    SlideType: 'Video'
-  slide3:
-    Name: 'Baz'
-    Description: 'Text Slide Description'
-    SlideType: 'Text'
-SilverStripe\Assets\Image:
-  image1:
-    Name: Test Image
-    Filename: test.jpg
+    Email: default@test.test
+
+Dynamic\FlexSlider\Model\Slide:
+  base_slide:
+    Title: 'Hello World'
+    Content: 'What a fine place it is too!'
+#  slide2:
+#    Title: 'Goodbye World'
+#    Content: 'It was fun while it lasted!'
+#  slide3:
+#    Title: 'Baz'
+#    Content: 'Text Slide Description'
+#SilverStripe\Assets\Image:
+#  image1:
+#    Name: Test Image
+#    Filename: test.jpg
