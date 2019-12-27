@@ -49,7 +49,7 @@
 			"thirdparty"
 		],
 		"branch-alias": {
-			"dev-master": "4.1.x-dev"
+			"dev-master": "5.x-dev"
 		}
 	}
 }
