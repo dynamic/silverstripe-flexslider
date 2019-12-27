@@ -77,6 +77,7 @@ class FlexSliderTest extends SapphireTest
      */
     public function testGetSlideshow()
     {
+        $this->markTestSkipped('Re-implement');
         $object = TestPage::create();
         $object->write();
         $slide1 = $this->objFromFixture(SlideImage::class, 'slide1');
