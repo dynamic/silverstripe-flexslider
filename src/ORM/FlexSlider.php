@@ -206,7 +206,7 @@ class FlexSlider extends DataExtension
     public function getCustomScript()
     {
 
-        if ($this->owner()->config('clear_requirements')) {
+        if ($this->owner->config('clear_requirements')) {
             return;
         }
 
