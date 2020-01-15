@@ -46,11 +46,11 @@ Dynamic\FlexSlider\ORM\FlexSlider:
   FlexSliderSpeed: 3000
 ```
 
-To disable including the custom JavaScript, use the `ClearRequirements` configuration:
+To disable including the custom JavaScript, use the `clear_requirements` configuration:
 
 ```yml
 Dynamic\FlexSlider\ORM\FlexSlider:
-  ClearRequirements: true
+  clear_requirements: true
 ```
 
 ### User Guide
