@@ -1,0 +1,103 @@
+# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+name: "CI"
+
+jobs:
+  tests:
+    name: "Tests"
+
+    runs-on: "ubuntu-latest"
+
+    env:
+      php_extensions: ctype, dom, fileinfo, hash, intl, mbstring, session, simplexml, tokenizer, xml, pdo, mysqli, gd, zip
+
+    services:
+      mysql:
+        image: "mysql:5.7"
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_PASSWORD:
+          MYSQL_DATABASE: test_db
+        ports:
+          - 3306/tcp
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "7.3"
+          - "7.4"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "Install PHP with extensions"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.php_extensions }}"
+          coverage: "xdebug"
+
+      - name: "Start mysql service"
+        run: "sudo /etc/init.d/mysql start"
+
+      - name: "Cache dependencies installed with composer"
+        uses: "actions/cache@v1"
+        with:
+          path: "~/.composer/cache"
+          key: "php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
+
+      - name: "Authorize private packagist"
+        env:
+          COMPOSER_TOKEN: ${{ secrets.COMPOSER_TOKEN }}
+        run: "if [[ $COMPOSER_TOKEN ]]; then composer config --global --auth http-basic.repo.packagist.com token $COMPOSER_TOKEN; fi"
+
+      - name: "Install dependencies with composer"
+        run: "composer install --no-ansi --no-interaction --no-progress"
+
+      - name: "Run tests with phpunit/phpunit"
+        env:
+          SS_DATABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
+        run: "vendor/bin/phpunit --coverage-html=build/logs/coverage/html --coverage-xml=build/logs/coverage"
+
+      - name: "Archive code coverage results"
+        uses: "actions/upload-artifact@v2"
+        with:
+          name: "coverage"
+          path: "build/logs/coverage/html"
+
+      - name: "Run tests with squizlabs/php_codesniffer"
+        run: "vendor/bin/phpcs src/ tests/ --standard=phpcs.xml.dist --report=checkstyle --report-file=build/logs/checkstyle.xml"
+
+      - name: "Archive checkstyle results"
+        uses: "actions/upload-artifact@v2"
+        with:
+          name: "checkstyle"
+          path: "build/logs/checkstyle.xml"
+
+      #- name: "Run tests with phpmd/phpmd"
+      #  run: "vendor/bin/phpmd src xml codesize,unusedcode,naming --reportfile build/logs/pmd.xml --exclude vendor/ --exclude autoload.php"
+
+      - name: "Run tests with phploc/phploc"
+        run: "vendor/bin/phploc --count-tests --exclude vendor/ --log-csv build/logs/phploc.csv --log-xml build/logs/phploc.xml src/ tests/
+"
+      - name: "Run tests with pdepend/pdepend"
+        run: "vendor/bin/pdepend --jdepend-xml=build/logs/jdepend.xml --ignore=vendor src"
+
+      - name: "Publish documentation"
+        run: "vendor/bin/phpdox -f phpdox.xml"
+
+      - name: "Archive documentation"
+        uses: "actions/upload-artifact@v2"
+        with:
+          name: "documentation"
+          path: "docs/html"
