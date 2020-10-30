@@ -205,6 +205,11 @@ class FlexSlider extends DataExtension
      */
     public function getCustomScript()
     {
+
+        if ($this->owner->config('clear_requirements')) {
+            return;
+        }
+
         // Flexslider options
         $sync = ($this->owner->ThumbnailNav == true) ? "sync: '.fs-carousel:eq('+index+')'," : '';
 
@@ -222,13 +227,13 @@ class FlexSlider extends DataExtension
             "(function($) {
                 $(document).ready(function(){
                     jQuery('.flexslider').each(function(index){
-					 
+
                          if(jQuery('.fs-carousel').eq(index).length) {
                              jQuery('.fs-carousel').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
                                 animation: 'slide',
                                 animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
-                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ", 
+                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ",
                                 directionNav: " . $this->owner->obj('CarouselDirectionNav')->NiceAsBoolean() . ",
                                 prevText: '',
                                 nextText: '',
@@ -241,7 +246,7 @@ class FlexSlider extends DataExtension
                                 itemMargin: 10
                               });
                          }
- 
+
                         if(jQuery('.flexslider').eq(index).length){
                             jQuery('.flexslider').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
@@ -259,12 +264,13 @@ class FlexSlider extends DataExtension
                                 },
                                 before: " . $before . ',
                                 after: ' . $after . ',
-                                slideshowSpeed: ' . $speed . ' 
+                                slideshowSpeed: ' . $speed . '
                             });
                         }
                     })
                 });
-            }(jQuery));'
+            }(jQuery));',
+            'flexsliderjquery'
         );
     }
 
