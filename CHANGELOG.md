@@ -1,12 +1,37 @@
 # Changelog
 
-## [4.1.0](https://github.com/dynamic/silverstripe-flexslider/tree/4.1.0) (2020-01-07)
+## [4.1.1](https://github.com/dynamic/silverstripe-flexslider/tree/4.1.1) (2021-05-26)
+
+[Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/4.1.0...4.1.1)
+
+**Implemented enhancements:**
+
+- Change default template to use includes rather than $Me [\#183](https://github.com/dynamic/silverstripe-flexslider/issues/183)
+
+**Closed issues:**
+
+- Recursive Lookup for Flexslider [\#201](https://github.com/dynamic/silverstripe-flexslider/issues/201)
+- Can not find the FlexSlider.ss template [\#184](https://github.com/dynamic/silverstripe-flexslider/issues/184)
+
+**Merged pull requests:**
+
+- BUGFIX composer cleanup [\#207](https://github.com/dynamic/silverstripe-flexslider/pull/207) ([jsirish](https://github.com/jsirish))
+- REFACTOR update GitHub workflow [\#206](https://github.com/dynamic/silverstripe-flexslider/pull/206) ([jsirish](https://github.com/jsirish))
+- fix slider include [\#205](https://github.com/dynamic/silverstripe-flexslider/pull/205) ([korthjp17](https://github.com/korthjp17))
+- CI GitHub workflow initial [\#202](https://github.com/dynamic/silverstripe-flexslider/pull/202) ([jsirish](https://github.com/jsirish))
+
+## [4.1.0](https://github.com/dynamic/silverstripe-flexslider/tree/4.1.0) (2020-01-08)
 
 [Full Changelog](https://github.com/dynamic/silverstripe-flexslider/compare/2.0.3...4.1.0)
 
 **Merged pull requests:**
 
-- bugfix - move FlexSlider include to templates/Includes [\#191](https://github.com/dynamic/silverstripe-flexslider/pull/191) ([jsirish](https://github.com/jsirish))
+- UPDATE require dynamic/silverstripe-linkable [\#199](https://github.com/dynamic/silverstripe-flexslider/pull/199) ([muskie9](https://github.com/muskie9))
+- bugfix - removed redundant “Development and congribution” section [\#192](https://github.com/dynamic/silverstripe-flexslider/pull/192) ([jsirish](https://github.com/jsirish))
+- travis - test SilverStripe 4.1 and 4.2 [\#190](https://github.com/dynamic/silverstripe-flexslider/pull/190) ([jsirish](https://github.com/jsirish))
+- bugfix - include path [\#189](https://github.com/dynamic/silverstripe-flexslider/pull/189) ([jsirish](https://github.com/jsirish))
+- Feature/transifex [\#188](https://github.com/dynamic/silverstripe-flexslider/pull/188) ([jsirish](https://github.com/jsirish))
+- update tests - new travis, scrutinizer, jenkinsfile [\#187](https://github.com/dynamic/silverstripe-flexslider/pull/187) ([jsirish](https://github.com/jsirish))
 
 ## [2.0.3](https://github.com/dynamic/silverstripe-flexslider/tree/2.0.3) (2019-11-05)
 
