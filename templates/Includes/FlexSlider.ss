@@ -6,7 +6,13 @@
             <ul class="slides">
                 <% loop $SlideShow %>
                     <li>
-                        $Me
+                        <% if $SlideType == Video %>
+                            <% include Dynamic\\FlexSlider\\Model\\SlideImage_Video %>
+                        <% else_if $SlideType == Text %>
+                            <% include Dynamic\\FlexSlider\\Model\\SlideImage_Text %>
+                        <% else %>
+                            <% include Dynamic\\FlexSlider\\Model\\SlideImage_Image %>
+                        <% end_if %>
                     </li>
                 <% end_loop %>
             </ul>
