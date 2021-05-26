@@ -56,48 +56,19 @@ jobs:
           key: "php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}"
           restore-keys: "php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
 
-      - name: "Authorize private packagist"
-        env:
-          COMPOSER_TOKEN: ${{ secrets.COMPOSER_TOKEN }}
-        run: "if [[ $COMPOSER_TOKEN ]]; then composer config --global --auth http-basic.repo.packagist.com token $COMPOSER_TOKEN; fi"
-
       - name: "Install dependencies with composer"
         run: "composer install --no-ansi --no-interaction --no-progress"
 
       - name: "Run tests with phpunit/phpunit"
         env:
           SS_DATABASE_PORT: ${{ job.services.mysql.ports['3306'] }}
-        run: "vendor/bin/phpunit --coverage-html=build/logs/coverage/html --coverage-xml=build/logs/coverage"
+        run: "vendor/bin/phpunit --coverage-clover=coverage.xml"
 
-      - name: "Archive code coverage results"
-        uses: "actions/upload-artifact@v2"
+      - name: "Upload coverage results to CodeCov"
+        uses: codecov/codecov-action@v1
         with:
-          name: "coverage"
-          path: "build/logs/coverage/html"
+          files: ./coverage.xml # optional
+          flags: unittests # optional
 
       - name: "Run tests with squizlabs/php_codesniffer"
-        run: "vendor/bin/phpcs src/ tests/ --standard=phpcs.xml.dist --report=checkstyle --report-file=build/logs/checkstyle.xml"
-
-      - name: "Archive checkstyle results"
-        uses: "actions/upload-artifact@v2"
-        with:
-          name: "checkstyle"
-          path: "build/logs/checkstyle.xml"
-
-      #- name: "Run tests with phpmd/phpmd"
-      #  run: "vendor/bin/phpmd src xml codesize,unusedcode,naming --reportfile build/logs/pmd.xml --exclude vendor/ --exclude autoload.php"
-
-      - name: "Run tests with phploc/phploc"
-        run: "vendor/bin/phploc --count-tests --exclude vendor/ --log-csv build/logs/phploc.csv --log-xml build/logs/phploc.xml src/ tests/
-"
-      - name: "Run tests with pdepend/pdepend"
-        run: "vendor/bin/pdepend --jdepend-xml=build/logs/jdepend.xml --ignore=vendor src"
-
-      - name: "Publish documentation"
-        run: "vendor/bin/phpdox -f phpdox.xml"
-
-      - name: "Archive documentation"
-        uses: "actions/upload-artifact@v2"
-        with:
-          name: "documentation"
-          path: "docs/html"
+        run: "vendor/bin/phpcs -s --report=summary --standard=phpcs.xml.dist --extensions=php,inc --ignore=autoload.php --ignore=vendor/ src/ tests/"
