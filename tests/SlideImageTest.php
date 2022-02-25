@@ -48,7 +48,7 @@ class SlideImageTest extends SapphireTest
         $object = $this->objFromFixture(SlideImage::class, 'slide1');
         $object->Name = '';
         $object->ImageID = 1;
-        $this->setExpectedException(ValidationException::class);
+        $this->expectException(ValidationException::class);
         $object->write();
 
         $object->Name = 'Foo';
@@ -62,7 +62,7 @@ class SlideImageTest extends SapphireTest
     {
         $object = $this->objFromFixture(SlideImage::class, 'slide1');
         $object->ImageID = null;
-        $this->setExpectedException(ValidationException::class);
+        $this->expectException(ValidationException::class);
         $object->write();
 
         $base->ImageID = 1;
@@ -76,7 +76,7 @@ class SlideImageTest extends SapphireTest
     {
         $object = $this->objFromFixture(SlideImage::class, 'slide2');
         $object->VideoID = null;
-        $this->setExpectedException(ValidationException::class);
+        $this->expectException(ValidationException::class);
         $object->write();
 
         $object->VideoID = 1;
@@ -92,7 +92,7 @@ class SlideImageTest extends SapphireTest
         $description = $object->Description;
 
         $object->Description = null;
-        $this->setExpectedException(ValidationException::class);
+        $this->expectException(ValidationException::class);
         $object->write();
 
         $object->Description = $description;
