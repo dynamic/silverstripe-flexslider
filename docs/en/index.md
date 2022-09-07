@@ -26,4 +26,7 @@ My\Page:
   flexslider_enabled: true
 ```
 
-**Note** the `flexslider_enabled` config is generally for allowing fine tuned placement of the requirement vs replacement, however you can set the value to false and replace with your own flexslider client plugin.
+**Notse**
+- The `jquery_enabled` config allows for disabling specifically the jQuery library which is included to support `jquery.flexslider-min.js`. Disalbing this with a `false` value allows you to require your own version.
+  - You may have to disable `flexslider_enabled` and re-require `dynamic/flexslider:thirdparty/flexslider/jquery.flexslider-min.js` in your project for inclusion order purposes. See the [Inclusion Order](https://docs.silverstripe.org/en/4/developer_guides/templates/requirements/#inclusion-order) documentation for more information.
+- The `flexslider_enabled` config is generally for allowing fine tuned placement of the requirement vs replacement, however you can set the value to false and replace with your own flexslider client plugin.
