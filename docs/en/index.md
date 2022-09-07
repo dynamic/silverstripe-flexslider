@@ -16,39 +16,17 @@ Page:
 
 After attaching the DataExtension to your page type or DataObject run a `dev/build`.
 
-#### Adjust slider speed
-Adding `FlexSliderSpeed` to the config will adjust the speed of the slider in milliseconds.
-Sliders default to 7000 milliseconds, or 7 seconds to show each slide.
+##### Disabling Requirements
+
+The Flexslider module allows you control over both your jQuery and flexslider.min.js files. Each file has an independent config option which can be disabled allowing you control over what version (you bring and) include in your project by setting the following config flags:
 
 ```yml
-Page:
-  FlexSliderSpeed: 3000
-  extensions:
-    - Dynamic\FlexSlider\ORM\FlexSlider
+My\Page:
+  jquery_enabled: false
+  flexslider_enabled: false
 ```
 
-The object that has FlexSlider applied can also have a method `setFlexSliderSpeed()`. 
-This will allow for a field to be added to the cms to control speed, or more fine grained control over the speed of the slider.
-If `setFlexSliderSpeed()` return 0 or false the slider will fall back to using the config value.
-```php
-public function setFlexSliderSpeed()
-{
-    return 3000;
-}
-```
-
-Adjusting the defualt for all sliders can also be done in the config.
-```yml
-Dynamic\FlexSlider\ORM\FlexSlider:
-  FlexSliderSpeed: 3000
-```
-
-### User Guide
-
-You should now see a "Slides" tab on the page type or DataObject to which you applied the DataExtension. Simply create Slides to be included in the slide show that link to other pages on your website.
-
-![screen shot](../../images/FlexSliderCMS.png)
-
-You can inculde FlexSlider in your layout by using `<% include FlexSlider %>`
-
-![screen shot](../../images/FlexSlider.png)
+**Notse**
+- The `jquery_enabled` config allows for disabling specifically the jQuery library which is included to support `jquery.flexslider-min.js`. Disalbing this with a `false` value allows you to require your own version.
+  - You may have to disable `flexslider_enabled` and re-require `dynamic/flexslider:thirdparty/flexslider/jquery.flexslider-min.js` in your project for inclusion order purposes. See the [Inclusion Order](https://docs.silverstripe.org/en/4/developer_guides/templates/requirements/#inclusion-order) documentation for more information.
+- The `flexslider_enabled` config is generally for allowing fine tuned placement of the requirement vs replacement, however you can set the value to false and replace with your own flexslider client plugin.
