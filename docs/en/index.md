@@ -16,14 +16,14 @@ Page:
 
 After attaching the DataExtension to your page type or DataObject run a `dev/build`.
 
-##### Adjusting Requirements
+##### Disabling Requirements
 
-The Flexslider module allows you control over both your jQuery and flexslider.min.js files. Each file has an independent config option which can be disabled allowing you control over what version (you bring and) include in your project. Below are the default config settings:
+The Flexslider module allows you control over both your jQuery and flexslider.min.js files. Each file has an independent config option which can be disabled allowing you control over what version (you bring and) include in your project by setting the following config flags:
 
 ```yml
 My\Page:
-  jquery_enabled: true
-  flexslider_enabled: true
+  jquery_enabled: false
+  flexslider_enabled: false
 ```
 
 **Notse**
