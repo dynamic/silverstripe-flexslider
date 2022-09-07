@@ -21,7 +21,7 @@ The FlexSlider module allows a developer to attach a [Woothemes FlexSlider](http
 
 ## Installation
 
-`composer require dynamic/flexslider ^4.0`
+`composer require dynamic/flexslider ^4.2`
 
 ## License
 

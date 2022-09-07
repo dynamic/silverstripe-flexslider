@@ -63,6 +63,16 @@ class FlexSlider extends DataExtension
     ];
 
     /**
+     * @var bool
+     */
+    private static $jquery_enabled = true;
+
+    /**
+     * @var bool
+     */
+    private static $flexslider_enabled = true;
+
+    /**
      *
      */
     public function populateDefaults()
@@ -194,9 +204,15 @@ class FlexSlider extends DataExtension
     {
         // only call custom script if page has Slides and DataExtension
         if (DataObject::has_extension($this->owner->Classname, FlexSlider::class)) {
-            if ($this->owner->getSlideShow()->exists()) {
-                $this->getCustomScript();
+            if ($this->owner->config()->get('jquery_enabled')) {
+                Requirements::javascript('//code.jquery.com/jquery-3.6.1.min.js');
             }
+
+            if ($this->owner->getSlideShow()->exists() && $this->owner->config()->get('flexslider_enabled')) {
+                Requirements::javascript('dynamic/flexslider:thirdparty/flexslider/jquery.flexslider-min.js');
+            }
+
+            $this->getCustomScript();
         }
     }
 
@@ -222,13 +238,13 @@ class FlexSlider extends DataExtension
             "(function($) {
                 $(document).ready(function(){
                     jQuery('.flexslider').each(function(index){
-					 
+
                          if(jQuery('.fs-carousel').eq(index).length) {
                              jQuery('.fs-carousel').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
                                 animation: 'slide',
                                 animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
-                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ", 
+                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ",
                                 directionNav: " . $this->owner->obj('CarouselDirectionNav')->NiceAsBoolean() . ",
                                 prevText: '',
                                 nextText: '',
@@ -241,7 +257,7 @@ class FlexSlider extends DataExtension
                                 itemMargin: 10
                               });
                          }
- 
+
                         if(jQuery('.flexslider').eq(index).length){
                             jQuery('.flexslider').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
@@ -259,7 +275,7 @@ class FlexSlider extends DataExtension
                                 },
                                 before: " . $before . ',
                                 after: ' . $after . ',
-                                slideshowSpeed: ' . $speed . ' 
+                                slideshowSpeed: ' . $speed . '
                             });
                         }
                     })
