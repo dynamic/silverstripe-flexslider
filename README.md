@@ -1,10 +1,9 @@
 
 # SilverStripe Flexslider
 
+[![CI](https://github.com/dynamic/silverstripe-flexslider/actions/workflows/ci.yml/badge.svg)](https://github.com/dynamic/silverstripe-flexslider/actions/workflows/ci.yml)
 [![Build Status](https://travis-ci.org/dynamic/silverstripe-flexslider.svg?branch=master)](https://travis-ci.org/dynamic/silverstripe-flexslider)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dynamic/silverstripe-flexslider/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-flexslider/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/dynamic/silverstripe-flexslider/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-flexslider/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/dynamic/silverstripe-flexslider/badges/build.png?b=master)](https://scrutinizer-ci.com/g/dynamic/silverstripe-flexslider/build-status/master)
 [![codecov.io](https://codecov.io/github/dynamic/silverstripe-flexslider/coverage.svg?branch=master)](https://codecov.io/github/dynamic/silverstripe-flexslider?branch=master)
 
 [![Latest Stable Version](https://poser.pugx.org/dynamic/flexslider/v/stable)](https://packagist.org/packages/dynamic/flexslider)
