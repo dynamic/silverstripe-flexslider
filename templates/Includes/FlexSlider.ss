@@ -31,3 +31,5 @@
     <% end_if %>
     </div>
 <% end_if %>
+<% require javascript('//code.jquery.com/jquery-3.6.1.min.js') %>
+<% require javascript('dynamic/flexslider: thirdparty/flexslider/jquery.flexslider-min.js') %>
