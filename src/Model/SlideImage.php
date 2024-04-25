@@ -2,11 +2,11 @@
 
 namespace Dynamic\FlexSlider\Model;
 
-use function GuzzleHttp\Psr7\parse_request;
-use Sheadawson\Linkable\Forms\EmbeddedObjectField;
-use Sheadawson\Linkable\Forms\LinkField;
-use Sheadawson\Linkable\Models\EmbeddedObject;
-use Sheadawson\Linkable\Models\Link;
+use gorriecoe\Embed\Models\Embed;
+
+use gorriecoe\Link\Models\Link;
+use gorriecoe\LinkField\LinkField;
+use SilverShop\HasOneField\HasOneButtonField;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\CMS\Model\SiteTree;
@@ -19,6 +19,7 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
+use function GuzzleHttp\Psr7\parse_request;
 
 /**
  * Class SlideImage
@@ -62,7 +63,7 @@ class SlideImage extends DataObject implements PermissionProvider
      */
     private static $has_one = [
         'Image' => Image::class,
-        'Video' => EmbeddedObject::class,
+        //'Video' => Embed::class,
         'Page' => \Page::class,
         'PageLink' => SiteTree::class,
         'SlideLink' => Link::class,
@@ -187,7 +188,7 @@ class SlideImage extends DataObject implements PermissionProvider
             // Page link
             $fields->replaceField(
                 'PageLinkID',
-                LinkField::create('SlideLinkID', $this->fieldLabel('SlideLinkID'))
+                LinkField::create('SlideLink', $this->fieldLabel('SlideLinkID'), $this)
             );
 
             // Image
@@ -204,10 +205,13 @@ class SlideImage extends DataObject implements PermissionProvider
                     Wrapper::create(
                         $image
                     )->displayIf('SlideType')->isEqualTo('Image')->orIf('SlideType')->isEqualTo('Video')->end(),
-                    Wrapper::create(
-                        $videoField = EmbeddedObjectField::create('Video', $this->fieldLabel('Video'))
-                            ->setDescription(_t(__CLASS__ . '.VideoDescription', 'Supported links: YouTube, Vimeo'))
-                    )->displayIf('SlideType')->isEqualTo('Video')->end()
+                    /*Wrapper::create(
+                        $videoField = HasOneButtonField::create(
+                            'Video',
+                            'Video',
+                            $this
+                        )
+                    )->displayIf('SlideType')->isEqualTo('Video')->end()*/
                 ))->setName('MediaFields'),
                 'Description'
             );

@@ -113,7 +113,7 @@ class FlexSlider extends DataExtension
                 $config
             );
 
-            $slideTitle = $this->owner->stat('slide_tab_title') ?: _t(__CLASS__ . '.SLIDES', 'Slides');
+            $slideTitle = $this->owner->slide_tab_title ?: _t(__CLASS__ . '.SLIDES', 'Slides');
 
             $animations = [];
             $animationOptions = $this->owner->dbObject('Animation')->getEnum();
@@ -222,13 +222,13 @@ class FlexSlider extends DataExtension
             "(function($) {
                 $(document).ready(function(){
                     jQuery('.flexslider').each(function(index){
-					 
+
                          if(jQuery('.fs-carousel').eq(index).length) {
                              jQuery('.fs-carousel').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
                                 animation: 'slide',
                                 animationLoop: " . $this->owner->obj('Loop')->NiceAsBoolean() . ",
-                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ", 
+                                controlNav: " . $this->owner->obj('CarouselControlNav')->NiceAsBoolean() . ",
                                 directionNav: " . $this->owner->obj('CarouselDirectionNav')->NiceAsBoolean() . ",
                                 prevText: '',
                                 nextText: '',
@@ -241,7 +241,7 @@ class FlexSlider extends DataExtension
                                 itemMargin: 10
                               });
                          }
- 
+
                         if(jQuery('.flexslider').eq(index).length){
                             jQuery('.flexslider').eq(index).flexslider({
                                 slideshow: " . $this->owner->obj('Animate')->NiceAsBoolean() . ",
@@ -259,7 +259,7 @@ class FlexSlider extends DataExtension
                                 },
                                 before: " . $before . ',
                                 after: ' . $after . ',
-                                slideshowSpeed: ' . $speed . ' 
+                                slideshowSpeed: ' . $speed . '
                             });
                         }
                     })
