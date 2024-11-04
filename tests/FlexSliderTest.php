@@ -44,7 +44,7 @@ class FlexSliderTest extends SapphireTest
         $this->assertNotNull($pageFields->dataFieldByName('Slides'));
 
         Config::modify()
-            ->update(TestPage::class, 'slide_tab_title', 'MyCustomSlideTitle');
+            ->set(TestPage::class, 'slide_tab_title', 'MyCustomSlideTitle');
         $page2 = TestPage::create();
         $page2->write();
         $page2Fields = $page2->getCMSFields();
