@@ -19,7 +19,7 @@
 		}
 	],
 	"require": {
-		"dynamic/silverstripe-linkable": "^2.0",
+		"dynamic/silverstripe-linkable": "^2",
 		"silverstripe/recipe-cms": "^5",
 		"symbiote/silverstripe-gridfieldextensions": "^4"
 	},
