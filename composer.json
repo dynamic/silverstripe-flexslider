@@ -1,13 +1,8 @@
 {
 	"name": "dynamic/flexslider",
 	"description": "Display a FlexSlider on pages of your website",
-	"authors": [
-		{
-			"name": "Dynamic",
-			"homepage": "http://www.dynamicagency.com",
-			"email": "dev@dynamicagency.com"
-		}
-	],
+	"license": "BSD-3-Clause",
+	"type": "silverstripe-vendormodule",
 	"keywords": [
 		"silverstripe",
 		"flexslider",
@@ -16,38 +11,43 @@
 		"slider",
 		"jquery"
 	],
-	"license": "BSD-3-Clause",
-	"type": "silverstripe-vendormodule",
+	"authors": [
+		{
+			"name": "Dynamic",
+			"email": "dev@dynamicagency.com",
+			"homepage": "https://www.dynamicagency.com"
+		}
+	],
 	"require": {
-		"silverstripe/recipe-cms": "^4.0",
-		"dynamic/silverstripe-linkable": "^1.0",
-		"symbiote/silverstripe-gridfieldextensions": "^3.0"
+		"dynamic/silverstripe-linkable": "^2.0",
+		"silverstripe/recipe-cms": "^5.0",
+		"symbiote/silverstripe-gridfieldextensions": "^4.0"
 	},
 	"require-dev": {
-        "silverstripe/recipe-testing": "^2",
-		"squizlabs/php_codesniffer": "^3.0"
+		"silverstripe/recipe-testing": "^3",
+		"squizlabs/php_codesniffer": "^3"
 	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
 			"Dynamic\\FlexSlider\\": "src/",
 			"Dynamic\\FlexSlider\\Test\\": "tests/"
 		}
 	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true,
+			"silverstripe/recipe-plugin": true,
+			"silverstripe/vendor-plugin": true
+		},
+		"process-timeout": 600
+	},
 	"extra": {
 		"expose": [
 			"css",
 			"images",
 			"thirdparty"
 		]
-	},
-    "config": {
-        "process-timeout": 600,
-        "allow-plugins": {
-            "composer/installers": true,
-            "silverstripe/recipe-plugin": true,
-            "silverstripe/vendor-plugin": true
-        }
-    }
+	}
 }
