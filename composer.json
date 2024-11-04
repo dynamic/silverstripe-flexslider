@@ -19,13 +19,12 @@
 		}
 	],
 	"require": {
-		"dynamic/silverstripe-linkable": "^2.0",
-		"silverstripe/recipe-cms": "^5.0",
-		"symbiote/silverstripe-gridfieldextensions": "^4.0"
+		"dynamic/silverstripe-linkable": "^2",
+		"silverstripe/recipe-cms": "^5",
+		"symbiote/silverstripe-gridfieldextensions": "^4"
 	},
 	"require-dev": {
-		"silverstripe/recipe-testing": "^3",
-		"squizlabs/php_codesniffer": "^3"
+		"silverstripe/recipe-testing": "^3"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
