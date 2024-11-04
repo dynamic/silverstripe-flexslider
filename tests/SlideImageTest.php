@@ -188,7 +188,7 @@ class SlideImageTest extends SapphireTest
         $this->assertEquals(Config::modify()->get(SlideImage::class, 'image_size_limit'), $default);
 
         $new = 1024000;
-        Config::modify()->update(SlideImage::class, 'image_size_limit', $new);
+        Config::modify()->set(SlideImage::class, 'image_size_limit', $new);
         $this->assertEquals(Config::modify()->get(SlideImage::class, 'image_size_limit'), $new);
     }
 

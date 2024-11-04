@@ -123,7 +123,7 @@ class FlexSlider extends DataExtension
                 $config
             );
 
-            $slideTitle = $this->owner->stat('slide_tab_title') ?: _t(__CLASS__ . '.SLIDES', 'Slides');
+            $slideTitle = $this->owner->config()->get('slide_tab_title') ?: _t(__CLASS__ . '.SLIDES', 'Slides');
 
             $animations = [];
             $animationOptions = $this->owner->dbObject('Animation')->getEnum();
