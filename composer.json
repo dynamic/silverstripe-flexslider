@@ -19,18 +19,13 @@
 		}
 	],
 	"require": {
-		"dynamic/silverstripe-linkable": "dev-master",
-		"silverstripe/recipe-cms": "^5",
-		"symbiote/silverstripe-gridfieldextensions": "^4"
+		"dynamic/silverstripe-linkable": "^1.0 || ^2.0",
+		"silverstripe/recipe-cms": "^4.0 || ^5.0",
+		"symbiote/silverstripe-gridfieldextensions": "^3.0 || ^4.0"
 	},
 	"require-dev": {
-		"silverstripe/recipe-testing": "^3"
-	},
-	"repositories": {
-		"dynamic/silverstripe-linkable": {
-			"type": "vcs",
-			"url": "git@github.com:dynamic/silverstripe-linkable.git"
-		}
+		"silverstripe/recipe-testing": "^3",
+		"squizlabs/php_codesniffer": "^3.7"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
