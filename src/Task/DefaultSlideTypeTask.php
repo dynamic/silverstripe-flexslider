@@ -20,7 +20,7 @@ class DefaultSlideTypeTask extends BuildTask
     /**
      * @var string
      */
-    protected $title = 'Flexslider - Default Slide Type Task';
+    protected string $title = 'Flexslider - Default Slide Type Task';
 
     /**
      * @param \SilverStripe\Control\HTTPRequest $request
