@@ -15,7 +15,7 @@ use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\Core\Extension\Extension;
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\View\Requirements;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
