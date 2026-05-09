@@ -26,7 +26,7 @@ class SlideThumbnailNavMigrationTask extends BuildTask
     /**
      * @var string
      */
-    protected string $description = 'Set default values for slider after the thumbnail nav update';
+    protected static string $description = 'Set default values for slider after the thumbnail nav update';
 
     /**
      * @var string
@@ -36,7 +36,7 @@ class SlideThumbnailNavMigrationTask extends BuildTask
     /**
      * @var bool
      */
-    protected $enabled = true;
+    private static bool $is_enabled = true;
 
     /**
      * @param InputInterface $input
