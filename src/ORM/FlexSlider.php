@@ -15,7 +15,7 @@ use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension\Extension;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\View\Requirements;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
@@ -35,7 +35,7 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
  *
  * @property-read DataObject|FlexSlider $owner
  */
-class FlexSlider extends DataExtension
+class FlexSlider extends Extension
 {
     use Configurable;
 
