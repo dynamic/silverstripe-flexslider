@@ -28,7 +28,7 @@ class DefaultSlideTypeTask extends BuildTask
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \SilverStripe\PolyExecution\PolyOutput $output
      */
-    public function run(InputInterface $input, PolyOutput $output): int
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         $this->setDefaults();
         return 0;
