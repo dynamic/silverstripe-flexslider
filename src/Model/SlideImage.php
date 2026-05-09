@@ -341,7 +341,7 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @return \SilverStripe\ORM\FieldType\DBHTMLText
      */
-    public function forTemplate()
+    public function forTemplate(): string
     {
         return $this->renderWith();
     }
