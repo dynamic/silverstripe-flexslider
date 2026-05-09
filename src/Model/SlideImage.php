@@ -15,6 +15,7 @@ use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\Core\Validation\ValidationResult;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
@@ -223,7 +224,7 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @return \SilverStripe\ORM\ValidationResult
      */
-    public function validate()
+    public function validate(): ValidationResult
     {
         $result = parent::validate();
 
