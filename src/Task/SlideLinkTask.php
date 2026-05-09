@@ -7,6 +7,8 @@ use Sheadawson\Linkable\Models\Link;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DB;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * Class SlideLinkTask
@@ -17,7 +19,7 @@ class SlideLinkTask extends BuildTask
     /**
      * @var string
      */
-    protected $title = 'Flexslider - Slide Link Migration Task';
+    protected string $title = 'Flexslider - Slide Link Migration Task';
 
     /**
      * @var string
@@ -30,12 +32,13 @@ class SlideLinkTask extends BuildTask
     private $known_links = [];
 
     /**
-     * @param \SilverStripe\Control\HTTPRequest $request
-     * @throws \SilverStripe\ORM\ValidationException
+     * @param InputInterface $input
+     * @param PolyOutput $output
      */
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         $this->migrateLinks();
+        return 0;
     }
 
     /**
