@@ -310,7 +310,6 @@ class FlexSlider extends Extension
      */
     public function onBeforeWrite()
     {
-        parent::onBeforeWrite();
 
         if (!$this->owner->CarouselThumbnailCt) {
             $this->owner->CarouselThumbnailCt = 6;
