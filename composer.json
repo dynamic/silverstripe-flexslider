@@ -19,12 +19,19 @@
         }
     ],
     "require": {
+        "dynamic/silverstripe-linkable": "dev-master",
         "silverstripe/recipe-cms": "^6",
         "silverstripe/vendor-plugin": "^3",
         "symbiote/silverstripe-gridfieldextensions": "^4"
     },
     "require-dev": {
         "silverstripe/recipe-testing": "^4"
+    },
+    "repositories": {
+        "dynamic/silverstripe-linkable": {
+            "type": "vcs",
+            "url": "git@github.com:dynamic/silverstripe-linkable.git"
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
