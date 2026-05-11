@@ -27,12 +27,7 @@
     "require-dev": {
         "silverstripe/recipe-testing": "^4"
     },
-    "repositories": {
-        "dynamic/silverstripe-linkable": {
-            "type": "vcs",
-            "url": "git@github.com:dynamic/silverstripe-linkable.git"
-        }
-    },
+
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
