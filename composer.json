@@ -19,20 +19,15 @@
         }
     ],
     "require": {
-        "dynamic/silverstripe-linkable": "dev-master",
+        "dynamic/silverstripe-linkable": "^3.0",
         "silverstripe/recipe-cms": "^6",
         "silverstripe/vendor-plugin": "^3",
-        "symbiote/silverstripe-gridfieldextensions": "^4"
+        "symbiote/silverstripe-gridfieldextensions": "^5"
     },
     "require-dev": {
         "silverstripe/recipe-testing": "^4"
     },
-    "repositories": {
-        "dynamic/silverstripe-linkable": {
-            "type": "vcs",
-            "url": "git@github.com:dynamic/silverstripe-linkable.git"
-        }
-    },
+
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
@@ -42,11 +37,6 @@
         }
     },
     "config": {
-        "allow-plugins": {
-            "composer/installers": true,
-            "silverstripe/recipe-plugin": true,
-            "silverstripe/vendor-plugin": true
-        },
         "process-timeout": 600
     },
     "extra": {
