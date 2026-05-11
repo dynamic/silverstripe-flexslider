@@ -17,7 +17,7 @@ The FlexSlider module allows a developer to attach a [Woothemes FlexSlider](http
 
 ## Requirements
 
-* [silverstripe/silverstripe-framework](https://github.com/silverstripe/silverstripe-framework) ^4.0
+* [silverstripe/silverstripe-framework](https://github.com/silverstripe/silverstripe-framework) ^6
 
 ## Installation
 

@@ -8,7 +8,9 @@ use SilverStripe\Control\Director;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\PolyExecution\PolyOutput;
 use SilverStripe\Versioned\Versioned;
+use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * Class SlideThumbnailNavMigrationTask
@@ -19,12 +21,12 @@ class SlideThumbnailNavMigrationTask extends BuildTask
     /**
      * @var string
      */
-    protected $title = 'FlexSlider - Default Values';
+    protected string $title = 'FlexSlider - Default Values';
 
     /**
      * @var string
      */
-    protected $description = 'Set default values for slider after the thumbnail nav update';
+    protected static string $description = 'Set default values for slider after the thumbnail nav update';
 
     /**
      * @var string
@@ -34,14 +36,16 @@ class SlideThumbnailNavMigrationTask extends BuildTask
     /**
      * @var bool
      */
-    protected $enabled = true;
+    private static bool $is_enabled = true;
 
     /**
-     * @param $request
+     * @param InputInterface $input
+     * @param PolyOutput $output
      */
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         $this->defaultSliderSettings();
+        return 0;
     }
 
     /**

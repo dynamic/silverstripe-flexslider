@@ -15,7 +15,7 @@ use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\View\Requirements;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
@@ -35,7 +35,7 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
  *
  * @property-read DataObject|FlexSlider $owner
  */
-class FlexSlider extends DataExtension
+class FlexSlider extends Extension
 {
     use Configurable;
 
@@ -202,7 +202,7 @@ class FlexSlider extends DataExtension
      */
     public function contentcontrollerInit()
     {
-        // only call custom script if page has Slides and DataExtension
+        // only call custom script if page has Slides and Extension
         if (DataObject::has_extension($this->owner->Classname, FlexSlider::class)) {
             if ($this->owner->config()->get('jquery_enabled')) {
                 Requirements::javascript('//code.jquery.com/jquery-3.6.1.min.js');

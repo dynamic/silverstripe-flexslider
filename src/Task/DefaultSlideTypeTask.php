@@ -5,6 +5,8 @@ namespace Dynamic\Flexslider\Task;
 use Dynamic\FlexSlider\Model\SlideImage;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DB;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * Class DefaultSlideTypeTask
@@ -20,14 +22,16 @@ class DefaultSlideTypeTask extends BuildTask
     /**
      * @var string
      */
-    protected $title = 'Flexslider - Default Slide Type Task';
+    protected string $title = 'Flexslider - Default Slide Type Task';
 
     /**
-     * @param \SilverStripe\Control\HTTPRequest $request
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \SilverStripe\PolyExecution\PolyOutput $output
      */
-    public function run($request)
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
         $this->setDefaults();
+        return 0;
     }
 
     /**

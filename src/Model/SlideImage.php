@@ -15,7 +15,9 @@ use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\Core\Validation\ValidationResult;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
@@ -223,7 +225,7 @@ class SlideImage extends DataObject implements PermissionProvider
     /**
      * @return \SilverStripe\ORM\ValidationResult
      */
-    public function validate()
+    public function validate(): ValidationResult
     {
         $result = parent::validate();
 
@@ -322,26 +324,17 @@ class SlideImage extends DataObject implements PermissionProvider
         return array_combine($types, $types);
     }
 
+
     /**
-     * @param null $template
-     * @param null $customFields
      * @return \SilverStripe\ORM\FieldType\DBHTMLText
      */
-    public function renderWith($template = null, $customFields = null)
+    public function forTemplate(): DBHTMLText
     {
-        if ($template === null) {
-            $template = static::class;
-            $template = ($this->SlideType) ? $template . "_{$this->SlideType}" : '';
+        $template = static::class;
+        if ($this->SlideType) {
+            $template .= "_{$this->SlideType}";
         }
 
-        return parent::renderWith($template);
-    }
-
-    /**
-     * @return \SilverStripe\ORM\FieldType\DBHTMLText
-     */
-    public function forTemplate()
-    {
-        return $this->renderWith();
+        return $this->renderWith($template);
     }
 }
