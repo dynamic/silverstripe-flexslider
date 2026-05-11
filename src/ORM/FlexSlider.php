@@ -202,7 +202,7 @@ class FlexSlider extends Extension
      */
     public function contentcontrollerInit()
     {
-        // only call custom script if page has Slides and DataExtension
+        // only call custom script if page has Slides and Extension
         if (DataObject::has_extension($this->owner->Classname, FlexSlider::class)) {
             if ($this->owner->config()->get('jquery_enabled')) {
                 Requirements::javascript('//code.jquery.com/jquery-3.6.1.min.js');
