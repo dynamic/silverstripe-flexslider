@@ -17,7 +17,6 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\Core\Validation\ValidationResult;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
@@ -326,15 +325,15 @@ class SlideImage extends DataObject implements PermissionProvider
 
 
     /**
-     * @return \SilverStripe\ORM\FieldType\DBHTMLText
+     * @return string
      */
-    public function forTemplate(): DBHTMLText
+    public function forTemplate(): string
     {
         $template = static::class;
         if ($this->SlideType) {
             $template .= "_{$this->SlideType}";
         }
 
-        return $this->renderWith($template);
+        return (string) $this->renderWith($template);
     }
 }
