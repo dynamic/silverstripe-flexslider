@@ -1,8 +1,7 @@
 <% require css('dynamic/flexslider: thirdparty/flexslider/flexslider.css') %>
-<% require css('dynamic/flexslider: css/silverstripe-flexslider.css') %>
 <% if $SlideShow %>
-    <div class="slideshow">
-        <div class="flexslider">
+    <div class="row slideshow">
+        <div class="flexslider card col-md-12">
             <ul class="slides">
                 <% loop $SlideShow %>
                     <li>
@@ -18,17 +17,20 @@
             </ul>
         </div>
         <% if $ThumbnailNav && $SlideShow.Count > 1 %>
-        <div class="fs-carousel">
+        <div class="fs-carousel col-md-12">
             <ul class="slides">
                 <% loop $SlideShow %>
                     <li>
                         <% if $Image %>
-                            <img src="$Image.URL"  alt="$Image.Title" class="slide">
+                            <img src="$Image.Fill(200,200).URL"  alt="$Image.Title" class="slide">
                         <% end_if %>
                     </li>
                 <% end_loop %>
             </ul>
         </div>
     <% end_if %>
-</div>
+    </div>
+    <% require javascript('//code.jquery.com/jquery-3.6.1.min.js') %>
+    <% require javascript('dynamic/flexslider: thirdparty/flexslider/jquery.flexslider-min.js') %>
 <% end_if %>
+
